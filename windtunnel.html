@@ -86,7 +86,7 @@ table.detail td b{color:#e6edf3}
     <span class="tag">决策者看：哪条路最抗压、断点在第几环</span>
   </div>
 
-  <div class="cards" id="cards"></div>
+  <div class="wind-layout"><div class="cards" id="cards"></div>
 
   <div class="s">
     <h2>五张牌，谁的波及面更大 <span class="tag">横向对比 · 悬停看主体数</span></h2>
@@ -108,6 +108,7 @@ table.detail td b{color:#e6edf3}
     <div class="ana" id="road"></div>
   </div>
 
+  </div><!-- wind-layout -->
   <div class="next"><a href="blindspot.html">下一步：官方自己承认的问题 →</a></div>
   <div class="disc">压测按"牌 → 谁先受影响 → 哪条连线先断"推演；波及范围是模型推算（可信度 D），事件与数据为公开口径。非预测值。</div>
 </div>
@@ -143,7 +144,7 @@ function run(){
   $('impact').innerHTML=hits.slice(0,12).map(id=>`<span class="p">${ZK.nm(id)}</span>`).join('')
     +(safe.length?'<span class="p ok">其余主体暂稳</span>':'');
   /* 简化地图：只画被波及的主体 */
-  let s=`<rect width="1240" height="920" fill="#0a1018" rx="10"/>`;
+  let s=`<rect width="1240" height="920" fill="#f8fbff" rx="10"/>`;
   ZK.LK.forEach(l=>{
     const a=ZK.NO.find(n=>n[0]===l[0]),b=ZK.NO.find(n=>n[0]===l[1]);
     if(!a||!b)return;
@@ -158,7 +159,7 @@ function run(){
     s+=`<g transform="translate(${n[3]},${n[4]})">
       <ellipse rx="45" ry="17" fill="${c}" opacity=".35" stroke="#f87171" stroke-width="1.5"/>
       <text text-anchor="middle" y="-1" font-size="11" font-weight="700" fill="#0d1a24">${n[1].length>7?n[1].slice(0,7):n[1]}</text>
-      <text text-anchor="middle" y="12" font-size="9" fill="#e6edf3">${n[5]?'待核实':LCOL[n[2]]? '波及':''}</text>
+      <text text-anchor="middle" y="12" font-size="9" fill="#536782">${n[5]?'待核实':LCOL[n[2]]? '波及':''}</text>
     </g>`;
   });
   $('map').innerHTML=s;
