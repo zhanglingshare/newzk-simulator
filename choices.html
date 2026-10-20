@@ -53,6 +53,24 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .sl .v{min-width:26px;text-align:right;font-size:13px;font-weight:700;color:#67e8f9}
 .reset{border:1px solid #334155;background:#131c2b;color:#93a4bd;padding:7px 16px;border-radius:16px;font-size:12px;cursor:pointer}
 .reset:hover{color:#fff}
+.code{background:linear-gradient(135deg,#0c1a2e,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.code .t{font-size:13px;font-weight:800;color:#a78bfa;margin-bottom:8px}
+.code .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.seg b{font-size:11px;color:#8fa3bf;min-width:44px;text-align:right}
+.seg button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:5px 12px;border-radius:14px;font-size:12px;cursor:pointer}
+.seg button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.code .lock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.lock button{background:#0e7490;color:#fff;border:1px solid #22d3ee;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer}
+.lock button.un{background:#b45309;border-color:#fbbf24}
+.code .chip{font-size:13px;color:#67e8f9;font-weight:800;letter-spacing:.5px}
+.code .hint{font-size:11px;color:#5b6b82;margin-top:8px;line-height:1.7}
+.segbar{display:flex;gap:8px;margin:8px 0}
+.segbar button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:6px 16px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.segbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.win{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:8px 0}
+.win .hd{height:24px;background:transparent;color:#8fa3bf;font-size:10.5px;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;padding:0 2px}
+.win div{height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#0d1a24}
 </style></head><body>
 
 <div class="nav">
@@ -79,6 +97,17 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <span class="tag">决策者看：换尺子，排序怎么翻</span>
   </div>
 
+  <div class="code">
+    <div class="t">你的决策码 · 三把旋钮，一套参照</div>
+    <div class="row">
+      <div class="seg"><b>立场</b><span id="seg_wo"></span></div>
+      <div class="seg"><b>承接</b><span id="seg_rv"></span></div>
+      <div class="seg"><b>算力</b><span id="seg_cv"></span></div>
+      <div class="lock"><span class="chip" id="codeChip"></span><button id="lockBtn">参照已锁</button></div>
+    </div>
+    <div class="hint" id="codeHint"></div>
+  </div>
+
   <div class="twist" id="twist"></div>
 
   <div class="stand" id="stand"></div>
@@ -98,9 +127,17 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="s">
-    <h2>两两比较：谁比谁重要几倍 <span class="tag">· 当前立场</span></h2>
+    <h2>五条路各跑 1000 遍：分布长这样 <span class="tag">同一种子 · 同结果</span></h2>
+    <div class="chart" id="dist"></div>
+    <p class="ana" id="distNote"></p>
+  </div>
+
+  <div class="s">
+    <h2>两两比较：谁赢谁输 <span class="tag">两种看法切换</span></h2>
+    <div class="segbar"><button id="tab_mx" class="on">两两对比</button><button id="tab_win">占优概率</button></div>
     <div class="mx2" id="mx2"></div>
-    <p class="ana">格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。</p>
+    <div class="win" id="win" style="display:none"></div>
+    <p class="ana" id="pairNote"></p>
   </div>
 
   <div class="s" style="background:transparent;border:none;padding:0">
@@ -124,15 +161,20 @@ const ROAD_ACT={
 };
 let cur='均衡';
 let manual=null; /* 滑块自定义权重时非空 */
+let rv='mid';     /* 承接档：low/mid/high */
+let cv='0.40';    /* 算力系数档 */
+let locked=true;  /* 决策码锁定态 */
+let pairTab='mx'; /* 两两对比/占优概率 */
 
+function setStand(name){
+  cur=name;manual=null;
+  const list=ZK.AH[cur].map(r=>r[1]);
+  ZK.ROADS.forEach((r,i)=>{const s=$('s_'+r);if(s){s.value=Math.round(list[i]*10)/10;s.nextElementSibling.textContent=s.value;}});
+  renderStand();renderRank();renderRadar();renderMatrix();renderCode();
+}
 function renderStand(){
   $('stand').innerHTML=ZK.WO.map(w=>`<button data-w="${w[0]}" class="${w[1]===cur?'on':''}">${w[1]}</button>`).join('');
-  $('stand').querySelectorAll('button').forEach(b=>b.onclick=()=>{
-    cur=b.dataset.w;manual=null;
-    const list=ZK.AH[cur].map(r=>r[1]);
-    ZK.ROADS.forEach((r,i)=>{const s=$('s_'+r);if(s){s.value=Math.round(list[i]*10)/10;s.nextElementSibling.textContent=s.value;}});
-    renderStand();renderRank();renderRadar();renderMatrix();
-  });
+  $('stand').querySelectorAll('button').forEach(b=>b.onclick=()=>setStand(b.dataset.w));
 }
 function weightOf(r){ return manual?manual[r]: (ZK.AH[cur].find(x=>x[0]===r)||[r,5])[1]; }
 function renderRank(){
@@ -214,8 +256,99 @@ function renderRoads(){
       <div class="act">${ROAD_ACT[r]}</div>
     </div>`).join('');
 }
+
+/* ---------- 决策码（立场×承接×算力） ---------- */
+function segGroup(id, opts, curVal, cb){
+  $(id).innerHTML=opts.map(o=>`<button data-v="${o[0]}" class="${o[0]===curVal?'on':''}">${o[1]}</button>`).join('');
+  $(id).querySelectorAll('button').forEach(b=>b.onclick=()=>cb(b.dataset.v));
+}
+function codeText(){ return `${cur}-${ZK.RL[rv]}-${cv}`; }
+function renderCode(){
+  segGroup('seg_wo', ZK.WO, cur, setStand);
+  segGroup('seg_rv', ZK.RO, rv, v=>{rv=v;renderCode();});
+  segGroup('seg_cv', ZK.CO, cv, v=>{cv=v;renderCode();});
+  $('codeChip').textContent='决策码：'+codeText();
+  const lb=$('lockBtn');
+  lb.textContent=locked?'参照已锁':'已解锁·点此锁定';
+  lb.className=locked?'':'un';
+  lb.onclick=()=>{locked=!locked;renderCode();};
+  const to=ZK.TO;
+  $('codeHint').innerHTML=`锁定后，以下参照口径不变：本地配套率 30%→60%，产业桥贡献 32→58 亿（约1.8倍）；算力本地系数 0.30→0.50，算力桥 12→28 亿（约2.3倍）；人才留存/消费承接影响本地乘数。分布曲线与下方两张表均按当前决策码口径计算，同一种子同结果。`;
+}
+
+/* ---------- 五条路分布曲线（贡献抽样 2000 次） ---------- */
+function distOf(paths,N,seed){
+  const prng=ZK.mulberry32(seed),randn=ZK.makeRandn(prng);
+  const out=paths.map(()=>[]);
+  for(let i=0;i<N;i++)for(let j=0;j<paths.length;j++){
+    let v=paths[j].mu+randn()*paths[j].sd;
+    if(v<0)v=0;
+    out[j].push(v);
+  }
+  return out;
+}
+function smooth(a,w){const r=[];for(let i=0;i<a.length;i++){let s=0,c=0;for(let k=-w;k<=w;k++){const j=i+k;if(j>=0&&j<a.length){s+=a[j];c++;}}r.push(c?s/c:0);}return r;}
+function renderDist(){
+  const N=2000,seed=20261020;
+  const dists=distOf(ZK.DEFAULT_PATHS,N,seed);
+  const all=ZK.DEFAULT_PATHS.map((p,j)=>{const a=dists[j].slice().sort((x,y)=>x-y);return {p,min:a[0],max:a[a.length-1],mid:ZK.quantile(a,.5)};});
+  const xmin=Math.floor(Math.min(...all.map(d=>d.min))/50)*50;
+  const xmax=Math.ceil(Math.max(...all.map(d=>d.max))/50)*50;
+  const bins=Math.min(70, Math.max(30, Math.round((xmax-xmin)/12)));
+  const step=(xmax-xmin)/bins;
+  const xs=[];for(let i=0;i<bins;i++)xs.push(+(xmin+step*i).toFixed(0));
+  const series=ZK.DEFAULT_PATHS.map((p,j)=>{
+    const a=dists[j];
+    const f=new Array(bins).fill(0);
+    for(const v of a){let k=Math.floor((v-xmin)/step);if(k<0)k=0;if(k>=bins)k=bins-1;f[k]++;}
+    let sf=smooth(f,3); sf=smooth(sf,2);
+    return {name:p.name,type:'line',smooth:true,symbol:'none',lineStyle:{width:2.5,color:p.color},itemStyle:{color:p.color},areaStyle:{opacity:.06},data:sf.map(v=>+(v/N*100).toFixed(3))};
+  });
+  const dist=echarts.init($('dist'));
+  dist.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'cross'}},
+    legend:{data:ZK.DEFAULT_PATHS.map(p=>p.name),textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+    grid:{left:44,right:14,top:34,bottom:28},
+    xAxis:{type:'category',data:xs.map(x=>x+'亿'),axisLabel:{color:'#8fa3bf',fontSize:10.5,interval:Math.ceil(bins/9)},axisLine:{lineStyle:{color:'#22304a'}}},
+    yAxis:{type:'value',name:'密度',nameTextStyle:{color:'#5b6b82',fontSize:10},axisLabel:{color:'#5b6b82',fontSize:10},splitLine:{lineStyle:{color:'#1c2739'}}},
+    series
+  });
+  charts.push(dist);
+  const tops=all.map(d=>`${d.p.name} ${(d.mid/1).toFixed(0)}亿`).join(' · ');
+  $('distNote').innerHTML=`曲线越高越窄＝结果越确定。峰值就是每一条路最常出现的贡献：${tops}。链主做强、新赛道抢跑又高又宽＝潜力大、波动也大；服务补短、城市与人窄而矮＝稳，但到顶有限。（贡献分布按各路径 μ±σ 抽样 2000 次，同一种子同结果）`;
+}
+
+/* ---------- 占优概率（蒙特卡洛两两比） ---------- */
+function renderWin(){
+  const N=2000,seed=20261020;
+  const dists=distOf(ZK.DEFAULT_PATHS,N,seed);
+  const R=ZK.DEFAULT_PATHS;
+  const cells=[];
+  let head=`<div class="hd"></div>`+R.map(p=>`<div class="hd">${p.name.slice(0,3)}</div>`).join('');
+  for(let i=0;i<R.length;i++){
+    let row=`<div class="hd">${R[i].name.slice(0,3)}</div>`;
+    for(let j=0;j<R.length;j++){
+      if(i===j){row+=`<div style="background:#22304a;color:#8fa3bf">—</div>`;continue;}
+      let w=0;const a=dists[i],b=dists[j];
+      for(let k=0;k<N;k++)if(a[k]>b[k])w++;
+      const pct=Math.round(w/N*100);
+      const bg=pct>=70?'#0e7490':pct>=55?'#1d4ed8':'#475569';
+      row+=`<div style="background:${bg}" title="${R[i].name} 对 ${R[j].name} 占优 ${pct}%">${pct}%</div>`;
+    }
+    cells.push(row);
+  }
+  $('win').innerHTML=head+cells.join('');
+  const sorted=R.map((p,i)=>[p.name, dists[i].reduce((s,v)=>s+v,0)/N]).sort((a,b)=>b[1]-a[1]);
+  $('pairNote').innerHTML=`占优概率＝把每条路单独跑 2000 次，逐次比大小：行路对列路「贡献更高」的场次占比。期望贡献最高的是${sorted[0][0]}（均值${sorted[0][1].toFixed(0)}亿），但概率高低≠必然赢——换承接档、算力档，这张表会跟着变。`;
+}
+
+function initPair(){
+  $('tab_mx').onclick=()=>{pairTab='mx';$('tab_mx').className='on';$('tab_win').className='';$('mx2').style.display='';$('win').style.display='none';$('pairNote').textContent='格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。';};
+  $('tab_win').onclick=()=>{pairTab='win';$('tab_win').className='on';$('tab_mx').className='';$('mx2').style.display='none';$('win').style.display='';renderWin();};
+}
+
 const charts=[];
-renderStand();renderSliders();renderRank();renderRadar();renderMatrix();renderRoads();
+renderStand();renderSliders();renderRank();renderRadar();renderMatrix();renderRoads();renderCode();renderDist();initPair();
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 </body></html>

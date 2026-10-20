@@ -63,6 +63,14 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
 @keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .scanline{transform-origin:center;animation:spin 3s linear infinite}
+.big{background:linear-gradient(135deg,#0c1a2e,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.big .t{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:.5px}
+.big .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.big .nums div{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:8px;text-align:center}
+.big .nums b{display:block;font-size:20px;font-weight:800;color:#fbbf24}
+.big .nums span{font-size:11px;color:#8fa3bf}
+.big .links{font-size:11.5px;color:#8fa3bf;line-height:1.9}
+.big .links i{color:#67e8f9;font-style:normal}
 </style></head><body>
 
 <div class="nav">
@@ -95,6 +103,13 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
       <h1>今日仲恺</h1>
       <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">统计区间：近期公开信息，每日自动刷新。本页不展示后台真实阅读/转发/点赞，改用关注档标注。</span></p>
     </div>
+  </div>
+
+  <!-- 一张图概览：对照沥林式封面 -->
+  <div class="big">
+    <div class="t">仲恺，一张网 · 五条路 · 一个目标</div>
+    <div class="nums" id="bigNums"></div>
+    <div class="links" id="bigLinks"></div>
   </div>
 
   <!-- 老百姓三问 -->
@@ -136,6 +151,14 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
 </div>
 
 <script>
+/* 一张图概览（数据来自统一内核 model.js） */
+document.getElementById('bigNums').innerHTML=
+  `<div><b>${ZK.NO.length}</b><span>真实主体</span></div>`+
+  `<div><b>${ZK.LK.length}</b><span>关系连线</span></div>`+
+  `<div><b>${ZK.ROADS.length}</b><span>条路可选</span></div>`+
+  `<div><b>${ZK.TARGET}亿</b><span>「十五五」目标</span></div>`;
+document.getElementById('bigLinks').innerHTML=`五条路：<i>${ZK.ROADS.join(' · ')}</i>。一张网里，钱在哪一层流动、哪个环节最容易断，下面逐页摸清。`;
+
 /* 老百姓三问：从当日话题里挑 3 条（按类） */
 function pick3(items){
   const pick=(cat,fb)=>{const it=items.find(x=>x.cat===cat&&!fb.has(x.title));if(it){fb.add(it.title);return it;}return null;};
