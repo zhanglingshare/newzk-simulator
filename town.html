@@ -100,9 +100,9 @@ fetch('life.json').then(r=>r.json()).then(d=>{
       backgroundColor:'transparent',
       tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'<br>人气档：'+p[0].data.raw;}},
       grid:{left:64,right:30,top:8,bottom:18},
-      xAxis:{type:'value',min:0,max:3,interval:1,axisLabel:{show:false},splitLine:{lineStyle:{color:'#1c2739'}}},
-      yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#cbd5e1',fontSize:10},axisLine:{lineStyle:{color:'#22304a'}}},
-      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#3ddc97',2:'#fbbf24',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
+      xAxis:{type:'value',min:0,max:3,interval:1,axisLabel:{show:false},splitLine:{lineStyle:{color:'#e8eef6'}}},
+      yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#405a76',fontSize:10},axisLine:{lineStyle:{color:'#dbe6f2'}}},
+      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#3ddc97',2:'#fbbf24',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#405a76',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
     });
     window.__pop=pc;
     $('towns').innerHTML=list.map(t=>`
