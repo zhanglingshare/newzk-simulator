@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 五条路</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.stand{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+.stand button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:9px 18px;border-radius:20px;font-size:13px;cursor:pointer}
+.stand button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.rank{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.r{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.r .n{font-size:18px;font-weight:800;color:#fbbf24;min-width:26px;text-align:center}
+.r .m{font-size:12px;color:#67e8f9;font-weight:700;min-width:52px}
+.r .b{flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden}
+.r .b i{display:block;height:100%;border-radius:8px;transition:width .5s}
+.r .t{font-size:13.5px;font-weight:600;color:#e6edf3;min-width:96px}
+.notes{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:9px 12px;font-size:12px;color:#8fa3bf;margin-bottom:14px}
+.twist{background:linear-gradient(135deg,#1e1b4b,#0e1523);border:1px solid #a78bfa;border-radius:12px;padding:13px 15px;margin-bottom:14px}
+.twist .t{font-size:13px;font-weight:800;color:#a78bfa;margin-bottom:4px}
+.twist .one{color:#e6edf3;font-size:14px;font-weight:600}
+.roadcard{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:10px}
+.roadcard .h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.roadcard .h b{font-size:15px}
+.roadcard .h span{font-size:11px;color:#8fa3bf;background:#131c2b;border:1px solid #22304a;padding:2px 8px;border-radius:10px}
+.roadcard p{font-size:13px;color:#cbd5e1;margin:4px 0}
+.roadcard .act{font-size:12px;color:#67e8f9}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.roads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.roads{grid-template-columns:1fr}}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html" class="on">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">往 6500 亿走，有五条路可以选</div>
+    <div class="sub">没有对错，只有"换一把尺子，答案就换"。下面先挑你心里的尺子，再看它怎么排。</div>
+    <span class="tag">老百姓看：哪条路先改变我的日子</span>
+    <span class="tag">决策者看：换尺子，排序怎么翻</span>
+  </div>
+
+  <div class="twist" id="twist"></div>
+
+  <div class="stand" id="stand"></div>
+  <div class="rank" id="rank"></div>
+
+  <div class="s" style="background:transparent;border:none;padding:0">
+    <h2 style="font-size:15.5px;margin:14px 0 8px;border-left:3px solid #3b82f6;padding-left:9px">五条路，各自是什么</h2>
+    <div class="roads" id="roads"></div>
+  </div>
+
+  <div class="next"><a href="future.html">下一步：跑 1000 次，看 2030 →</a></div>
+  <div class="disc">排序分值为 AHP 模型估计（血统 D 级，待校准）；"谁排第一"会随立场变，数值与未来页蒙特卡洛口径一致。</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i);
+const COLOR={'链主做强':'#3b82f6','新赛道抢跑':'#8b5cf6','园区扩容':'#06b6d4','服务补短':'#fbbf24','城市与人':'#f87171'};
+const ROAD_ACT={
+  '链主做强':'目标：规模做强、技术做深、标准做高、品牌做大',
+  '新赛道抢跑':'动作：OPC行动·AI示范场景10个 / 低空制造基地 / 仲力磁场一期',
+  '园区扩容':'动作：中韩产业园千亿起步区 · 潼湖智慧区 · 人工智能园29.9km²',
+  '服务补短':'动作：生产性服务业 · 首发经济 · 消费提振（智谷彩街）',
+  '城市与人':'动作：学位2400个 · 医院分院 · 10分钟体育圈 · 人才安居'
+};
+let cur='均衡';
+function renderStand(){
+  $('stand').innerHTML=ZK.WO.map(w=>`<button data-w="${w[0]}" class="${w[1]===cur?'on':''}">${w[1]}</button>`).join('');
+  $('stand').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.w;renderStand();renderRank();});
+}
+function renderRank(){
+  const list=ZK.AH[cur];
+  const max=list[0][1];
+  $('rank').innerHTML=list.map((r,i)=>`
+    <div class="r">
+      <div class="n">${i+1}</div>
+      <div class="t">${r[0]}</div>
+      <div class="b"><i style="width:${r[1]/max*100}%;background:linear-gradient(90deg,${COLOR[r[0]]}88,${COLOR[r[0]]})"></i></div>
+      <div class="m">${r[1].toFixed(1)}</div>
+    </div>`).join('');
+  const twist={ '产值优先':['反直觉','在"产值优先"的尺子下，城市与人垫底；但在"民生优先"下它排第一——同一座城，换把尺子就换答案。'],
+    '均衡':['稳定', '均衡尺子下五条路差距最小，新赛道略领先——这也是多数地方实际在走的路线。'],
+    '民生优先':['反直觉','民生优先下"城市与人"登顶、服务补短第二：先把人留住，产业才留得住——这就是"人安好→产业旺"的闭环。']}[cur];
+  $('twist').innerHTML=`<div class="t">${twist[0]}</div><div class="one">${twist[1]}</div>`;
+}
+function renderRoads(){
+  $('roads').innerHTML=ZK.ROADS.map(r=>`
+    <div class="roadcard">
+      <div class="h"><b style="color:${COLOR[r]}">${r}</b><span>${(ZK.ROAD_NOTE[r]||'').slice(0,14)}</span></div>
+      <p>${ZK.ROAD_NOTE[r]}</p>
+      <div class="act">${ROAD_ACT[r]}</div>
+    </div>`).join('');
+}
+renderStand();renderRank();renderRoads();
+</script>
+</body></html>

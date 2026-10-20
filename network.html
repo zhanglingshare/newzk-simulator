@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 产业链地图</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:1240px;margin:auto;padding:56px 12px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;color:#e6edf3;border-left:3px solid #3b82f6;padding-left:9px}
+.s .tag{font-size:11px;color:#5b6b82}
+.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:10px 0 3px}
+.one{color:#e6edf3;font-weight:700}
+.ana{color:#8fa3bf;font-size:12.5px}
+.layerbar{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+.layerbar button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:4px 10px;border-radius:14px;font-size:11.5px;cursor:pointer}
+.layerbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff}
+svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
+.node{cursor:pointer}
+.node text{pointer-events:none}
+.node ellipse{stroke:#0d1a24;stroke-width:1.2}
+.node:hover ellipse{stroke:#fff;stroke-width:2}
+.node.dim{opacity:.15}
+.link{stroke-opacity:.5}
+.link.dash{stroke-dasharray:4 3;stroke-opacity:.4}
+.link.hi{stroke-opacity:1;stroke-width:2.5}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;font-size:11.5px;color:#8fa3bf}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.stat{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.stat .c{flex:1;min-width:130px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:9px 11px}
+.stat .v{font-size:20px;font-weight:800;color:#67e8f9}
+.stat .l{font-size:11px;color:#8fa3bf}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+.tip{position:fixed;z-index:99;background:#0d1a24;border:1px solid #334155;border-radius:8px;padding:7px 10px;font-size:12px;color:#e6edf3;pointer-events:none;display:none;max-width:280px}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.mul{border-collapse:collapse;width:100%;font-size:12.5px}
+.mul td{border-bottom:1px dashed #1e2b40;padding:7px 4px;color:#cbd5e1}
+.mul td:first-child{color:#e6edf3;font-weight:700}
+.mul tr:last-child td{color:#fbbf24;font-weight:800;border-top:1px solid #fbbf2444}
+.sem{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:10px 0}
+.sem .n{background:#131c2b;border:1px solid #334155;border-radius:8px;padding:6px 10px;font-size:12px;color:#e6edf3}
+.sem .a{color:#a78bfa;font-size:11px;font-weight:800;padding:0 2px}
+.sem .weak{color:#f87171}
+.loop{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px 0;font-size:12.5px}
+.loop .n{background:#0f1a2c;border:1px solid #22304a;border-radius:8px;padding:5px 9px;color:#cbd5e1}
+.loop .ar{color:#3ddc97;font-weight:800}
+.loop .neg{color:#f87171}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html" class="on">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">仲恺是一张怎么样的网？</div>
+    <div class="sub">68 个真实主体：谁跟谁有业务往来、钱从哪来、在哪一层漏掉。点亮一个点看它的连接。</div>
+    <span class="tag">老百姓看：我的工作在哪个环节</span>
+    <span class="tag">决策者看：断点在哪、钱漏在哪层</span>
+  </div>
+
+  <div class="s">
+    <h2>① 全产业链图谱 <span class="tag">68 主体 · 9 层 · 悬停看连接</span></h2>
+    <div class="layerbar" id="layerBar"></div>
+    <div class="legend" id="legend"></div>
+    <svg id="net" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="stat" id="stat"></div>
+    <div class="gt">直接说</div>
+    <p class="one">链主和园区之间连得密，但"生产 → 生活 → 消费"这一层几乎全是虚线。</p>
+    <p class="ana">把鼠标放到任意主体上：橙色＝链主，青色＝零部件，蓝色＝园区，粉色＝生活。虚线＝待核实的连接（消费承接、生产性服务业、外资落地），这些正是官方承认的"服务业滞后、消费外流"。</p>
+  </div>
+
+  <div class="s">
+    <h2>② 钱流四层漏损：仲恺每一块钱转几圈 <span class="tag">投入产出式本地乘数</span></h2>
+    <p class="ana">链主每收到 1 亿订单，钱在仲恺里一层层留下来——每一层都会漏出去一部分。</p>
+    <table class="mul" id="mul"></table>
+    <div class="gt">怎么读</div>
+    <p class="one">1 亿订单 → 约 <b id="multK">0.62 亿</b> 留在仲恺（本地乘数约 <b id="multN">1.6</b>）。配套率从 30% 提到 60%、工人消费多留一点，乘数能到 2 以上——这就是"产业旺"变不成"城市兴"的量化原因。</p>
+  </div>
+
+  <div class="two">
+    <div class="s">
+      <h2>③ 传导链：哪一环最松 <span class="tag">SEM 路径系数 · 模型估计</span></h2>
+      <div class="sem" id="sem"></div>
+      <div class="gt">怎么读</div>
+      <p class="one">这条链是"产城人"闭环：产业投入 → 创新 → 工资 → 本地消费 → 生活配套 → 人才留驻 → 再投入。</p>
+      <p class="ana">数字＝传导强度（路径系数，越接近 1 越紧）。<b style="color:#f87171">"工资 → 本地消费"只有 0.35，是全链最松的一环</b>——工人的钱流去了惠城和深圳。这是结构方程模型的简化呈现，系数为模型估计、非实测（血统 D 级，待走访核实）。</p>
+    </div>
+    <div class="s">
+      <h2>④ 因果回路：断在哪一环 <span class="tag">系统动力学回路</span></h2>
+      <div class="loop" id="loop"></div>
+      <div class="gt">怎么读</div>
+      <p class="one">投资 → 配套 → 订单 → 链主 → 税收 → 基建 → 人才 → 创新 → 新订单，是一个正反馈闭环。</p>
+      <p class="ana">官方说"投资仍未止跌回稳"（工业投资 <b style="color:#f87171">-23.6%</b>）——回路在<b style="color:#f87171">第一环"投资"就断了</b>：今天产值还在涨，是因为存量在撑；五年后增量从哪来，要看投资回不回补。</p>
+    </div>
+  </div>
+
+  <div class="next"><a href="choices.html">下一步：仲恺的五条路 →</a></div>
+  <div class="disc">主体与连线基于公开信息整理，血统分级标注；所有数字为情景推演，非预测值。</div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#00c2d9','park':'#3b82f6','fac':'#8ba6bd','cap':'#a06bff','tal':'#3ddc97','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
+const LNAME={'chain':'链主/龙头','oem':'整机','part':'零部件','park':'园区','fac':'设施','cap':'资本/要素','tal':'人才','life':'生活','vill':'乡村','gap':'缺失·待核实'};
+const tips=$('#tip');
+function $(i){return document.getElementById(i)}
+function tip(e,h){tips.innerHTML=h;tips.style.display='block';const x=e.clientX,y=e.clientY;tips.style.left=Math.min(x+14,innerWidth-300)+'px';tips.style.top=Math.max(y-12,8)+'px'}
+function tipOff(){tips.style.display='none'}
+
+/* 图例 + 层开关 */
+let hidden={};
+function legend(){
+  $('legend').innerHTML=Object.keys(LCOL).map(k=>`<span><i style="background:${LCOL[k]}"></i>${LNAME[k]}</span>`).join('');
+  $('layerBar').innerHTML=Object.keys(LNAME).map(k=>`<button data-l="${k}" class="${hidden[k]?'':'on'}">${LNAME[k]}</button>`).join('');
+  $('layerBar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.l;hidden[k]=!hidden[k];b.classList.toggle('on',!hidden[k]);draw();
+  });
+}
+function draw(){
+  const svg=$('net');
+  let s=`<rect width="1240" height="920" fill="#0a1018" rx="10"/>`;
+  /* 连线 */
+  ZK.LK.forEach(l=>{
+    const a=ZK.NO.find(n=>n[0]===l[0]),b=ZK.NO.find(n=>n[0]===l[1]);
+    if(!a||!b)return;
+    if(hidden[a[2]]||hidden[b[2]])return;
+    const w=l[2]||1,dash=l[3];
+    s+=`<line class="link${dash?' dash':''}" data-a="${l[0]}" data-b="${l[1]}" x1="${a[3]}" y1="${a[4]}" x2="${b[3]}" y2="${b[4]}" stroke="${LCOL[a[2]]}" stroke-width="${dash?1:(w===2?2:1)}" opacity=".35"/>`;
+  });
+  /* 节点 */
+  ZK.NO.forEach(n=>{
+    if(hidden[n[2]])return;
+    const c=LCOL[n[2]],dim=n[5]?0.6:1;
+    s+=`<g class="node" data-n="${n[0]}" transform="translate(${n[3]},${n[4]})">
+      <ellipse rx="45" ry="17" fill="${c}" opacity="${dim}" stroke="#0d1a24"/>
+      <text text-anchor="middle" y="-1" font-size="11" font-weight="700" fill="#0d1a24">${n[1].length>7?n[1].slice(0,7):n[1]}</text>
+      <text text-anchor="middle" y="12" font-size="9" fill="${dim<1?'#cbd5e1':'#081018'}" opacity="${dim<1?1:0.9}">${LNAME[n[2]]}${n[5]?'·待核实':''}</text>
+    </g>`;
+  });
+  svg.innerHTML=s;
+  bind(svg);
+}
+let locked=null;
+function bind(svg){
+  svg.querySelectorAll('.node').forEach(g=>{
+    const id=g.dataset.n;
+    const hl=(e)=>{
+      const c=ZK.LK.filter(l=>l[0]===id||l[1]===id);
+      const w=c.reduce((a,b)=>a+(b[2]||0),0);
+      const hits=c.map(l=>ZK.nm(l[0]===id?l[1]:l[0]));
+      tip(e,`<b>${ZK.nm(id)}</b> · ${LNAME[ZK.layerOf(id)]}${ZK.NO.find(n=>n[0]===id)[5]?'（待核实）':''}<br>连接 ${c.length} 条 · 强度合计 ${w}<br><span style="color:#8fa3bf">连向：${hits.slice(0,8).join('、')||'暂无'}</span>`);
+      svg.querySelectorAll('.node').forEach(x=>x.classList.toggle('dim',x!==g));
+      svg.querySelectorAll('.link').forEach(l=>l.classList.toggle('hi',l.dataset.a===id||l.dataset.b===id));
+    };
+    g.onmouseenter=hl;
+    g.onmousemove=hl;
+    g.onmouseleave=()=>{tipOff();if(locked===id)return;svg.querySelectorAll('.node').forEach(x=>x.classList.remove('dim'));svg.querySelectorAll('.link').forEach(l=>l.classList.remove('hi'));};
+    g.onclick=e=>{locked=locked===id?null:id;hl(e);};
+  });
+  svg.addEventListener('mousemove',e=>{const r=svg.getBoundingClientRect();if(e.clientY>r.top+r.height-30)tipOff();});
+}
+/* 统计 */
+function stat(){
+  const E=ZK.LK.length, real=ZK.LK.filter(l=>!l[3]).length, dash=ZK.LK.length-real;
+  const deg={};ZK.NO.forEach(n=>deg[n[0]]=0);ZK.LK.forEach(l=>{deg[l[0]]++;deg[l[1]]++});
+  const top=[...ZK.NO].sort((a,b)=>deg[b[0]]-deg[a[0]]).slice(0,3);
+  $('stat').innerHTML=`<div class="c"><div class="v">${ZK.NO.length}</div><div class="l">真实主体（9 层）</div></div>
+    <div class="c"><div class="v">${E}</div><div class="l">关系连线（实线 ${real} · 虚线 ${dash} 待核实）</div></div>
+    <div class="c"><div class="v">${top.map(n=>ZK.nm(n[0])).join(' · ')}</div><div class="l">连接最多的主体（度前 3）</div></div>`;
+}
+/* 本地乘数 */
+function mul(){
+  $('mul').innerHTML=ZK.MULT_LAYERS.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:#8fa3bf">${r[2]}</td></tr>`).join('');
+}
+/* SEM */
+function sem(){
+  $('sem').innerHTML=ZK.SEM.map((r,i)=>`
+    <span class="n">${r[0]}</span><span class="a${r[2]<0.4?' weak':''}">→ ${r[2].toFixed(2)}</span>${i===2?'<span style="color:#f87171;font-size:11px">最松</span>':''}
+  `).join('')+'<span class="n">再投入</span>';
+}
+/* 回路 */
+function loop(){
+  $('loop').innerHTML=`
+    <span class="n">投资</span><span class="ar">→</span><span class="n">配套</span><span class="ar">→</span><span class="n">订单</span><span class="ar">→</span><span class="n">链主</span><span class="ar">→</span><span class="n">税收</span><span class="ar">→</span><span class="n">基建</span><span class="ar">→</span><span class="n">人才</span><span class="ar">→</span><span class="n">创新</span><span class="ar">→</span><span class="n">新订单</span><span class="ar">→</span><span class="n">投资</span>
+  `;
+}
+legend();draw();stat();mul();sem();loop();
+</script>
+</body></html>

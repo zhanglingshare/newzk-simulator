@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 风洞</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:960px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+@media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}}
+.card{background:#131c2b;border:1px solid #22304a;border-radius:12px;padding:13px 11px;cursor:pointer;text-align:center;transition:.2s}
+.card:hover{border-color:#f87171}
+.card.on{background:linear-gradient(160deg,#3f1d1d,#131c2b);border-color:#f87171;box-shadow:0 0 0 1px #f8717144}
+.card .e{font-size:22px}
+.card .t{font-size:13px;font-weight:700;margin:6px 0 3px;color:#e6edf3}
+.card .s{font-size:11px;color:#8fa3bf;line-height:1.5}
+.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
+.one{color:#e6edf3;font-weight:600;font-size:13.5px}
+.ana{color:#8fa3bf;font-size:12.5px}
+.result{display:none}
+.result.on{display:block}
+.impact{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.impact .p{background:rgba(248,113,113,.1);border:1px solid #f8717155;color:#fecaca;border-radius:8px;padding:5px 10px;font-size:12px}
+.impact .p.ok{background:rgba(61,220,151,.08);border-color:#3ddc9755;color:#a7f3d0}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:760px){.stat{grid-template-columns:1fr}}
+.stat .c{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:10px 12px}
+.stat .v{font-size:17px;font-weight:800;color:#f87171}
+.stat .l{font-size:11px;color:#8fa3bf}
+.lv{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin:6px 0}
+.lv i{display:block;height:100%;border-radius:6px}
+.roadhit{margin:6px 0;font-size:13px;color:#cbd5e1}
+.roadhit b{color:#e6edf3}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html" class="on">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">风洞：把仲恺放进风里吹一吹</div>
+    <div class="sub">选一张冲击牌，看这张网上谁先扛不住、哪条路先断。压测不是咒它出事，是提前想好"出事怎么办"。</div>
+    <span class="tag">老百姓看：那家厂跑了，我会先缺什么</span>
+    <span class="tag">决策者看：哪条路最抗压、断点在第几环</span>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="s">
+    <h2>冲击波及面（主体级模拟）</h2>
+    <div class="impact" id="impact"></div>
+    <svg id="map" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="stat" id="stat"></div>
+    <div class="gt">风洞结论（模型推演）</div>
+    <div class="one" id="conc"></div>
+    <div class="ana" id="road"></div>
+  </div>
+
+  <div class="next"><a href="blindspot.html">下一步：官方自己承认的问题 →</a></div>
+  <div class="disc">压力测试为 ABM 式主体行为模拟：牌 → 受影响主体集 → 断边。波及集为模型设计（血统 D 级），事件与数据为公开口径。非预测值。</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i);
+const SH=ZK.SHOCKS;
+/* 每张牌：受影响主体集（源自 ZK.shockHits）+ 波及说明 + 路况 */
+const ROADHIT={
+  chain:{r:'链主做强、园区扩容最受压',note:'一家链主外迁/大客户砍单：直接砍掉链主、整机和上游配套一大串；园区招商信心也受打击。好在另四条路还能跑，链条没全断。'},
+  invest:{r:'园区扩容、新赛道抢跑最受压',note:'工业投资再降 10 个点：新项目断档，园区扩容和新赛道最吃亏；存量链主还在，但五年后增量堪忧——这正是官方说的"投资仍未止跌回稳"。'},
+  trade:{r:'链主做强最受压',note:'外贸突破 1500 亿说明依赖很深：外部一波动，整机和出口型链主先晃；B保、物流跟着承压。内需（智谷彩街、消费提振）反而成了缓冲垫。'},
+  ai:{r:'新赛道抢跑最受压',note:'算力过剩：数据中心收益低于预期，AI 产业园和未来产业中心投入节奏放慢；对存量工业冲击小，但"新赛道"变"新风险"。'},
+  talent:{r:'城市与人、服务补短最受压',note:'工程师流向深莞：创新链条松脱，人才公寓、学校医院、商业街的使用率跟着掉。人才留不住，消费承接（最松一环）更松。'}
+};
+const TL={'chain':{'e':'🏭','t':'链主外迁/订单转移','s':'一家链主把产能迁走，或大客户砍单'},
+'invest':{'e':'📉','t':'投资继续收缩','s':'工业投资再降10个点，新项目断档'},
+'trade':{'e':'🌊','t':'外贸波动','s':'外部关税/汇率冲击，1500亿外贸承压'},
+'ai':{'e':'⚡','t':'AI算力过剩','s':'算力价格战，数据中心收益低于预期'},
+'talent':{'e':'🧑‍💻','t':'高端人才流失','s':'工程师流向深莞，创新链松脱'}};
+let cur='chain';
+const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#00c2d9','park':'#3b82f6','fac':'#8ba6bd','cap':'#a06bff','tal':'#3ddc97','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
+function cards(){
+  $('cards').innerHTML=SH.map(s=>{const k=s[2];return `<div class="card ${k===cur?'on':''}" data-k="${k}"><div class="e">${TL[k].e}</div><div class="t">${s[0]}</div><div class="s">${TL[k].s}</div></div>`;}).join('');
+  $('cards').querySelectorAll('.card').forEach(c=>c.onclick=()=>{cur=c.dataset.k;cards();run();});
+}
+function run(){
+  const hits=ZK.shockHits(cur);
+  const all=ZK.NO.map(n=>n[0]);
+  const safe=all.filter(id=>!hits.includes(id));
+  const rl=ROADHIT[cur];
+  /* 波及标签 */
+  $('impact').innerHTML=hits.slice(0,12).map(id=>`<span class="p">${ZK.nm(id)}</span>`).join('')
+    +(safe.length?'<span class="p ok">其余主体暂稳</span>':'');
+  /* 简化地图：只画被波及的主体 */
+  let s=`<rect width="1240" height="920" fill="#0a1018" rx="10"/>`;
+  ZK.LK.forEach(l=>{
+    const a=ZK.NO.find(n=>n[0]===l[0]),b=ZK.NO.find(n=>n[0]===l[1]);
+    if(!a||!b)return;
+    const ah=hits.includes(a[0]),bh=hits.includes(b[0]);
+    if(!ah&&!bh)return;
+    const broken=ah||bh;
+    s+=`<line x1="${a[3]}" y1="${a[4]}" x2="${b[3]}" y2="${b[4]}" stroke="${broken?'#f87171':'#334155'}" stroke-width="${broken?1.5:1}" stroke-dasharray="${broken?'4 3':'none'}" opacity="${broken?.8:.25}"/>`;
+  });
+  ZK.NO.forEach(n=>{
+    if(!hits.includes(n[0]))return;
+    const c=LCOL[n[2]];
+    s+=`<g transform="translate(${n[3]},${n[4]})">
+      <ellipse rx="45" ry="17" fill="${c}" opacity=".35" stroke="#f87171" stroke-width="1.5"/>
+      <text text-anchor="middle" y="-1" font-size="11" font-weight="700" fill="#0d1a24">${n[1].length>7?n[1].slice(0,7):n[1]}</text>
+      <text text-anchor="middle" y="12" font-size="9" fill="#e6edf3">${n[5]?'待核实':LCOL[n[2]]? '波及':''}</text>
+    </g>`;
+  });
+  $('map').innerHTML=s;
+  /* 统计 */
+  $('stat').innerHTML=`
+    <div class="c"><div class="v">${hits.length}</div><div class="l">直接波及主体数（全图 ${ZK.NO.length}）</div></div>
+    <div class="c"><div class="v">${Math.round(hits.length/ZK.NO.length*100)}%</div><div class="l">网络波及面</div></div>
+    <div class="c"><div class="v" style="color:#3ddc97">${safe.length}</div><div class="l">暂时稳的主体</div></div>
+    <div class="c"><div class="v">${rl.r.split('、')[0]}</div><div class="l">最受压的一条路</div></div>`;
+  /* 结论 */
+  $('conc').textContent='这张牌打下来：'+rl.note;
+  $('road').innerHTML='<b>最受压：</b>'+rl.r+'<br><b>缓冲垫：</b>其余路径仍在跑，网络没有整体崩塌——所以压测的意义是"提前知道断点在哪，把最松的一环先补上"。';
+}
+cards();run();
+</script>
+</body></html>

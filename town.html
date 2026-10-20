@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 生活地图</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.pulse{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.pu{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:9px 12px;font-size:12.5px;color:#cbd5e1;flex:1;min-width:240px}
+.pu b{display:block;font-size:11px;color:#7dd3fc;margin-bottom:3px}
+.towns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+@media(max-width:760px){.towns{grid-template-columns:1fr}}
+.tw{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:13px;position:relative}
+.tw .tag{display:inline-block;font-size:10.5px;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:1px 8px;border-radius:10px;margin-bottom:6px}
+.tw h3{font-size:16px;margin:0 0 4px;color:#fff}
+.tw .hot{position:absolute;top:12px;right:12px;font-size:12px;color:#fbbf24;font-weight:800}
+.tw .hot i{font-style:normal;font-size:10px;color:#5b6b82;font-weight:400}
+.tw .why{font-size:12px;color:#8fa3bf;margin-bottom:8px}
+.tw .plays{font-size:11.5px;color:#cbd5e1;margin-bottom:4px}
+.tw .foods{font-size:11.5px;color:#fbbf24}
+.tw .lv{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:9px;margin-top:6px}
+.season{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;background:rgba(255,255,255,.03);border:1px solid #22304a;border-radius:10px;padding:11px 13px}
+.season b{color:#a3e635;font-size:13px}
+.season span{font-size:12px;color:#8fa3bf}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html" class="on">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">周末去哪吃、去哪玩</div>
+    <div class="sub">5 个镇街 + 4 个园区，近期公开打卡热度三档（高/较高/中），不是真实人数统计。</div>
+  </div>
+
+  <div class="pulse" id="pulse"></div>
+  <div class="towns" id="towns"></div>
+
+  <div class="season" id="season"></div>
+
+  <div class="next" style="margin-top:16px"><a href="index.html">回到第①页 · 今日仲恺 →</a></div>
+  <div class="disc">来源：仲恺高新区政府公开信息 · 惠州日报/南方+ · 点评/小红书/抖音公开打卡。人气为公开打卡热度档，非真实人数；功能区不做农品。</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i);
+const LV={'高':'#3ddc97','较高':'#fbbf24','中':'#fb923c'};
+fetch('life.json').then(r=>r.json()).then(d=>{
+  $('pulse').innerHTML=d.pulse.map(p=>`<div class="pu"><b>今天大家在聊</b>${p}</div>`).join('');
+  $('towns').innerHTML=d.towns.map(t=>`
+    <div class="tw">
+      <span class="tag">${t.tag}</span>
+      <h3>${t.n}</h3>
+      <span class="hot">${t.hot}<i> 人气档</i></span>
+      <div class="why">${t.why}</div>
+      <div class="plays">${(t.plays||[]).join(' · ')}</div>
+      ${t.foods?`<div class="foods">${t.foods.join(' · ')}</div>`:''}
+      <span class="lv" style="color:${LV[t.level]||'#8fa3bf'};border:1px solid ${LV[t.level]||'#8fa3bf'}44">人气：${t.level}</span>
+    </div>`).join('');
+  $('season').innerHTML=`<b>当季：${d.season||''}</b><span>${d.note||''} · 更新：${d.updated||''}</span>`;
+}).catch(()=>{
+  $('pulse').innerHTML='<div class="pu"><b>今天大家在聊</b>智谷彩街招商完成约80%，力争12月整体开业</div><div class="pu"><b>今天大家在聊</b>跟着鹅香去沥林：市级非遗“沥林碌鹅”曾登央视，每年引大湾区食客超10万人次</div>';
+  $('towns').innerHTML='<div class="tw"><span class="tag">提示</span><h3>离线快照</h3><div class="why">上线后自动加载每日生活数据（5镇街+4园区）</div></div>';
+  $('season').innerHTML='<b>当季：秋</b><span>离线预览 · 上线后按季更新</span>';
+});
+</script>
+</body></html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 忽略了什么</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#1a0f0f,#0e1523);border:1px solid #7f1d1d;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#fca5a5}
+.hero .tag{display:inline-block;background:rgba(248,113,113,.12);color:#fecaca;border:1px solid #f8717144;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #f87171;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
+.one{color:#e6edf3;font-weight:600;font-size:13.5px}
+.ana{color:#8fa3bf;font-size:12.5px}
+.blind{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+@media(max-width:760px){.blind{grid-template-columns:1fr}}
+.bd{background:linear-gradient(160deg,#1a0f0f,#0f1a2c);border:1px solid #4c1d1d;border-radius:10px;padding:12px}
+.bd .n{font-size:11px;color:#f87171;font-weight:800;letter-spacing:.5px}
+.bd b{display:block;font-size:14px;color:#e6edf3;margin:4px 0}
+.bd p{font-size:12px;color:#8fa3bf;margin:0}
+.bd .src{font-size:10.5px;color:#5b6b82;margin-top:6px}
+.q4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+@media(max-width:760px){.q4{grid-template-columns:repeat(2,1fr)}}
+.qi{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px;text-align:center}
+.qi .v{font-size:22px;font-weight:800;color:#f87171}
+.qi .l{font-size:11.5px;color:#8fa3bf;margin-top:3px}
+.qi .d{font-size:10.5px;color:#5b6b82;margin-top:2px}
+.shock{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+@media(max-width:760px){.shock{grid-template-columns:1fr}}
+.sh{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px 12px}
+.sh b{font-size:13.5px;color:#e6edf3}
+.sh p{font-size:12px;color:#8fa3bf;margin:4px 0 0}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html" class="on">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">这些事，官方报告自己都承认了</div>
+    <div class="sub">不看官方自认的短板，五年规划就只是愿望清单。这一页专门把"遮羞布"掀开。</div>
+    <span class="tag">老百姓看：这些钱去哪了</span>
+    <span class="tag">决策者看：明天的行动清单</span>
+  </div>
+
+  <div class="s">
+    <h2>官方原话：五个真问题</h2>
+    <div class="blind" id="blind"></div>
+  </div>
+
+  <div class="s">
+    <h2>投资四连负：今天不投，明天没增量</h2>
+    <div class="q4" id="q4"></div>
+    <div class="gt">直接说</div>
+    <p class="one">产值今天还在涨（+12.2%），是存量在撑；但新开工的投资全部在下滑——五年后 6500 亿的新增量，从哪来？这是全站最该盯的一个数。</p>
+    <p class="ana">口径：旧科研版录入的投资增速（官方统计口径，血统 A 轨可信待复核）。基建 -41.2% 意味着园区配套的投入在收缩，和"三产滞后、城市弱"是同一件事的两面。</p>
+  </div>
+
+  <div class="s">
+    <h2>消费外流疑云：工人钱去哪了</h2>
+    <div class="shock">
+      <div class="sh"><b>173.4 亿社消 vs 数十万产业人口</b><p>人均社消摊到产业人口上偏低——钱可能流去了惠城、深圳。这正好对应传导链里"工资→本地消费"那根最松的弦（0.35）。</p></div>
+      <div class="sh"><b>三产 2024 年负增长</b><p>服务业这块短板不是慢，是倒退过。智谷彩街这类消费提振，补的就是这一课。</p></div>
+    </div>
+  </div>
+
+  <div class="next"><a href="mylife.html">下一步：这些数字跟我有什么关系 →</a></div>
+  <div class="disc">盲点内容来自 2026 年仲恺区政府工作报告原文与统计公报；投资数据为旧科研版录入口径（A 轨待复核）。非预测值。</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i);
+const BLIND=[
+  ['工业大而不强','低端锁定待打破','规上工业总产值 4037 亿，但高附加值环节占比待提升','2026 政府工作报告原话'],
+  ['服务业发展滞后','三产 31.4%，2024 年还负增长','生产性服务业、消费性服务业双双欠账','2026 政府工作报告原话'],
+  ['投资仍未止跌回稳','四连负说明新动能未接上','工业投资、固投、技改、基建全面收缩','2026 政府工作报告原话'],
+  ['高端人才不足','工程师流向深莞','创新链条最吃紧的一环','2026 政府工作报告原话'],
+  ['新旧动能转换任务依然艰巨','新赛道尚未成势','AI、低空、未来产业都还在起步','2026 政府工作报告原话'],
+  ['基建投资 -41.2%','园区配套投入收缩','道路、管网、公共服务设施欠账加大','旧科研版录入（A 轨待复核）']
+];
+$('blind').innerHTML=BLIND.map(b=>`<div class="bd"><div class="n">官方自认 · ${b[3]}</div><b>${b[0]}</b><p>${b[1]}</p><div class="src">${b[2]}</div></div>`).join('');
+const Q4=[['-23.6%','工业投资'],['-22.3%','固定资产投资'],['-22.4%','技术改造投资'],['-41.2%','基建投资']];
+$('q4').innerHTML=Q4.map(q=>`<div class="qi"><div class="v">${q[0]}</div><div class="l">${q[1]}</div><div class="d">同期官方口径</div></div>`).join('');
+</script>
+</body></html>

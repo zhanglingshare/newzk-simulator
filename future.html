@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 未来2030</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
+.one{color:#e6edf3;font-weight:600;font-size:13.5px}
+.ana{color:#8fa3bf;font-size:12.5px}
+.scen{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+.scen button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:8px 16px;border-radius:18px;font-size:13px;cursor:pointer}
+.scen button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.kpi .c{flex:1;min-width:120px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:10px 12px;text-align:center}
+.kpi .v{font-size:22px;font-weight:800;color:#67e8f9}
+.kpi .l{font-size:11px;color:#8fa3bf;margin-top:2px}
+.kpi .c.warn .v{color:#fbbf24}
+.kpi .c.bad .v{color:#f87171}
+.kpi .c.good .v{color:#3ddc97}
+svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
+.contrib{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.contrib .c{flex:1;min-width:130px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:9px 11px}
+.contrib .v{font-size:17px;font-weight:800}
+.contrib .l{font-size:11px;color:#8fa3bf}
+.bar{height:10px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;border-radius:6px}
+.spanline{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0}
+.spanline .lab{font-size:12px;color:#8fa3bf}
+.spanline .seg{background:#131c2b;border:1px solid #334155;border-radius:16px;padding:5px 14px;font-size:13px;color:#e6edf3}
+.spanline .seg b{color:#fbbf24}
+.gapbar{margin:10px 0}
+.gapbar .row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12.5px}
+.gapbar .lab{min-width:72px;color:#8fa3bf}
+.gapbar .tr{flex:1;height:16px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative}
+.gapbar .tr i{position:absolute;top:0;bottom:0;border-radius:8px}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.q3{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.q3 .t{font-size:13px;font-weight:800;color:#7dd3fc;margin-bottom:8px}
+.q3 .row{display:flex;flex-wrap:wrap;gap:8px}
+.q3 .q{flex:1;min-width:200px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:9px 11px}
+.q3 .q b{display:block;font-size:12.5px;color:#e6edf3}
+.q3 .q span{font-size:11.5px;color:#8fa3bf}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html" class="on">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">2030 年，仲恺能到 6500 亿吗？</div>
+    <div class="sub">这不是猜一个数，而是跑 1000 次、看最坏最好差多远——这叫"稳健区间"，比单点预测诚实。</div>
+    <span class="tag">老百姓看：五年后我的就业、收入、生活</span>
+    <span class="tag">决策者看：缺口多大、哪条路补多少</span>
+  </div>
+
+  <div class="s">
+    <h2>先选一个世界：三种情景</h2>
+    <div class="scen" id="scen"></div>
+    <div class="ana" id="scenNote"></div>
+    <div class="kpi" id="kpi"></div>
+    <div class="gt">分布形状（1000 次跑的结果堆在一起）</div>
+    <svg id="hist" viewBox="0 0 860 220" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="gt">稳健区间（10% 最好 → 50% 中位 → 90% 最坏）</div>
+    <div class="spanline" id="spanline"></div>
+    <div class="ana" id="gapNote"></div>
+  </div>
+
+  <div class="s">
+    <h2>6500 = 4037 现有家底 + 五条路新增</h2>
+    <div class="contrib" id="contrib"></div>
+    <div class="gt">缺口怎么看</div>
+    <div class="gapbar" id="gapbar"></div>
+    <div class="ana">五条路的中值合计新增约 2300 亿，正好补上 4037→6500 的缺口。问题不在总量，而在<b>恶劣情景下中值只有约 X 亿，过线概率掉到 Y%</b>——所以关键是抗压，不是乐观。</div>
+  </div>
+
+  <div class="q3">
+    <div class="t">换成人话：五年后，仲恺人的日子</div>
+    <div class="row">
+      <div class="q"><b>就业</b><span id="jobs">…</span></div>
+      <div class="q"><b>收入</b><span id="income">…</span></div>
+      <div class="q"><b>生活</b><span id="life">…</span></div>
+    </div>
+  </div>
+
+  <div class="next"><a href="windtunnel.html">下一步：进风洞，压一压 →</a></div>
+  <div class="disc">蒙特卡洛：1000 次抽样 × 三情景；情景参数与五条路 μ/σ 为模型设计值（血统 D 级），目标锚点 6500/2000 亿为官方口径。非预测值。</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i);
+const C=['乐观','基准','恶劣'];
+let cur=0;
+const S=ZK.SEN;
+const r3=S.map(s=>ZK.run(20261020+s[0].charCodeAt(0)*7,1000,ZK.DEFAULT_PATHS,{muScale:s[2],noise:s[3]}));
+
+function scen(){
+  $('scen').innerHTML=S.map((s,i)=>`<button data-i="${i}" class="${i===cur?'on':''}">${s[0]}：${s[1]}</button>`).join('');
+  $('scen').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;scen();kpi();hist();spanline();contrib();gapbar();q3();});
+}
+function kpi(){
+  const r=r3[cur],s=S[cur];
+  const hitCls=r.hit>=60?'good':r.hit>=30?'warn':'bad';
+  $('kpi').innerHTML=`
+    <div class="c good"><div class="v">${Math.round(r.p50)} 亿</div><div class="l">中位数（1000 次跑的中点）</div></div>
+    <div class="c"><div class="v">${Math.round(r.p10)} — ${Math.round(r.p90)} 亿</div><div class="l">稳健区间（最好 10% 到最坏 10%）</div></div>
+    <div class="c ${hitCls}"><div class="v">${r.hit.toFixed(0)}%</div><div class="l">过 6500 亿线的概率（${s[0]}情景）</div></div>
+    <div class="c"><div class="v">${Math.round(ZK.TARGET-r.p50)} 亿</div><div class="l">中位数离目标还差</div></div>`;
+  $('scenNote').textContent='情景 '+s[0]+'：'+s[1];
+}
+function hist(){
+  const r=r3[cur],w=860,h=200,pad=10,left=54,top=12;
+  const bins=22,min=3000,max=8200,bw=(max-min)/bins;
+  const cnt=new Array(bins).fill(0);
+  r.results.forEach(v=>{let b=Math.floor((v-min)/bw);if(b<0)b=0;if(b>=bins)b=bins-1;cnt[b]++;});
+  const mx=Math.max(...cnt);
+  let s='';
+  for(let i=0;i<bins;i++){
+    const x=left+i*(w-left)/bins, bw2=(w-left)/bins-1.5, yh=cnt[i]/mx*(h-top-34);
+    const c=i===0?'#1e293b':'#2563eb';
+    const over=min+(i+1)*bw>=ZK.TARGET;
+    s+=`<rect x="${x}" y="${h-top-yh}" width="${bw2}" height="${yh}" fill="${over?'#f59e0b':'#2563eb'}" opacity="${over?.85:.6}" rx="1"/>`;
+  }
+  s+=`<line x1="${left+(ZK.TARGET-min)/bw/bins*(w-left)}" y1="${top}" x2="${left+(ZK.TARGET-min)/bw/bins*(w-left)}" y2="${h-34}" stroke="#f87171" stroke-dasharray="5 4" stroke-width="1.5"/>`;
+  s+=`<text x="${left+(ZK.TARGET-min)/bw/bins*(w-left)+6}" y="${top+12}" fill="#f87171" font-size="11">目标 6500</text>`;
+  s+=`<text x="${left}" y="${h-14}" fill="#64748b" font-size="10">3000</text>`;
+  s+=`<text x="${w-40}" y="${h-14}" fill="#64748b" font-size="10">8200 亿</text>`;
+  s+=`<text x="${left+6}" y="${top+12}" fill="#8fa3bf" font-size="10.5">1000 次结果堆叠 · 橙色柱＝落在 6500 以上</text>`;
+  $('hist').innerHTML=s;
+}
+function spanline(){
+  const r=r3[cur];
+  $('spanline').innerHTML=`<span class="lab">最好 10%</span><span class="seg"><b>${Math.round(r.p90)}</b> 亿</span>
+    <span class="lab">中位</span><span class="seg"><b>${Math.round(r.p50)}</b> 亿</span>
+    <span class="lab">最坏 10%</span><span class="seg"><b>${Math.round(r.p10)}</b> 亿</span>`;
+}
+function contrib(){
+  const r=r3[cur];
+  $('contrib').innerHTML=ZK.DEFAULT_PATHS.map((p,i)=>{
+    const v=p.mu*S[cur][2];
+    return `<div class="c"><div class="v" style="color:${p.color}">+${Math.round(v)} 亿</div><div class="l">${p.name}（中值贡献）</div><div class="bar"><i style="width:${v/700*100}%;background:${p.color}"></i></div></div>`;
+  }).join('');
+}
+function gapbar(){
+  const r=r3[cur];
+  const basePct=ZK.BASE/ZK.TARGET*100;
+  const total=P=(r.p50-ZK.BASE);
+  const rows=[['现有家底',ZK.BASE,0,basePct,'#64748b']];
+  ZK.DEFAULT_PATHS.forEach((p,i)=>{
+    const v=p.mu*S[cur][2];
+    rows.push([p.name,v,ZK.BASE+rows.slice(1).reduce((a,x)=>a+x[1],0),v/ZK.TARGET*100,p.color]);
+  });
+  let s='';
+  rows.forEach((r2,i)=>{
+    const w=Math.max(2,r2[3]);
+    s+=`<div class="row"><span class="lab">${r2[0]}</span><div class="tr"><i style="left:${(r2[2]/ZK.TARGET*100)}%;width:${w}%;background:${r2[4]}"></i></div><span style="min-width:70px;text-align:right">${Math.round(r2[1]).toLocaleString()} 亿</span></div>`;
+  });
+  s+=`<div class="row"><span class="lab">目标线</span><div class="tr" style="border:1px dashed #f59e0b;background:transparent"></div><span style="color:#f59e0b">6500 亿</span></div>`;
+  $('gapbar').innerHTML=s;
+  const gapNote=cur===2?'<b style="color:#f87171">恶劣情景下缺口明显放大</b>：链主订单转移+投资收缩，五条路贡献同步缩水，过线概率只剩 '+r3[2].hit.toFixed(0)+'%。'
+    :(cur===1?'<b style="color:#fbbf24">基准情景</b>：按当前趋势延续，中值 '+Math.round(r3[1].p50)+' 亿，过线概率 '+r3[1].hit.toFixed(0)+'%。'
+    :'<b style="color:#3ddc97">乐观情景</b>：需求旺+投资回补，过线概率 '+r3[0].hit.toFixed(0)+'%。');
+  document.querySelector('#gapbar + .ana').textContent='五条路中值合计新增约 2300 亿，正好补上 4037→6500 的缺口。'+gapNote+' 所以关键是抗压，不是乐观。';
+}
+function q3(){
+  const r=r3[cur];
+  const jobs=cur===2?'岗位增量打折，靠存量撑':'岗位跟着园区走：新增约 2300 亿产值 × 每亿约 15 岗（估算）≈ 新增 3 万个岗位（估算口径）';
+  const income=cur===2?'人均收入增速放缓':'人均 GDP 从 19.9 万向 25 万+走（按产值估算）';
+  const life=cur===0?'三产补短兑现：商业、夜市、智谷彩街都起来了':'生活改善取决于"服务补短"这条路，恶劣情景下会被延后';
+  $('jobs').textContent=jobs;$('income').textContent=income;$('life').textContent=life;
+}
+scen();kpi();hist();spanline();contrib();gapbar();q3();
+</script>
+</body></html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 使用指南</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:860px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
+.one{color:#e6edf3;font-weight:600;font-size:13.5px}
+.ana{color:#8fa3bf;font-size:12.5px}
+.route{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:760px){.route{grid-template-columns:1fr}}
+.rt{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:12px}
+.rt b{display:block;font-size:13.5px;color:#7dd3fc;margin-bottom:5px}
+.rt p{font-size:12.5px;color:#8fa3bf;margin:0;line-height:1.8}
+.rt p a{color:#67e8f9;text-decoration:none}
+.read{margin:8px 0}
+.rd{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed #1e2b40}
+.rd:last-child{border-bottom:none}
+.rd .n{flex:none;width:26px;height:26px;border-radius:50%;background:#1d4ed8;color:#fff;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rd b{font-size:13px;color:#e6edf3}
+.rd p{font-size:12px;color:#8fa3bf;margin:2px 0 0}
+.warn{background:linear-gradient(135deg,#1a0f0f,#0e1523);border:1px solid #7f1d1d;border-radius:10px;padding:11px 13px;margin:10px 0;font-size:12px;color:#fca5a5}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html" class="on">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">三分钟学会看这个沙盘</div>
+    <div class="sub">两种人，两种读法。先选你是谁，再按路线走。</div>
+  </div>
+
+  <div class="s">
+    <h2>先选一条路线</h2>
+    <div class="route">
+      <div class="rt"><b>我是老百姓</b><p>从 <a href="mylife.html">⑧ 跟我的关系</a> 开始 → ③ 产业链地图看我在哪个环节 → ① 今日仲恺看最近发生什么 → ④ 五条路投个立场 → ② 生活地图周末去哪吃</p></div>
+      <div class="rt"><b>我是决策者</b><p>从 <a href="choices.html">④ 五条路</a> 开始 → ⑤ 未来跑三情景 → ⑥ 风洞压五张牌 → ⑦ 忽略了什么看官方自认短板 → ⑨ 分析报告看血统与敏感性</p></div>
+    </div>
+  </div>
+
+  <div class="s">
+    <h2>每张图怎么读</h2>
+    <div class="read">
+      <div class="rd"><div class="n">网</div><div><b>产业链地图（③）</b><p>看"谁跟谁连"不如看"哪里没连"。虚线＝待核实的关系，断点就是钱漏掉的地方。</p></div></div>
+      <div class="rd"><div class="n">柱</div><div><b>钱流四层漏损（③）</b><p>链主 1 亿订单，一层层往下留。看每层留多少，就知道"产业旺"为什么没变成"城市兴"。</p></div></div>
+      <div class="rd"><div class="n">链</div><div><b>传导链（③）</b><p>产城人闭环一段段排开，数字越小越松。最松的那一环，就是最该先补的。</p></div></div>
+      <div class="rd"><div class="n">尺</div><div><b>立场排序（④）</b><p>换一把尺子（产值优先/均衡/民生优先），五条路的排名就换。没有标准答案，只有立场。</p></div></div>
+      <div class="rd"><div class="n">峰</div><div><b>千次跑分布（⑤）</b><p>1000 次结果堆成的山形。山尖往左靠＝够不着目标；看区间不看单点，才是稳健决策。</p></div></div>
+      <div class="rd"><div class="n">牌</div><div><b>冲击牌（⑥）</b><p>选一张牌看谁先断。压测不是咒它出事，是提前想好"出事怎么办"。</p></div></div>
+    </div>
+  </div>
+
+  <div class="s">
+    <h2>三条铁律</h2>
+    <div class="warn">1️⃣ 所有数字都是情景推演，不是预测值——官方锚点（GDP 1160 亿、产值 4037 亿、目标 6500 亿）才是实数。<br>2️⃣ 模型估计一律标"D 级待核实"，引用时别说成事实。<br>3️⃣ 今天的话题每天自动刷新（① 页），生活地图按季更新（⑫ 页）——沙盘是活的。</div>
+  </div>
+
+  <div class="next" style="text-align:center;margin:20px 0 6px"><a href="town.html" style="background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">最后：去生活地图逛逛 →</a></div>
+  <div class="disc">本沙盘为公开信息整理与模型推演，不构成任何决策建议；涉及具体投资、政策请以官方文件为准。</div>
+</div>
+</body></html>

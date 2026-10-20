@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 跟我的关系</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #f472b6;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
+.one{color:#e6edf3;font-weight:600;font-size:13.5px}
+.ana{color:#8fa3bf;font-size:12.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.card{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:12px}
+.card .e{font-size:20px}
+.card b{display:block;font-size:14px;color:#e6edf3;margin:6px 0 4px}
+.card p{font-size:12.5px;color:#8fa3bf;margin:0;line-height:1.7}
+.card .num{font-size:17px;font-weight:800;color:#67e8f9}
+.lv{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin:8px 0 2px}
+.lv i{display:block;height:100%;border-radius:6px}
+.row2{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:12.5px;color:#cbd5e1}
+.row2 .lab{min-width:70px;color:#8fa3bf}
+.row2 .tr{flex:1;height:15px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative}
+.row2 .tr i{position:absolute;top:0;bottom:0;border-radius:8px}
+.row2 .v{min-width:60px;text-align:right;font-weight:700}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+</style></head><body>
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html" class="on">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hu">4037 亿、6500 亿……跟我有什么关系？</div>
+    <div class="sub">这一页把产业数字翻译成"我的日子"：工作、工资、消费、上学、看病、住房。</div>
+    <span class="tag">老百姓看：这一页就是为我写的</span>
+    <span class="tag">决策者看：三产滞后、消费外流的实感证据</span>
+  </div>
+
+  <div class="s">
+    <h2>就业：厂在，岗位就在；厂走，岗位先走</h2>
+    <div class="grid2">
+      <div class="card"><div class="e">🏭</div><b>今天：产业人口撑起仲恺</b><p>规上工业 1144 家、用电 102 亿度，数十万产业人口在这里上班。链主每加一条产线，配套厂就多一批岗位。</p></div>
+      <div class="card"><div class="e">📈</div><b>未来：新增约 3 万个岗位（估算）</b><p>按"新增 2300 亿产值 × 每亿约 15 个岗位"估算（模型换算，血统 D 级），岗位跟着园区走——人安好，厂才留得住。</p></div>
+    </div>
+  </div>
+
+  <div class="s">
+    <h2>工资与消费：钱在仲恺转，还是流出去</h2>
+    <div class="row2"><span class="lab">工资留在仲恺</span><div class="tr"><i style="left:0;width:35%;background:#f472b6"></i></div><span class="v">约 35%</span></div>
+    <div class="row2"><span class="lab">流去惠城/深圳</span><div class="tr"><i style="left:35%;width:65%;background:#475569"></i></div><span class="v">约 65%</span></div>
+    <div class="gt">直接说</div>
+    <p class="one">这是传导链里最松的一环：工人挣的钱，六成以上花在了仲恺之外。钱不在仲恺转，商业街就起不来，三产就滞后——这跟你每月在哪买菜、周末去哪逛街，是同一件事。</p>
+    <p class="ana">比例＝模型估计（血统 D 级），指向"消费外流"方向，具体数待实地走访核实。</p>
+  </div>
+
+  <div class="s">
+    <h2>教育医疗：这两年的新进展</h2>
+    <div class="grid2">
+      <div class="card"><div class="e">🎓</div><b>新增公办学位</b><p class="num">2400 个</p><p>2026 年新增公办学位，配套新建学校落地（廖承志红军学校幸福校区等）。</p></div>
+      <div class="card"><div class="e">🏥</div><b>医院分院开建</b><p class="num">2 家新院</p><p>区人民医院潼侨分院、惠环医院新院推进——看病人不用都往市区跑。</p></div>
+      <div class="card"><div class="e">⚽</div><b>10 分钟体育健身圈</b><p class="num">覆盖推进</p><p>运动场馆进社区，配合智谷彩街"运动+美食"双核心。</p></div>
+      <div class="card"><div class="e">🏠</div><b>安居</b><p class="num">智福家园已选房</p><p>陈江城中村改造安置房选房落地（271 户选得 299 套）；人才公寓补人才短板。</p></div>
+    </div>
+  </div>
+
+  <div class="s">
+    <h2>住房与通勤：住在哪、怎么上班</h2>
+    <div class="ana" style="margin-bottom:6px">深惠城际、四环路全线闭环（R 线仲恺往惠阳方向 2026.10.30 通车）——通勤圈在拉开。跨区通勤是虚线：住惠城、上班仲恺的人不少，他们的钱也大部分花在了惠城。</div>
+    <div class="gt">决策者看</div>
+    <p class="one">这一页就是"服务业滞后、消费外流"的实感证据，也是第④页"城市与人"那条路（民生优先下排第一）的底气：把人留住，钱才留得住。</p>
+  </div>
+
+  <div class="next"><a href="report.html">下一步：看分析报告与血统 →</a></div>
+  <div class="disc">民生进展来自官方公开报道（学位 2400、医院新院、智福家园选房等）；岗位/消费比例为模型估算，血统 D 级待核实。非预测值。</div>
+</div>
+</body></html>
