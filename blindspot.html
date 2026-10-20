@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -42,6 +43,8 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .next{text-align:center;margin:20px 0 6px}
 .next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.chart{width:100%;height:230px}
+@media(max-width:760px){.chart{height:190px}}
 </style></head><body>
 
 <div class="nav">
@@ -89,6 +92,12 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     </div>
   </div>
 
+  <div class="s">
+    <h2>三个缺口，补哪个回报大 <span class="tag">敏感性区间 · 基准到进取</span></h2>
+    <div class="chart" id="gapChart"></div>
+    <p class="ana">纵轴是基准档到进取档的落地金额。区间越长＝这根弦越有弹性：算力本地系数从 0.30 提到 0.50，数据中心留在仲恺的钱能翻一倍多——这跟官方"提高算力本地转化率"的方向一致。都是模型推演，血统 D 级。</p>
+  </div>
+
   <div class="next"><a href="mylife.html">下一步：这些数字跟我有什么关系 →</a></div>
   <div class="disc">盲点内容来自 2026 年仲恺区政府工作报告原文与统计公报；投资数据为旧科研版录入口径（A 轨待复核）。非预测值。</div>
 </div>
@@ -106,5 +115,21 @@ const BLIND=[
 $('blind').innerHTML=BLIND.map(b=>`<div class="bd"><div class="n">官方自认 · ${b[3]}</div><b>${b[0]}</b><p>${b[1]}</p><div class="src">${b[2]}</div></div>`).join('');
 const Q4=[['-23.6%','工业投资'],['-22.3%','固定资产投资'],['-22.4%','技术改造投资'],['-41.2%','基建投资']];
 $('q4').innerHTML=Q4.map(q=>`<div class="qi"><div class="v">${q[0]}</div><div class="l">${q[1]}</div><div class="d">同期官方口径</div></div>`).join('');
+/* 三个缺口：基准 vs 进取（与 report 敏感性同源） */
+const GAP=[['算力本地系数','0.30→0.50',12,28],['本地配套率','30%→60%',32,58],['消费承接','低→高',12,18]];
+const gc=echarts.init($('gapChart'));
+gc.setOption({
+  backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>${p[0].dataIndex===0?'基准':''}${p[1].value} 亿 → ${p[0].dataIndex===0?GAP[p[0].dataIndex][3]:''}`},
+  legend:{data:['基准档','进取档'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+  grid:{left:96,right:30,top:28,bottom:18},
+  xAxis:{type:'value',axisLabel:{color:'#8fa3bf',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:GAP.map(g=>g[0]).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+  series:[
+    {name:'基准档',type:'bar',barWidth:12,data:GAP.map(g=>g[2]).reverse().map(v=>({value:v,itemStyle:{color:'#334155'}}))},
+    {name:'进取档',type:'bar',barWidth:12,data:GAP.map(g=>g[3]).reverse().map(v=>({value:v,itemStyle:{color:'#3ddc97',borderRadius:[0,5,5,0]}}))}
+  ],
+  graphic:[{type:'text',left:8,bottom:0,style:{text:'灰＝基准 · 绿＝进取 · 区间越长越有弹性',fill:'#8fa3bf',fontSize:10}}]
+});
+window.addEventListener('resize',()=>gc.resize());
 </script>
 </body></html>

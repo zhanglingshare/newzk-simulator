@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -47,6 +48,16 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
 svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
+.chart{width:100%;height:230px}
+@media(max-width:760px){.chart{height:190px}}
+.chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0;font-size:12px}
+.chain .n{background:#0f1a2c;border:1px solid #22304a;border-radius:8px;padding:5px 10px;color:#cbd5e1}
+.chain .ar{color:#f87171;font-weight:800}
+.chain .ok{color:#3ddc97}
+table.detail{width:100%;border-collapse:collapse;margin:10px 0;font-size:11.5px}
+table.detail th,table.detail td{border:1px solid #22304a;padding:6px 8px;text-align:left;color:#8fa3bf}
+table.detail th{background:#131c2b;color:#cbd5e1}
+table.detail td b{color:#e6edf3}
 </style></head><body>
 
 <div class="nav">
@@ -74,6 +85,15 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
   </div>
 
   <div class="cards" id="cards"></div>
+
+  <div class="s">
+    <h2>五张牌，谁的波及面更大 <span class="tag">横向对比 · 悬停看主体数</span></h2>
+    <div class="chart" id="bar5"></div>
+    <div class="gt">连锁传导（第一轮波及）</div>
+    <div class="chain" id="chain"></div>
+    <div class="gt">断边明细</div>
+    <table class="detail" id="detail"></table>
+  </div>
 
   <div class="s">
     <h2>冲击波及面（主体级模拟）</h2>
@@ -148,7 +168,28 @@ function run(){
   /* 结论 */
   $('conc').textContent='这张牌打下来：'+rl.note;
   $('road').innerHTML='<b>最受压：</b>'+rl.r+'<br><b>缓冲垫：</b>其余路径仍在跑，网络没有整体崩塌——所以压测的意义是"提前知道断点在哪，把最松的一环先补上"。';
+  /* 连锁传导（第一轮） */
+  $('chain').innerHTML=`<span class="n" style="border-color:#f87171;color:#f87171">${TL[cur].t}</span><span class="ar">→</span>`
+    +hits.slice(0,6).map(id=>`<span class="n">${ZK.nm(id)}</span>`).join('<span class="ar">→</span>')
+    +`<span class="ar">→</span><span class="n ok">其余 ${safe.length} 个主体暂稳</span>`;
 }
-cards();run();
+function bar5(){
+  const rows=SH.map(s=>{const h=ZK.shockHits(s[2]);return {name:s[0],n:h.length,pct:Math.round(h.length/ZK.NO.length*100)};});
+  const bc=echarts.init($('bar5'));
+  bc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>波及 ${p[0].value} 个主体（占全图 ${rows.find(r=>r.name===p[0].name).pct}%）`},
+    grid:{left:112,right:36,top:8,bottom:20},
+    xAxis:{type:'value',axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    yAxis:{type:'category',data:rows.map(r=>r.name.length>9?r.name.slice(0,9):r.name).reverse(),axisLabel:{color:'#cbd5e1',fontSize:10.5},axisLine:{lineStyle:{color:'#22304a'}}},
+    series:[{type:'bar',barWidth:15,data:rows.map((r,i)=>({value:r.n,itemStyle:{color:i===rows.length-1?'#3b82f6':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:'{c} 主体'}}))}]
+  });
+  charts.push(bc);
+  /* 断边明细表 */
+  $('detail').innerHTML=`<tr><th>冲击牌</th><th>受影响主体</th><th>波及面</th><th>最受压的路</th></tr>`
+    +rows.map(r=>`<tr><td><b>${r.name}</b></td><td>${r.n} 个</td><td>${r.pct}%</td><td>${ROADHIT[r.name===SH[0][0]?'chain':SH.find(s=>s[0]===r.name)[2]].r.split('、')[0]}</td></tr>`).join('');
+}
+const charts=[];
+cards();run();bar5();
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 </body></html>

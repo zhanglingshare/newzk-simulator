@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -22,40 +23,28 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
 .one{color:#e6edf3;font-weight:600;font-size:13.5px}
 .ana{color:#8fa3bf;font-size:12.5px}
+.chart{width:100%;height:280px}
+@media(max-width:760px){.chart{height:230px}}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
 @media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
 .kpi{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:11px 10px;text-align:center}
 .kpi .v{font-size:19px;font-weight:800;color:#67e8f9}
 .kpi .v small{font-size:11px;color:#8fa3bf}
 .kpi .l{font-size:11px;color:#8fa3bf;margin-top:2px}
-.cl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-@media(max-width:760px){.cl{grid-template-columns:repeat(2,1fr)}}
-.cli{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px;text-align:center}
-.cli .v{font-size:17px;font-weight:800;margin:4px 0}
-.cli .l{font-size:11.5px;color:#8fa3bf}
-.cli .d{font-size:11px;color:#5b6b82}
 .park{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
 @media(max-width:760px){.park{grid-template-columns:1fr}}
 .pk{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px 12px}
 .pk b{display:block;font-size:13.5px;color:#e6edf3;margin-bottom:3px}
 .pk span{font-size:11px;color:#8fa3bf;display:block}
 .pk p{font-size:12px;color:#cbd5e1;margin:5px 0 0}
-.new{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
-@media(max-width:760px){.new{grid-template-columns:1fr}}
-.ni{background:linear-gradient(135deg,#0f1a2c,#12243a);border:1px solid #2b4a77;border-radius:10px;padding:11px 12px}
-.ni b{font-size:13.5px;color:#7dd3fc}
-.ni p{font-size:12px;color:#cbd5e1;margin:4px 0 0}
-.structure{display:flex;align-items:center;gap:8px;margin:10px 0;flex-wrap:wrap}
-.structure .seg{flex:1;min-width:70px;text-align:center;color:#0d1a24;font-size:12.5px;font-weight:700;padding:10px 4px;border-radius:8px}
-.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
-@media(max-width:760px){.cmp{grid-template-columns:1fr}}
-.cm{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:10px 12px}
-.cm b{font-size:13px}
-.cm p{font-size:11.5px;color:#8fa3bf;margin:4px 0 0}
-.cm.hot{border-color:#f59e0b44;background:linear-gradient(160deg,#1a1506,#0f1a2c)}
 .next{text-align:center;margin:20px 0 6px}
 .next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:760px){.duo{grid-template-columns:1fr}}
+.duo .d{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:10px 12px}
+.duo .d b{font-size:13px;color:#7dd3fc;display:block;margin-bottom:5px}
+.duo .d p{font-size:12px;color:#8fa3bf;margin:0;line-height:1.7}
 </style></head><body>
 
 <div class="nav">
@@ -90,50 +79,109 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="s">
-    <h2>三根柱子 + 新赛道</h2>
-    <div class="cl" id="cl"></div>
-    <div class="new" id="new"></div>
-  </div>
-
-  <div class="s">
-    <h2>三次产业结构</h2>
-    <div class="structure">
-      <div class="seg" style="background:#a3e635">一产 1.0%</div>
-      <div class="seg" style="background:#3b82f6">二产 67.6%</div>
-      <div class="seg" style="background:#f59e0b">三产 31.4%</div>
-    </div>
+    <h2>三次产业结构：一根长板 + 一根短板</h2>
+    <div class="chart" id="pie"></div>
     <div class="gt">怎么读</div>
     <p class="one">二产独大、三产偏弱。工业这块板又长又硬，服务业这块板又短又软——"产城人融合"要补的，主要就是那块短板。</p>
+    <p class="ana" id="pieNote"></p>
   </div>
 
   <div class="s">
-    <h2>园区版图：「1+1+2」千亿版图</h2>
+    <h2>三根柱子：谁在扛产值</h2>
+    <div class="chart" id="pillar"></div>
+    <div class="gt">直接说</div>
+    <p class="one">智能终端 1212 亿、超高清 976 亿、能源电子 812 亿——三根柱子占了规上工业的大部分；能源电子是增长最快的（+18.7%），显示是第二引擎（+23.6%）。</p>
+  </div>
+
+  <div class="s">
+    <h2>新赛道：官方押注的四个方向</h2>
+    <div class="chart" id="newc"></div>
+    <div class="ana">四个新赛道都还在"起步期"——这正是官方"新旧动能转换任务依然艰巨"那句话的注脚。</div>
+  </div>
+
+  <div class="s">
+    <h2>园区版图：「1+1+2」千亿布局</h2>
     <div class="park" id="park"></div>
     <div class="ana">仲恺片区合计约 55.9 平方公里，是"十五五"规上工业冲 6500 亿的主战场。</div>
   </div>
 
   <div class="s">
     <h2>跟兄弟区比一下</h2>
-    <div class="cmp" id="cmp"></div>
-    <div class="gt">直接说</div>
-    <p class="one">同样是产业大区，仲恺工业强度最高、生活配套最弱；大亚湾在石化+新能源上更集中，惠城则是服务业和城市功能的中心。仲恺的短板一目了然。</p>
+    <div class="chart" id="radar"></div>
+    <div class="duo">
+      <div class="d"><b>仲恺</b><p>工业强度全市最高（95），三产与城市配套垫底（45/40）——产业大区、生活洼地。</p></div>
+      <div class="d"><b>对照</b><p>大亚湾风险集中度更高（单一产业纵深）；惠城三产和城市功能最全。仲恺的短板一目了然。</p></div>
+    </div>
+    <p class="ana">雷达为定性估计（血统 D 级），用于相对比较，不用于精确排名。</p>
   </div>
 
   <div class="next"><a href="network.html">下一步：把 68 个主体连成一张网 →</a></div>
-  <div class="disc">数字来源：仲恺高新区 2025 年经济运行与统计公报（官方）。结构占比为 2024 年公报口径。</div>
+  <div class="disc">数字来源：仲恺高新区 2025 年经济运行与统计公报（官方 A 轨）。结构占比为 2024 年公报口径；雷达与强度评分为定性估计（D 级）。</div>
 </div>
 
 <script>
 const $=i=>document.getElementById(i);
-const KPI=[['1160.39 亿','GDP','+7.1%'],['4037.12 亿','规上工业总产值','+12.2%'],['19.94 万','人均 GDP','元'],['56.6%','电子占规上工业增加值','电子/高技术/先进：56.6/68.7/55.4%']];
-$('kpis').innerHTML=KPI.map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div><div class="l" style="color:#5b6b82">${k[2]}</div></div>`).join('');
-const CL=[['智能终端','1212.8 亿','支柱'],['超高清视频显示','975.7 亿','+23.6%'],['能源电子','811.6 亿','+18.7%'],['其他智造','约 1037 亿','口径余项']];
-$('cl').innerHTML=CL.map((c,i)=>`<div class="cli"><div class="v" style="color:${['#06b6d4','#3b82f6','#8b5cf6','#64748b'][i]}">${c[0]}</div><div class="l">${c[1]}</div><div class="d">${c[2]}</div></div>`).join('');
-const NEW=[['AI+制造','OPC 行动 · 10 个示范场景','新赛道'],['低空经济','低空经济制造基地','新赛道'],['未来产业','仲力磁场·未来产业创新验证中心','新赛道'],['数据服务','数据服务基地','新赛道']];
-$('new').innerHTML=NEW.map(n=>`<div class="ni"><b>${n[0]}</b><p>${n[1]}<br><span style="font-size:11px;color:#5b6b82">${n[2]}</span></p></div>`).join('');
-const PARK=[['潼湖生态智慧区','北部 · 千亿级','中韩(惠州)产业园起步区所在'],['中韩(惠州)产业园起步区','12.7 平方公里','预计总产值超 1000 亿'],['广东(仲恺)人工智能产业园','南部 · 29.9 平方公里','人工智能+超高清显示'],['东江科技园','联动','成熟园区'],['惠南科技园','联动','成熟园区'],['仲恺高端产业合作区','仲恺片区合计 55.9 km²','1+1+2 版图']];
-$('park').innerHTML=PARK.map(p=>`<div class="pk"><b>${p[0]}</b><span>${p[1]}</span><p>${p[2]}</p></div>`).join('');
-const CMP=[['仲恺高新区','工业强度全市最高，服务业偏弱','电子集群+能源电子，生活配套补课中','hot'],['大亚湾','石化+新能源集中','单一产业纵深大，风险也集中',''],['惠城','服务业+城市功能中心','工业规模小于仲恺，三产最全','']];
-$('cmp').innerHTML=CMP.map(c=>`<div class="cm ${c[3]||''}"><b style="color:${c[3]==='hot'?'#f59e0b':'#e6edf3'}">${c[0]}</b><p>${c[1]}</p><p style="color:#5b6b82">${c[2]}</p></div>`).join('');
+const DARK=['#0e1523','#1c2739','#0e1523'];
+/* ---------- 家底 KPI（从内核 ZK.A 提取） ---------- */
+const pick=(k)=>{const r=ZK.A.find(x=>x[0].indexOf(k)>=0);return r?r[1]:'—'};
+$('kpis').innerHTML=[
+  [pick('地区生产总值'),'GDP','+7.1%'],
+  [pick('规上工业总产值'),'规上工业总产值','+12.2%'],
+  [pick('人均地区生产总值'),'人均 GDP','元'],
+  [pick('电子产业占规上工业增加值'),'电子占规上工业','56.6%']
+].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div><div class="l" style="color:#5b6b82">${k[2]}</div></div>`).join('');
+
+/* ---------- 三次产业结构环图 ---------- */
+const pie=echarts.init($('pie'));
+pie.setOption({
+  backgroundColor:'transparent',color:['#a3e635','#3b82f6','#f59e0b'],
+  tooltip:{trigger:'item',formatter:'{b}<br>{c}% · {d}%'},
+  title:{text:'2024 年三次产业',left:'center',top:6,textStyle:{color:'#8fa3bf',fontSize:12,fontWeight:400}},
+  series:[{type:'pie',radius:['42%','68%'],center:['50%','56%'],itemStyle:{borderColor:'#0e1523',borderWidth:2},
+    label:{color:'#e6edf3',formatter:'{b}\n{c}%'},data:[{name:'一产',value:1.0},{name:'二产',value:67.6},{name:'三产',value:31.4}]}]
+});
+$('pieNote').textContent='口径：2024 年公报；三产占比另有 28.5%（2023 口径）并列（B 轨）。';
+
+/* ---------- 三大支柱柱状图 ---------- */
+const pillar=echarts.init($('pillar'));
+pillar.setOption({
+  backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:44,right:14,top:28,bottom:30},
+  xAxis:{type:'value',axisLabel:{color:'#8fa3bf',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:ZK.CL.map(c=>c[0]).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+  series:[{type:'bar',barWidth:24,
+    data:ZK.CL.map(c=>({value:parseFloat(c[1].replace('约 ','')),itemStyle:{color:c[3],borderRadius:[0,6,6,0]},label:{show:true,position:'right',color:'#e6edf3',formatter:'{c} 亿'}}))}]
+});
+
+/* ---------- 新赛道（官方押注四方向） ---------- */
+const newc=echarts.init($('newc'));
+newc.setOption({
+  backgroundColor:'transparent',tooltip:{trigger:'item'},
+  grid:{left:44,right:14,top:28,bottom:24},
+  xAxis:{type:'value',max:100,axisLabel:{show:false},splitLine:{show:false}},
+  yAxis:{type:'category',data:ZK.NEW.map(n=>n[0]).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+  series:[{type:'bar',barWidth:18,
+    data:ZK.NEW.map((n,i)=>({value:82-i*14,itemStyle:{color:i===0?'#22d3ee':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#8fa3bf',fontSize:10,formatter:n[1]}}))}]
+});
+
+/* ---------- 园区版图卡片 ---------- */
+$('park').innerHTML=ZK.PARKS.map(p=>`<div class="pk"><b>${p[0]}</b><span>${p[1]}</span><p>${p[2]}</p></div>`).join('')+`<div class="pk"><b>仲恺高端产业合作区</b><span>仲恺片区合计 55.9 km²</span><p>1+1+2 版图</p></div>`;
+
+/* ---------- 兄弟区对比雷达 ---------- */
+const radar=echarts.init($('radar'));
+radar.setOption({
+  backgroundColor:'transparent',tooltip:{},
+  legend:{data:['仲恺','大亚湾','惠城'],textStyle:{color:'#8fa3bf',fontSize:11},top:4},
+  radar:{indicator:[
+    {name:'工业强度',max:100},{name:'三产水平',max:100},{name:'城市配套',max:100},{name:'人口活力',max:100},{name:'风险集中',max:100}
+  ],radius:'62%',center:['50%','56%'],axisName:{color:'#8fa3bf',fontSize:11},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#0e1523','#111b2b']}}},
+  series:[{type:'radar',symbolSize:4,
+    data:[
+      {name:'仲恺',value:[95,45,40,70,60],lineStyle:{color:'#3b82f6'},itemStyle:{color:'#3b82f6'},areaStyle:{opacity:.25}},
+      {name:'大亚湾',value:[90,50,50,65,85],lineStyle:{color:'#06b6d4'},itemStyle:{color:'#06b6d4'},areaStyle:{opacity:.15}},
+      {name:'惠城',value:[45,85,80,75,35],lineStyle:{color:'#f59e0b'},itemStyle:{color:'#f59e0b'},areaStyle:{opacity:.15}}
+    ]}]
+});
+window.addEventListener('resize',()=>[pie,pillar,newc,radar].forEach(x=>x.resize()));
 </script>
 </body></html>

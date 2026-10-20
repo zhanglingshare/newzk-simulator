@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -47,6 +48,8 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 .gapbar .lab{min-width:72px;color:#8fa3bf}
 .gapbar .tr{flex:1;height:16px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative}
 .gapbar .tr i{position:absolute;top:0;bottom:0;border-radius:8px}
+.chart{width:100%;height:270px}
+@media(max-width:760px){.chart{height:215px}}
 .next{text-align:center;margin:20px 0 6px}
 .next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
@@ -88,10 +91,16 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     <div class="ana" id="scenNote"></div>
     <div class="kpi" id="kpi"></div>
     <div class="gt">分布形状（1000 次跑的结果堆在一起）</div>
-    <svg id="hist" viewBox="0 0 860 220" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="chart" id="hist"></div>
     <div class="gt">稳健区间（10% 最好 → 50% 中位 → 90% 最坏）</div>
     <div class="spanline" id="spanline"></div>
     <div class="ana" id="gapNote"></div>
+  </div>
+
+  <div class="s">
+    <h2>三种世界的箱线：不只是中点 <span class="tag">1000 次抽样分布</span></h2>
+    <div class="chart" id="box"></div>
+    <p class="ana">箱＝最好 25% 到最坏 25% 的中段，横线＝中位数，须线＝稳健区间两端。恶劣情景的整个箱子都压在目标线以下，乐观情景的须线才够到 7000 亿上方。</p>
   </div>
 
   <div class="s">
@@ -136,25 +145,53 @@ function kpi(){
     <div class="c"><div class="v">${Math.round(ZK.TARGET-r.p50)} 亿</div><div class="l">中位数离目标还差</div></div>`;
   $('scenNote').textContent='情景 '+s[0]+'：'+s[1];
 }
+const charts=[];
 function hist(){
-  const r=r3[cur],w=860,h=200,pad=10,left=54,top=12;
+  const r=r3[cur],w=860,h=200,left=54,top=12;
   const bins=22,min=3000,max=8200,bw=(max-min)/bins;
   const cnt=new Array(bins).fill(0);
   r.results.forEach(v=>{let b=Math.floor((v-min)/bw);if(b<0)b=0;if(b>=bins)b=bins-1;cnt[b]++;});
   const mx=Math.max(...cnt);
-  let s='';
-  for(let i=0;i<bins;i++){
-    const x=left+i*(w-left)/bins, bw2=(w-left)/bins-1.5, yh=cnt[i]/mx*(h-top-34);
-    const c=i===0?'#1e293b':'#2563eb';
-    const over=min+(i+1)*bw>=ZK.TARGET;
-    s+=`<rect x="${x}" y="${h-top-yh}" width="${bw2}" height="${yh}" fill="${over?'#f59e0b':'#2563eb'}" opacity="${over?.85:.6}" rx="1"/>`;
-  }
-  s+=`<line x1="${left+(ZK.TARGET-min)/bw/bins*(w-left)}" y1="${top}" x2="${left+(ZK.TARGET-min)/bw/bins*(w-left)}" y2="${h-34}" stroke="#f87171" stroke-dasharray="5 4" stroke-width="1.5"/>`;
-  s+=`<text x="${left+(ZK.TARGET-min)/bw/bins*(w-left)+6}" y="${top+12}" fill="#f87171" font-size="11">目标 6500</text>`;
-  s+=`<text x="${left}" y="${h-14}" fill="#64748b" font-size="10">3000</text>`;
-  s+=`<text x="${w-40}" y="${h-14}" fill="#64748b" font-size="10">8200 亿</text>`;
-  s+=`<text x="${left+6}" y="${top+12}" fill="#8fa3bf" font-size="10.5">1000 次结果堆叠 · 橙色柱＝落在 6500 以上</text>`;
-  $('hist').innerHTML=s;
+  const hc=echarts.init($('hist'));
+  hc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{
+      const v0=min+Math.floor(p[0].value)*bw,v1=v0+bw;
+      return `${v0}—${v1} 亿<br>跑出 ${p[0].value} 次${v1>=ZK.TARGET?' · 已过目标线':''}`;
+    }},
+    grid:{left:52,right:18,top:34,bottom:30},
+    xAxis:{type:'value',min:3000,max:8200,axisLabel:{color:'#8fa3bf',formatter:'{value}亿',interval:1},splitLine:{show:false}},
+    yAxis:{type:'value',axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    series:[{type:'bar',barWidth:'98%',
+      data:cnt.map((c,i)=>({value:c,itemStyle:{color:min+(i+1)*bw>=ZK.TARGET?'rgba(245,158,11,.85)':'rgba(37,99,235,.65)',borderRadius:1}})),
+      markLine:{silent:true,symbol:'none',lineStyle:{color:'#f87171',type:'dashed',width:1.5},
+        label:{color:'#f87171',fontSize:11,formatter:'目标 6500'},
+        data:[{xAxis:ZK.TARGET}]}}],
+    graphic:[{type:'text',left:8,top:10,style:{text:'1000 次结果堆叠 · 橙色柱＝落在 6500 以上 · 悬停看计数',fill:'#8fa3bf',fontSize:10.5}}]
+  });
+  charts.push(hc);
+}
+function box(){
+  const bc=echarts.init($('box'));
+  const boxData=r3.map(r=>{
+    const v=[...r.results].sort((a,b)=>a-b);
+    const q=(f)=>{const i=Math.floor(f*(v.length-1));return Math.round(v[i]);};
+    return [q(.05),q(.25),q(.5),q(.75),q(.95)];
+  });
+  bc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'item',formatter:p=>{
+      const v=p.value;return `${p.name}<br>最坏 5%：${v[0]} 亿<br>下四分位：${v[1]} 亿<br>中位数：${v[2]} 亿<br>上四分位：${v[3]} 亿<br>最好 5%：${v[4]} 亿`;
+    }},
+    legend:{data:['分布','目标线'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+    grid:{left:50,right:18,top:30,bottom:26},
+    xAxis:{type:'category',data:['乐观','基准','恶劣'],axisLabel:{color:'#e6edf3',fontSize:12},axisLine:{lineStyle:{color:'#22304a'}}},
+    yAxis:{type:'value',axisLabel:{color:'#8fa3bf',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    series:[
+      {name:'分布',type:'boxplot',boxWidth:44,itemStyle:{color:'rgba(37,99,235,.25)',borderColor:'#3b82f6',borderWidth:1.5},
+        data:boxData,
+        markLine:{silent:true,symbol:'none',lineStyle:{color:'#f87171',type:'dashed'},label:{color:'#f87171',formatter:'目标 6500'},data:[{yAxis:ZK.TARGET}]}}
+    ]
+  });
+  charts.push(bc);
 }
 function spanline(){
   const r=r3[cur];
@@ -197,6 +234,7 @@ function q3(){
   const life=cur===0?'三产补短兑现：商业、夜市、智谷彩街都起来了':'生活改善取决于"服务补短"这条路，恶劣情景下会被延后';
   $('jobs').textContent=jobs;$('income').textContent=income;$('life').textContent=life;
 }
-scen();kpi();hist();spanline();contrib();gapbar();q3();
+scen();kpi();hist();box();spanline();contrib();gapbar();q3();
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 </body></html>

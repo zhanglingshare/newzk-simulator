@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -58,6 +59,8 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 .loop .n{background:#0f1a2c;border:1px solid #22304a;border-radius:8px;padding:5px 9px;color:#cbd5e1}
 .loop .ar{color:#3ddc97;font-weight:800}
 .loop .neg{color:#f87171}
+.chart{width:100%;height:230px}
+@media(max-width:760px){.chart{height:200px}}
 </style></head><body>
 
 <div class="nav">
@@ -90,6 +93,8 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     <div class="legend" id="legend"></div>
     <svg id="net" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg>
     <div class="stat" id="stat"></div>
+    <div class="gt">连接最密的主体（按度排序）</div>
+    <div class="chart" id="topChart"></div>
     <div class="gt">直接说</div>
     <p class="one">链主和园区之间连得密，但"生产 → 生活 → 消费"这一层几乎全是虚线。</p>
     <p class="ana">把鼠标放到任意主体上：橙色＝链主，青色＝零部件，蓝色＝园区，粉色＝生活。虚线＝待核实的连接（消费承接、生产性服务业、外资落地），这些正是官方承认的"服务业滞后、消费外流"。</p>
@@ -99,6 +104,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     <h2>② 钱流四层漏损：仲恺每一块钱转几圈 <span class="tag">投入产出式本地乘数</span></h2>
     <p class="ana">链主每收到 1 亿订单，钱在仲恺里一层层留下来——每一层都会漏出去一部分。</p>
     <table class="mul" id="mul"></table>
+    <div class="chart" id="leakChart"></div>
     <div class="gt">怎么读</div>
     <p class="one">1 亿订单 → 约 <b id="multK">0.62 亿</b> 留在仲恺（本地乘数约 <b id="multN">1.6</b>）。配套率从 30% 提到 60%、工人消费多留一点，乘数能到 2 以上——这就是"产业旺"变不成"城市兴"的量化原因。</p>
   </div>
@@ -106,7 +112,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
   <div class="two">
     <div class="s">
       <h2>③ 传导链：哪一环最松 <span class="tag">SEM 路径系数 · 模型估计</span></h2>
-      <div class="sem" id="sem"></div>
+      <div class="chart" id="semChart"></div>
       <div class="gt">怎么读</div>
       <p class="one">这条链是"产城人"闭环：产业投入 → 创新 → 工资 → 本地消费 → 生活配套 → 人才留驻 → 再投入。</p>
       <p class="ana">数字＝传导强度（路径系数，越接近 1 越紧）。<b style="color:#f87171">"工资 → 本地消费"只有 0.35，是全链最松的一环</b>——工人的钱流去了惠城和深圳。这是结构方程模型的简化呈现，系数为模型估计、非实测（血统 D 级，待走访核实）。</p>
@@ -194,16 +200,51 @@ function stat(){
   $('stat').innerHTML=`<div class="c"><div class="v">${ZK.NO.length}</div><div class="l">真实主体（9 层）</div></div>
     <div class="c"><div class="v">${E}</div><div class="l">关系连线（实线 ${real} · 虚线 ${dash} 待核实）</div></div>
     <div class="c"><div class="v">${top.map(n=>ZK.nm(n[0])).join(' · ')}</div><div class="l">连接最多的主体（度前 3）</div></div>`;
+  const top10=[...ZK.NO].sort((a,b)=>deg[b[0]]-deg[a[0]]).slice(0,10).reverse();
+  const tc=echarts.init($('topChart'));
+  tc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：连 ${p[0].value} 条`},
+    grid:{left:96,right:26,top:8,bottom:20},
+    xAxis:{type:'value',minInterval:1,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    yAxis:{type:'category',data:top10.map(n=>ZK.nm(n[0]).length>9?ZK.nm(n[0]).slice(0,9):ZK.nm(n[0])),axisLabel:{color:'#cbd5e1',fontSize:10.5},axisLine:{lineStyle:{color:'#22304a'}}},
+    series:[{type:'bar',barWidth:13,data:top10.map(n=>deg[n[0]]).map((v,i)=>({value:v,itemStyle:{color:ZK.NO.find(n=>n[0]===top10[i][0])?LCOL[ZK.layerOf(top10[i][0])]:'#3b82f6',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#e6edf3',fontSize:10}}))}]
+  });
+  charts.push(tc);
 }
 /* 本地乘数 */
 function mul(){
   $('mul').innerHTML=ZK.MULT_LAYERS.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:#8fa3bf">${r[2]}</td></tr>`).join('');
+  /* 1 亿订单去向：堆叠条形 */
+  const parts=[[0.32,'本地配套采购','#00c2d9'],[0.18,'本地工资','#3ddc97'],[0.07,'工资本地消费','#fbbf24'],[0.05,'本地税收','#a06bff'],[0.38,'漏到外地（消费外流/购买外部）','#334155']];
+  const lc=echarts.init($('leakChart'));
+  lc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'item',formatter:p=>`${p.name}<br>${(p.value*100).toFixed(0)} 分（1 亿订单里占 ${(p.value).toFixed(2)} 亿）`},
+    grid:{left:8,right:8,top:26,bottom:8},
+    xAxis:{show:false,type:'value',max:1},
+    yAxis:{show:false,type:'category'},
+    series:[{type:'bar',stack:'leak',barWidth:34,data:parts.map(p=>({value:p[0],name:p[1],itemStyle:{color:p[2]}})),label:{show:true,position:'inside',formatter:p=>(p.value*100).toFixed(0)+'%',color:'#0d1a24',fontSize:11,fontWeight:700}}],
+    legend:{data:parts.map(p=>p[1]),bottom:0,textStyle:{color:'#8fa3bf',fontSize:10},itemWidth:10,itemHeight:10}
+  });
+  charts.push(lc);
 }
-/* SEM */
+/* SEM 传导链 */
+const charts=[];
 function sem(){
-  $('sem').innerHTML=ZK.SEM.map((r,i)=>`
-    <span class="n">${r[0]}</span><span class="a${r[2]<0.4?' weak':''}">→ ${r[2].toFixed(2)}</span>${i===2?'<span style="color:#f87171;font-size:11px">最松</span>':''}
-  `).join('')+'<span class="n">再投入</span>';
+  const rows=[...ZK.SEM].reverse();
+  const sc=echarts.init($('semChart'));
+  sc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{
+      const s=ZK.SEM.find(r=>r[0]+' → '+r[1]===p[0].name);return `${p[0].name}<br>系数 ${p[0].value.toFixed(2)}<br><span style="color:#8fa3bf">${s?s[3]:''}</span>`;
+    }},
+    grid:{left:86,right:40,top:8,bottom:20},
+    xAxis:{type:'value',min:0,max:0.8,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    yAxis:{type:'category',data:rows.map(r=>r[0]+' → '+r[1]),axisLabel:{color:'#cbd5e1',fontSize:10},axisLine:{lineStyle:{color:'#22304a'}}},
+    series:[{type:'bar',barWidth:15,
+      data:rows.map(r=>({value:r[2],itemStyle:{color:r[2]<0.4?'#f87171':r[2]>0.58?'#3ddc97':'#3b82f6',borderRadius:[0,5,5,0]},
+        label:{show:true,position:'right',color:r[2]<0.4?'#f87171':'#cbd5e1',fontSize:11,formatter:'{c}'}}))}],
+    graphic:[{type:'text',left:12,bottom:2,style:{text:'最松＝红 · 最紧＝绿（0.35 全链最松）',fill:'#8fa3bf',fontSize:10}}]
+  });
+  charts.push(sc);
 }
 /* 回路 */
 function loop(){
@@ -212,5 +253,6 @@ function loop(){
   `;
 }
 legend();draw();stat();mul();sem();loop();
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 </body></html>

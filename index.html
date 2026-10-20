@@ -3,6 +3,7 @@
 <title>NewZK · 今日仲恺</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -31,6 +32,10 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
 .vote .cmp{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
 .vote .bar{flex:1;min-width:140px;height:16px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
 .vote .bar i{display:block;height:100%;border-radius:8px}
+.chart{width:100%;height:210px;margin-top:10px}
+@media(max-width:760px){.chart{height:180px}}
+.chart2{width:100%;height:230px;margin-top:12px}
+@media(max-width:760px){.chart2{height:190px}}
 .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
 .cat{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:5px 13px;border-radius:16px;font-size:12.5px;cursor:pointer}
 .cat .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
@@ -108,6 +113,7 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
       <button data-v="不能">到不了</button>
     </div>
     <div class="out" id="voteOut"></div>
+    <div class="chart" id="voteChart"></div>
   </div>
 
   <div class="toolbar">
@@ -121,6 +127,7 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
   </div>
   <div class="scan-info" id="scanInfo">正在读取今日话题…</div>
   <div id="topicList"></div>
+  <div class="chart" id="catChart"></div>
 
   <div class="next"><a href="network.html">下一步：看仲恺的产业链地图 →</a></div>
   <div class="disc">数据来源：仲恺高新区管委会、统计公报、本地媒体、上市公司公告。所有数字均为情景推演，非预测值。</div>
@@ -144,6 +151,21 @@ const VKEY='newzk_vote';
 let votes=JSON.parse(localStorage.getItem(VKEY)||'{"能":0,"悬":0,"不能":0,"mine":null}');
 const r=ZK.run(20261020,1000,ZK.DEFAULT_PATHS);
 const hitP=r.hit.toFixed(0),p50=Math.round(r.p50);
+const charts=[];
+const $=i=>document.getElementById(i);
+function drawVoteChart(){
+  const total=votes['能']+votes['悬']+votes['不能'];
+  const vc=echarts.init($('voteChart'));
+  vc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 票（${total?Math.round(p[0].value/total*100):0}%）`},
+    grid:{left:40,right:16,top:30,bottom:20},
+    xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#cbd5e1',fontSize:11.5},axisLine:{lineStyle:{color:'#22304a'}}},
+    yAxis:{type:'value',minInterval:1,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#3ddc97':k==='悬'?'#a78bfa':'#f87171',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#e6edf3',formatter:'{c} 票'}}))}],
+    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#8fa3bf',fontSize:10.5}}]
+  });
+  charts.push(vc);
+}
 function renderVote(){
   const total=votes['能']+votes['悬']+votes['不能'];
   const my=votes.mine;
@@ -153,6 +175,7 @@ function renderVote(){
     (total>0?('仲恺人的判断：能到 '+Math.round(votes['能']/total*100)+'% / 悬 '+Math.round(votes['悬']/total*100)+'% / 到不了 '+Math.round(votes['不能']/total*100)+'%　'):'还没人投票，你是第一个。')+
     '　模型：'+modelTxt+
     '<div class="cmp"><div class="bar"><i style="width:'+hitP+'%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></i></div><span style="font-size:11px;color:#8fa3bf">紫色条＝模型跑 1000 次，过 6500 亿的比例 '+hitP+'%</span></div>';
+  drawVoteChart();
 }
 document.getElementById('voteBtns').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
@@ -187,6 +210,20 @@ function render(cat){
     </div>`;
   }).join('');
 }
+function drawCatChart(){
+  const cnt={};DATA.forEach(x=>{cnt[x.cat]=(cnt[x.cat]||0)+1});
+  const CMAP={'industry':['产业','#3b82f6'],'city':['城市','#6b7280'],'livelihood':['民生','#f97316'],'food':['好吃','#ef4444'],'fun':['好玩','#10b981'],'warm':['暖闻','#a78bfa']};
+  const cc=echarts.init($('catChart'));
+  cc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'item',formatter:'{b}：{c} 条 · {d}%'},
+    title:{text:'今日话题构成',left:'center',top:4,textStyle:{color:'#8fa3bf',fontSize:12,fontWeight:400}},
+    legend:{bottom:0,textStyle:{color:'#8fa3bf',fontSize:10.5},itemWidth:10,itemHeight:10},
+    series:[{type:'pie',radius:['38%','64%'],center:['50%','54%'],itemStyle:{borderColor:'#0e1523',borderWidth:2},
+      label:{color:'#e6edf3',formatter:'{b} {c}'},
+      data:Object.keys(cnt).map(k=>({name:(CMAP[k]||[k,'#334155'])[0],value:cnt[k],itemStyle:{color:(CMAP[k]||[k,'#334155'])[1]}}))}]
+  });
+  charts.push(cc);
+}
 document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x===b));
   render(b.dataset.c);
@@ -196,11 +233,14 @@ fetch('hot.json').then(r=>r.json()).then(d=>{
   document.getElementById('scanInfo').textContent='已刷新 · '+d.updated+' · 共 '+DATA.length+' 条 · 来源：仲恺高新区管委会与公开媒体';
   pick3(DATA);
   render('all');
+  drawCatChart();
 }).catch(()=>{
   DATA=[{title:'惠州四环路全线闭环，R线（仲恺往惠阳方向）计划10月30日通车',cat:'city',emoji:'',rel:4,sources:[{name:'惠州日报'}],summary:'四环路闭环拉大仲恺通勤圈，R线10月30日通车。',event_date:'2026-10-20'},{title:'智谷彩街：原卓研工业区旧厂房改造，打造"运动+美食"特色商业街',cat:'city',emoji:'',rel:4,sources:[{name:'仲恺发布'}],summary:'旧厂房改商业街，招商约80%，力争12月整体开业。',event_date:'2026-10-20'},{title:'亿纬动力电池潼湖生态智慧区红岗片区22.47万㎡地块规划许可批前公示',cat:'industry',emoji:'',rel:3,sources:[{name:'仲恺高新区管委会'}],summary:'亿纬在潼湖智慧区再落新地块，能源电子扩产。',event_date:'2026-10-20'},{title:'沥林碌鹅即食食品项目建设用地周转方案公示，非遗美食向即食化延链',cat:'industry',emoji:'',rel:3,sources:[{name:'仲恺发布'}],summary:'沥林碌鹅从餐桌走向即食产品，非遗美食产业延链。',event_date:'2026-10-20'},{title:'潼湖碌鹅季人气旺：广和老街百年圩市，高峰三天卖出约1000只',cat:'fun',emoji:'',rel:3,sources:[{name:'南方+'}],summary:'碌鹅季带火潼湖圩市，美食IP撑起镇域人气。',event_date:'2026-10-20'},{title:'陈江街道城中村改造安置房智福家园选房，271户村民选得299套新房',cat:'livelihood',emoji:'',rel:3,sources:[{name:'仲恺发布'}],summary:'城中村改造安置房落地，安居补课进行中。',event_date:'2026-10-20'}];
   document.getElementById('scanInfo').textContent='内置快照（离线预览）· 上线后每日自动刷新';
   pick3(DATA);
   render('all');
+  drawCatChart();
 });
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 </body></html>

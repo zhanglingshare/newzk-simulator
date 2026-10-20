@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -38,6 +39,13 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .next{text-align:center;margin:20px 0 6px}
 .next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.qlife .q{margin-bottom:8px}
+.qlife .q b{display:block;font-size:12.5px;color:#cbd5e1;margin-bottom:4px}
+.qlife .opts{display:flex;gap:6px;flex-wrap:wrap}
+.qlife .opts button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.qlife .opts button.on{background:#7c3aed;border-color:#a78bfa;color:#fff;font-weight:700}
+.chart{width:100%;height:220px}
+@media(max-width:760px){.chart{height:190px}}
 </style></head><body>
 
 <div class="nav">
@@ -98,7 +106,57 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <p class="one">这一页就是"服务业滞后、消费外流"的实感证据，也是第④页"城市与人"那条路（民生优先下排第一）的底气：把人留住，钱才留得住。</p>
   </div>
 
+  <div class="s">
+    <h2>你的三个选择，模型里对应哪根弦 <span class="tag">点一点，看影响</span></h2>
+    <div class="qlife" id="qlife"></div>
+    <div class="chart" id="lifeChart"></div>
+    <div class="ana" id="lifeNote"></div>
+  </div>
+
   <div class="next"><a href="report.html">下一步：看分析报告与血统 →</a></div>
   <div class="disc">民生进展来自官方公开报道（学位 2400、医院新院、智福家园选房等）；岗位/消费比例为模型估算，血统 D 级待核实。非预测值。</div>
 </div>
+
+<script>
+const $=i=>document.getElementById(i);
+const LIFE=[
+  {q:'你的工资主要花在哪？',opts:[
+    {t:'花在仲恺（智谷彩街、本地消费）',note:'你这一票投给"消费承接"：本地乘数从 0.35 往上抬，商业街和三产有底。',v:[9,3,8,6,9]},
+    {t:'周末去惠城/深圳花',note:'对应"消费外流"：钱在仲恺只过手不落地，商业街缺客流——最松的一根弦。',v:[2,6,2,8,2]},
+    {t:'攒着或寄回老家',note:'储蓄外流：短期对消费拉动弱，但家庭抗风险强，安居意愿上升。',v:[3,2,3,4,7]}]},
+  {q:'你在哪上班？',opts:[
+    {t:'仲恺链主/整机厂',note:'直接进"链主做强"：1 亿订单往下配，配套吃多少决定产业桥高度。',v:[10,7,6,5,6]},
+    {t:'配套厂/物流仓储',note:'在产业桥上但偏上游配套：工资基数低，消费承接弱，共富桥靠你。',v:[7,4,5,3,5]},
+    {t:'深莞通勤、住仲恺',note:'人才往深莞回流：创新链松脱，人才公寓使用率掉——"城市与人"最疼。',v:[2,3,2,9,3]}]},
+  {q:'孩子在哪上学？',opts:[
+    {t:'仲恺新学位（2400 个）',note:'安居加分：人留得住，钱留得住，城市与人、服务补短两条路同时受益。',v:[6,5,7,7,10]},
+    {t:'市区名校（每天通勤）',note:'通勤房：人在仲恺、钱在别处，消费承接继续漏。',v:[3,2,3,6,2]},
+    {t:'还没想/观望',note:'不确定性本身是风险：学位政策不稳，年轻家庭就摇摆——决策者要补的正是确定性。',v:[4,3,4,5,4]}]}
+];
+const DIM=['链主做强','新赛道抢跑','园区扩容','服务补短','城市与人'];
+const sel=[0,0,0];
+function drawLife(){
+  const v=DIM.map((d,i)=>LIFE.reduce((s,q,j)=>s+q.opts[sel[j]].v[i],0));
+  const lc=echarts.init($('lifeChart'));
+  lc.setOption({
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 分`},
+    grid:{left:70,right:20,top:12,bottom:20},
+    xAxis:{type:'value',max:30,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#3ddc97':x>=12?'#3b82f6':'#f87171',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10}}))}]
+  });
+  window.__lc=lc;
+  const best=DIM[v.indexOf(Math.max(...v))];
+  $('lifeNote').innerHTML='你现在的三个选择，最牵动的是<b style="color:#3ddc97">'+best+'</b>。换个选项再看——同一个你，换三个小决定，模型里那条最长的柱子就换一根。这就是"产城人融合"落到个人身上的样子。';
+}
+$('qlife').innerHTML=LIFE.map((q,i)=>`<div class="q"><b>${q.q}</b><div class="opts">${q.opts.map((o,j)=>`<button data-i="${i}" data-j="${j}" class="${j===sel[i]?'on':''}">${o.t}</button>`).join('')}</div></div>`).join('');
+$('qlife').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  const i=+b.dataset.i,j=+b.dataset.j;
+  sel[i]=j;
+  $('qlife').querySelectorAll(`button[data-i="${i}"]`).forEach(x=>x.classList.toggle('on',+x.dataset.j===j));
+  drawLife();
+});
+drawLife();
+window.addEventListener('resize',()=>window.__lc&&window.__lc.resize());
+</script>
 </body></html>

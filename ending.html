@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -19,6 +20,8 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .loop .n{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:10px 14px;text-align:center;color:#cbd5e1}
 .loop .n b{display:block;font-size:14px;color:#fff;margin-bottom:2px}
 .loop .ar{color:#3ddc97;font-weight:800;font-size:16px}
+.chart{width:100%;height:270px}
+@media(max-width:760px){.chart{height:215px}}
 .s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
 .s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3ddc97;padding-left:9px}
 .gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
@@ -73,6 +76,8 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   <div class="s">
     <h2>闭环里每一环都是真的</h2>
     <p class="one" style="margin-bottom:6px">产业旺：4037 亿产值、1053 家高企——这是供血；城市兴：学位 2400、医院新院、智谷彩街——这是转化；人安好：工资花在仲恺、人才留下——这是回流。传导链里那根最松的弦（工资→本地消费，0.35），就是闭环漏气的地方。</p>
+    <div class="chart" id="worldChart"></div>
+    <p class="ana">横向对比几个产城融合走在前面的地方（评分＝本沙盘按"产业/城市/人"三件套自评，血统 D 级，仅示意打法）：南山、合肥、松山湖、成都是"三件套齐平"或"人先安"；仲恺是典型的"产业强、城市弱、人待安"——差的那两件，正是官方"补课"和这个沙盘反复强调的方向。</p>
   </div>
 
   <div class="s">
@@ -106,5 +111,20 @@ $('loop').innerHTML=`
   <div class="n"><b>人安好</b>工资花仲恺 · 人才留驻</div><div class="ar">→</div>
   <div class="n"><b>再投入</b>消费→商业→税收→园区</div><div class="ar">→</div>
   <div class="n"><b>产业更旺</b>链主留 · 新项目来</div>`;
+const wc=echarts.init($('worldChart'));
+wc.setOption({
+  backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>产业 ${p[0].value} / 城市 ${p[1].value} / 人 ${p[2].value}`},
+  legend:{data:['产业','城市','人'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+  grid:{left:84,right:30,top:28,bottom:18},
+  xAxis:{type:'value',max:10,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:['深圳南山','合肥','东莞松山湖','成都高新区','仲恺'].reverse(),axisLabel:{color:'#cbd5e1',fontSize:10.5},axisLine:{lineStyle:{color:'#22304a'}}},
+  series:[
+    {name:'产业',type:'bar',barWidth:9,data:[9,8,7,6,9].reverse().map(v=>({value:v,itemStyle:{color:'#3b82f6'}}))},
+    {name:'城市',type:'bar',barWidth:9,data:[9,7,7,8,5].reverse().map(v=>({value:v,itemStyle:{color:'#3ddc97'}}))},
+    {name:'人',type:'bar',barWidth:9,data:[9,6,8,8,4].reverse().map(v=>({value:v,itemStyle:{color:'#fbbf24'}}))}
+  ],
+  graphic:[{type:'text',left:8,bottom:0,style:{text:'评分仅示意打法 · 血统 D 级',fill:'#8fa3bf',fontSize:10}}]
+});
+window.addEventListener('resize',()=>wc.resize());
 </script>
 </body></html>

@@ -4,6 +4,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
+<script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -41,6 +42,17 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
 .roads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:760px){.roads{grid-template-columns:1fr}}
+.chart{width:100%;height:280px}
+@media(max-width:760px){.chart{height:220px}}
+.mx2{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:8px 0}
+.mx2 div{height:34px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#0d1a24}
+.sliders{margin:10px 0}
+.sl{display:flex;align-items:center;gap:10px;margin:8px 0}
+.sl .lab{min-width:76px;font-size:12.5px;color:#cbd5e1}
+.sl input{flex:1;accent-color:#3b82f6}
+.sl .v{min-width:26px;text-align:right;font-size:13px;font-weight:700;color:#67e8f9}
+.reset{border:1px solid #334155;background:#131c2b;color:#93a4bd;padding:7px 16px;border-radius:16px;font-size:12px;cursor:pointer}
+.reset:hover{color:#fff}
 </style></head><body>
 
 <div class="nav">
@@ -70,7 +82,26 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   <div class="twist" id="twist"></div>
 
   <div class="stand" id="stand"></div>
-  <div class="rank" id="rank"></div>
+
+  <div class="s">
+    <h2>换一把尺子，排序就翻 <span class="tag">三立场 · AHP 权重</span></h2>
+    <div class="chart" id="radar"></div>
+    <p class="ana">同一套得分，三种权重立场投影：产值优先下"链主做强"登顶，民生优先下"城市与人"反超——排序不是客观事实，是立场的结果。</p>
+  </div>
+
+  <div class="s">
+    <h2>你自己的尺子：拖权重，看排序怎么翻</h2>
+    <div class="sliders" id="sliders"></div>
+    <button class="reset" id="reset">回到当前立场默认权重</button>
+    <div class="rank" id="rank"></div>
+    <p class="ana" id="sliderNote"></p>
+  </div>
+
+  <div class="s">
+    <h2>AHP 判断矩阵：谁比谁重要几倍 <span class="tag">1–9 标度 · 当前立场</span></h2>
+    <div class="mx2" id="mx2"></div>
+    <p class="ana">格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。</p>
+  </div>
 
   <div class="s" style="background:transparent;border:none;padding:0">
     <h2 style="font-size:15.5px;margin:14px 0 8px;border-left:3px solid #3b82f6;padding-left:9px">五条路，各自是什么</h2>
@@ -92,13 +123,21 @@ const ROAD_ACT={
   '城市与人':'动作：学位2400个 · 医院分院 · 10分钟体育圈 · 人才安居'
 };
 let cur='均衡';
+let manual=null; /* 滑块自定义权重时非空 */
+
 function renderStand(){
   $('stand').innerHTML=ZK.WO.map(w=>`<button data-w="${w[0]}" class="${w[1]===cur?'on':''}">${w[1]}</button>`).join('');
-  $('stand').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.w;renderStand();renderRank();});
+  $('stand').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    cur=b.dataset.w;manual=null;
+    const list=ZK.AH[cur].map(r=>r[1]);
+    ZK.ROADS.forEach((r,i)=>{const s=$('s_'+r);if(s){s.value=Math.round(list[i]*10)/10;s.nextElementSibling.textContent=s.value;}});
+    renderStand();renderRank();renderRadar();renderMatrix();
+  });
 }
+function weightOf(r){ return manual?manual[r]: (ZK.AH[cur].find(x=>x[0]===r)||[r,5])[1]; }
 function renderRank(){
-  const list=ZK.AH[cur];
-  const max=list[0][1];
+  const list=ZK.ROADS.map(r=>[r,weightOf(r)]).sort((a,b)=>b[1]-a[1]);
+  const max=Math.max(...list.map(l=>l[1]));
   $('rank').innerHTML=list.map((r,i)=>`
     <div class="r">
       <div class="n">${i+1}</div>
@@ -106,10 +145,66 @@ function renderRank(){
       <div class="b"><i style="width:${r[1]/max*100}%;background:linear-gradient(90deg,${COLOR[r[0]]}88,${COLOR[r[0]]})"></i></div>
       <div class="m">${r[1].toFixed(1)}</div>
     </div>`).join('');
-  const twist={ '产值优先':['反直觉','在"产值优先"的尺子下，城市与人垫底；但在"民生优先"下它排第一——同一座城，换把尺子就换答案。'],
+  const twist={
+    '产值优先':['反直觉','在"产值优先"的尺子下，城市与人垫底；但在"民生优先"下它排第一——同一座城，换把尺子就换答案。'],
     '均衡':['稳定', '均衡尺子下五条路差距最小，新赛道略领先——这也是多数地方实际在走的路线。'],
     '民生优先':['反直觉','民生优先下"城市与人"登顶、服务补短第二：先把人留住，产业才留得住——这就是"人安好→产业旺"的闭环。']}[cur];
-  $('twist').innerHTML=`<div class="t">${twist[0]}</div><div class="one">${twist[1]}</div>`;
+  if(manual){
+    $('twist').innerHTML=`<div class="t">你的尺子（自定义权重）</div><div class="one">你亲手调的权重生效了：${list[0][0]} 排第一。重置立场可回到 ${cur} 的默认排序。</div>`;
+  }else{
+    $('twist').innerHTML=`<div class="t">${twist[0]}</div><div class="one">${twist[1]}</div>`;
+  }
+}
+function renderRadar(){
+  const radar=echarts.init($('radar'));
+  radar.setOption({
+    backgroundColor:'transparent',tooltip:{},
+    legend:{data:['产值优先','均衡','民生优先'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+    radar:{indicator:ZK.ROADS.map(r=>({name:r.length>4?r.slice(0,4):r,max:10})),radius:'62%',center:['50%','56%'],
+      axisName:{color:'#8fa3bf',fontSize:10.5},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#0e1523','#111b2b']}}},
+    series:[{type:'radar',symbolSize:4,
+      data:[
+        {name:'产值优先',value:ZK.AH['产值优先'].map(r=>r[1]),lineStyle:{color:'#3b82f6'},itemStyle:{color:'#3b82f6'},areaStyle:{opacity:.2}},
+        {name:'均衡',value:ZK.AH['均衡'].map(r=>r[1]),lineStyle:{color:'#3ddc97'},itemStyle:{color:'#3ddc97'},areaStyle:{opacity:.15}},
+        {name:'民生优先',value:ZK.AH['民生优先'].map(r=>r[1]),lineStyle:{color:'#fbbf24'},itemStyle:{color:'#fbbf24'},areaStyle:{opacity:.15}}
+      ]}]
+  });
+  charts.push(radar);
+}
+function renderSliders(){
+  const list=ZK.AH[cur];
+  $('sliders').innerHTML=ZK.ROADS.map(r=>{
+    const v=weightOf(r);
+    return `<div class="sl"><span class="lab">${r}</span><input type="range" id="s_${r}" min="1" max="10" step="0.5" value="${v}"><span class="v">${v}</span></div>`;
+  }).join('');
+  ZK.ROADS.forEach(r=>{
+    $('s_'+r).oninput=e=>{
+      const v=parseFloat(e.target.value);
+      e.target.nextElementSibling.textContent=v;
+      manual=manual||{};manual[r]=v;
+      renderRank();renderMatrix();
+    };
+  });
+  $('reset').onclick=()=>{
+    manual=null;
+    const list=ZK.AH[cur].map(r=>r[1]);
+    ZK.ROADS.forEach((r,i)=>{const s=$('s_'+r);s.value=Math.round(list[i]*10)/10;s.nextElementSibling.textContent=s.value;});
+    renderRank();renderMatrix();
+  };
+}
+function renderMatrix(){
+  const rows=ZK.ROADS.map(r=>[r,weightOf(r)]);
+  const mx=ZK.ROADS.map(a=>ZK.ROADS.map(b=>{
+    const wa=weightOf(a),wb=weightOf(b);
+    const ratio=wa/wb; /* 1-9 标度 */
+    const v=Math.max(1,Math.min(9,Math.round(ratio*2)/2));
+    const t=wa>=wb?`${a}比${b}重要${v.toFixed(1)}倍`:`${b}比${a}重要${(1/ratio).toFixed(1)}倍`;
+    return {v,a,b,hi:wa>wb+0.3,t};
+  }));
+  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>{
+    const c=mx[i][j];
+    return `<div style="background:${c.hi?'#3b82f6':'#1c2739'}" title="${c.t}">${i===j?'—':c.v.toFixed(1)}</div>`;
+  }).join('')).join('');
 }
 function renderRoads(){
   $('roads').innerHTML=ZK.ROADS.map(r=>`
@@ -119,6 +214,8 @@ function renderRoads(){
       <div class="act">${ROAD_ACT[r]}</div>
     </div>`).join('');
 }
-renderStand();renderRank();renderRoads();
+const charts=[];
+renderStand();renderSliders();renderRank();renderRadar();renderMatrix();renderRoads();
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 </body></html>
