@@ -342,3 +342,10 @@ body[data-page="choices"] .code .seg button{background:#fff!important;border:1px
 body[data-page="choices"] .code .seg button.on{background:#245bdb!important;color:#fff!important}
 body[data-page="choices"] .roadcard p{color:#536782!important}
 body[data-page="choices"] .mx2 div,body[data-page="choices"] .win div{color:#203955}
+
+
+/* Mobile network prioritizes names over secondary category captions. */
+@media(max-width:760px){
+  body[data-page="network"] .network-canvas svg#net .node text:nth-of-type(2){opacity:0}
+  body[data-page="network"] .network-canvas:before{content:'横向滑动画布 · 点击主体查看详情';display:block;position:sticky;left:0;top:0;z-index:2;width:max-content;max-width:100%;padding:9px 13px;color:#45617f;background:#edf4ff;border-radius:0 0 10px 0;font-size:12px;font-weight:600}
+}
