@@ -167,7 +167,7 @@ radar2.setOption({
   backgroundColor:'transparent',tooltip:{},
   legend:{data:['产值优先','均衡','民生优先'],textStyle:{color:'#8fa3bf',fontSize:10},top:0},
   radar:{indicator:ZK.ROADS.map(r=>({name:r.length>4?r.slice(0,4):r,max:10})),radius:'60%',center:['50%','55%'],
-    axisName:{color:'#8fa3bf',fontSize:10},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#0e1523','#111b2b']}}},
+    axisName:{color:'#8fa3bf',fontSize:10},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#f8fbff','#edf4ff']}}},
   series:[{type:'radar',symbolSize:3,
     data:[
       {name:'产值优先',value:ZK.AH['产值优先'].map(r=>r[1]),lineStyle:{color:'#3b82f6'},itemStyle:{color:'#3b82f6'},areaStyle:{opacity:.2}},
@@ -182,7 +182,7 @@ charts.push(radar2);
     const ratio=w(a)/w(b),v=Math.max(1,Math.min(9,Math.round(ratio*2)/2));
     return {v,hi:w(a)>w(b)+0.3,t:`${a} vs ${b}：${v.toFixed(1)}`};
   }));
-  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>`<div style="background:${i===j?'#22304a':cells[i][j].hi?'#3b82f6':'#1c2739'}" title="${cells[i][j].t}">${i===j?'—':cells[i][j].v.toFixed(1)}</div>`).join('')).join('');
+  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>`<div style="background:${i===j?'#edf2f8':cells[i][j].hi?'#245bdb':'#e7effb'}" title="${cells[i][j].t}">${i===j?'—':cells[i][j].v.toFixed(1)}</div>`).join('')).join('');
 })();
 
 /* ---------- 五路 × 三情景 卡片矩阵 ---------- */
