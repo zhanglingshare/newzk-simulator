@@ -88,37 +88,44 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
   </div>
 
   <div class="s">
-    <h2>① 全产业链图谱 <span class="tag">68 主体 · 9 层 · 悬停看连接</span></h2>
+    <h2>① 全产业链图谱 <span class="tag">68 主体 · 9 层 · 点住可以拖</span></h2>
+    <div class="layerbar" id="quickBar">
+      <button class="on" data-f="all">全部</button>
+      <button data-f="solid">只看实线关系</button>
+      <button data-f="chain">只看链主链</button>
+      <button data-f="village">乡村与生活</button>
+    </div>
     <div class="layerbar" id="layerBar"></div>
     <div class="legend" id="legend"></div>
     <svg id="net" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg>
     <div class="stat" id="stat"></div>
-    <div class="gt">连接最密的主体（按度排序）</div>
+    <div class="gt">连接最密的主体（按连接多少排序）</div>
     <div class="chart" id="topChart"></div>
+    <p class="ana" style="margin-top:6px">连接最多＝这张网上最离不开的"腰"：链主和几大园区一断，大半张网跟着晃。</p>
     <div class="gt">直接说</div>
     <p class="one">链主和园区之间连得密，但"生产 → 生活 → 消费"这一层几乎全是虚线。</p>
-    <p class="ana">把鼠标放到任意主体上：橙色＝链主，青色＝零部件，蓝色＝园区，粉色＝生活。虚线＝待核实的连接（消费承接、生产性服务业、外资落地），这些正是官方承认的"服务业滞后、消费外流"。</p>
+    <p class="ana">把鼠标放到任意主体上：橙色＝链主，青色＝零部件，蓝色＝园区，粉色＝生活。虚线＝待核实的连接（消费承接、生产性服务业、外资落地），这些正是官方承认的"服务业滞后、消费外流"。<b>想换视角就点住一个点拖一拖</b>——地图是活的。</p>
   </div>
 
   <div class="s">
-    <h2>② 钱流四层漏损：仲恺每一块钱转几圈 <span class="tag">投入产出式本地乘数</span></h2>
+    <h2>② 钱流四层漏损：仲恺每一块钱转几圈 <span class="tag">1 亿订单去哪了</span></h2>
     <p class="ana">链主每收到 1 亿订单，钱在仲恺里一层层留下来——每一层都会漏出去一部分。</p>
     <table class="mul" id="mul"></table>
     <div class="chart" id="leakChart"></div>
     <div class="gt">怎么读</div>
-    <p class="one">1 亿订单 → 约 <b id="multK">0.62 亿</b> 留在仲恺（本地乘数约 <b id="multN">1.6</b>）。配套率从 30% 提到 60%、工人消费多留一点，乘数能到 2 以上——这就是"产业旺"变不成"城市兴"的量化原因。</p>
+    <p class="one">1 亿订单 → 约 <b id="multK">0.62 亿</b> 留在仲恺——相当于 1 块钱在仲恺转出约 <b id="multN">1.6</b> 块钱的活。配套率从 30% 提到 60%、工人消费多留一点，能转到 2 块以上——这就是"产业旺"变不成"城市兴"的原因：钱没在本地转起来。</p>
   </div>
 
   <div class="two">
     <div class="s">
-      <h2>③ 传导链：哪一环最松 <span class="tag">SEM 路径系数 · 模型估计</span></h2>
+      <h2>③ 传导链：哪一环最松 <span class="tag">一环扣一环 · 哪环最松</span></h2>
       <div class="chart" id="semChart"></div>
       <div class="gt">怎么读</div>
       <p class="one">这条链是"产城人"闭环：产业投入 → 创新 → 工资 → 本地消费 → 生活配套 → 人才留驻 → 再投入。</p>
-      <p class="ana">数字＝传导强度（路径系数，越接近 1 越紧）。<b style="color:#f87171">"工资 → 本地消费"只有 0.35，是全链最松的一环</b>——工人的钱流去了惠城和深圳。这是结构方程模型的简化呈现，系数为模型估计、非实测（血统 D 级，待走访核实）。</p>
+      <p class="ana">数字＝这一环的传导力度（越大越紧）。<b style="color:#f87171">"工资 → 本地消费"只有 0.35，是全链最松的一环</b>——工人的钱流去了惠城和深圳。这些力度是按公开信息推算的（可信度 D：推算值·待核实），数值只说明松紧方向，不是实测。</p>
     </div>
     <div class="s">
-      <h2>④ 因果回路：断在哪一环 <span class="tag">系统动力学回路</span></h2>
+      <h2>④ 因果回路：断在哪一环 <span class="tag">一环扣一环的循环</span></h2>
       <div class="loop" id="loop"></div>
       <div class="gt">怎么读</div>
       <p class="one">投资 → 配套 → 订单 → 链主 → 税收 → 基建 → 人才 → 创新 → 新订单，是一个正反馈闭环。</p>
@@ -127,7 +134,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
   </div>
 
   <div class="next"><a href="choices.html">下一步：仲恺的五条路 →</a></div>
-  <div class="disc">主体与连线基于公开信息整理，血统分级标注；所有数字为情景推演，非预测值。</div>
+  <div class="disc">主体与连线基于公开信息整理，可信度分级标注；所有数字为情景推演，非预测值。</div>
 </div>
 
 <div class="tip" id="tip"></div>
@@ -140,31 +147,49 @@ function $(i){return document.getElementById(i)}
 function tip(e,h){tips.innerHTML=h;tips.style.display='block';const x=e.clientX,y=e.clientY;tips.style.left=Math.min(x+14,innerWidth-300)+'px';tips.style.top=Math.max(y-12,8)+'px'}
 function tipOff(){tips.style.display='none'}
 
-/* 图例 + 层开关 */
-let hidden={};
+/* 图例 + 层开关 + 快捷筛选 */
+let hidden={},quick='all';
 function legend(){
   $('legend').innerHTML=Object.keys(LCOL).map(k=>`<span><i style="background:${LCOL[k]}"></i>${LNAME[k]}</span>`).join('');
   $('layerBar').innerHTML=Object.keys(LNAME).map(k=>`<button data-l="${k}" class="${hidden[k]?'':'on'}">${LNAME[k]}</button>`).join('');
   $('layerBar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
     const k=b.dataset.l;hidden[k]=!hidden[k];b.classList.toggle('on',!hidden[k]);draw();
   });
+  $('quickBar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    quick=b.dataset.f;
+    $('quickBar').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    draw();
+  });
 }
+/* 拖拽：节点坐标存内存态 */
+const pos={};ZK.NO.forEach(n=>pos[n[0]]=[n[3],n[4]]);
+let drag=null;
 function draw(){
   const svg=$('net');
+  const off={}; /* 快捷筛选下的隐藏层 */
+  if(quick==='solid')ZK.LK.forEach(l=>{if(l[3]){off[l[0]]=1;off[l[1]]=1;}});
+  const qc={}; /* chain 模式保留的层 */
+  if(quick==='chain'){['chain','oem','part'].forEach(k=>qc[k]=1);}
   let s=`<rect width="1240" height="920" fill="#0a1018" rx="10"/>`;
   /* 连线 */
   ZK.LK.forEach(l=>{
     const a=ZK.NO.find(n=>n[0]===l[0]),b=ZK.NO.find(n=>n[0]===l[1]);
     if(!a||!b)return;
+    if(quick==='chain'&&!qc[a[2]]&&!qc[b[2]])return;
+    if(off[a[0]]||off[b[0]])return;
     if(hidden[a[2]]||hidden[b[2]])return;
-    const w=l[2]||1,dash=l[3];
-    s+=`<line class="link${dash?' dash':''}" data-a="${l[0]}" data-b="${l[1]}" x1="${a[3]}" y1="${a[4]}" x2="${b[3]}" y2="${b[4]}" stroke="${LCOL[a[2]]}" stroke-width="${dash?1:(w===2?2:1)}" opacity=".35"/>`;
+    const dash=l[3];
+    const p1=pos[l[0]],p2=pos[l[1]];
+    s+=`<line class="link${dash?' dash':''}" data-a="${l[0]}" data-b="${l[1]}" x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${LCOL[a[2]]}" stroke-width="${dash?1:(l[2]===2?2:1)}" opacity=".35"/>`;
   });
   /* 节点 */
   ZK.NO.forEach(n=>{
+    if(quick==='chain'&&!qc[n[2]])return;
+    if(off[n[0]])return;
     if(hidden[n[2]])return;
     const c=LCOL[n[2]],dim=n[5]?0.6:1;
-    s+=`<g class="node" data-n="${n[0]}" transform="translate(${n[3]},${n[4]})">
+    const p=pos[n[0]];
+    s+=`<g class="node" data-n="${n[0]}" transform="translate(${p[0]},${p[1]})">
       <ellipse rx="45" ry="17" fill="${c}" opacity="${dim}" stroke="#0d1a24"/>
       <text text-anchor="middle" y="-1" font-size="11" font-weight="700" fill="#0d1a24">${n[1].length>7?n[1].slice(0,7):n[1]}</text>
       <text text-anchor="middle" y="12" font-size="9" fill="${dim<1?'#cbd5e1':'#081018'}" opacity="${dim<1?1:0.9}">${LNAME[n[2]]}${n[5]?'·待核实':''}</text>
@@ -172,6 +197,10 @@ function draw(){
   });
   svg.innerHTML=s;
   bind(svg);
+}
+function svgPt(svg,e){
+  const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;
+  return p.matrixTransform(svg.getScreenCTM().inverse());
 }
 let locked=null;
 function bind(svg){
@@ -182,13 +211,28 @@ function bind(svg){
       const w=c.reduce((a,b)=>a+(b[2]||0),0);
       const hits=c.map(l=>ZK.nm(l[0]===id?l[1]:l[0]));
       tip(e,`<b>${ZK.nm(id)}</b> · ${LNAME[ZK.layerOf(id)]}${ZK.NO.find(n=>n[0]===id)[5]?'（待核实）':''}<br>连接 ${c.length} 条 · 强度合计 ${w}<br><span style="color:#8fa3bf">连向：${hits.slice(0,8).join('、')||'暂无'}</span>`);
-      svg.querySelectorAll('.node').forEach(x=>x.classList.toggle('dim',x!==g));
+      svg.querySelectorAll('.node').forEach(x=>x.classList.toggle('dim',x!==g&&locked!==id));
       svg.querySelectorAll('.link').forEach(l=>l.classList.toggle('hi',l.dataset.a===id||l.dataset.b===id));
     };
     g.onmouseenter=hl;
     g.onmousemove=hl;
     g.onmouseleave=()=>{tipOff();if(locked===id)return;svg.querySelectorAll('.node').forEach(x=>x.classList.remove('dim'));svg.querySelectorAll('.link').forEach(l=>l.classList.remove('hi'));};
     g.onclick=e=>{locked=locked===id?null:id;hl(e);};
+    /* 拖拽 */
+    g.addEventListener('pointerdown',e=>{e.preventDefault();drag={id:id,g:g};g.setPointerCapture(e.pointerId);g.classList.add('drag');});
+    g.addEventListener('pointermove',e=>{
+      if(!drag||drag.id!==id)return;
+      const q=svgPt(svg,e);
+      pos[id]=[q.x,q.y];
+      g.setAttribute('transform','translate('+q.x+','+q.y+')');
+      svg.querySelectorAll('.link[data-a="'+id+'"],.link[data-b="'+id+'"]').forEach(l=>{
+        const a=pos[l.dataset.a],b=pos[l.dataset.b];
+        if(a&&b){l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',b[0]);l.setAttribute('y2',b[1]);}
+      });
+      if(locked===id){svg.querySelectorAll('.link').forEach(l=>l.classList.remove('hi'));svg.querySelectorAll('.node').forEach(x=>x.classList.remove('dim'));}
+    });
+    g.addEventListener('pointerup',()=>{drag=null;g.classList.remove('drag');});
+    g.addEventListener('pointercancel',()=>{drag=null;g.classList.remove('drag');});
   });
   svg.addEventListener('mousemove',e=>{const r=svg.getBoundingClientRect();if(e.clientY>r.top+r.height-30)tipOff();});
 }
@@ -211,7 +255,7 @@ function stat(){
   });
   charts.push(tc);
 }
-/* 本地乘数 */
+/* 钱流漏损 */
 function mul(){
   $('mul').innerHTML=ZK.MULT_LAYERS.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:#8fa3bf">${r[2]}</td></tr>`).join('');
   /* 1 亿订单去向：堆叠条形 */
@@ -227,14 +271,14 @@ function mul(){
   });
   charts.push(lc);
 }
-/* SEM 传导链 */
+/* 传导链 */
 const charts=[];
 function sem(){
   const rows=[...ZK.SEM].reverse();
   const sc=echarts.init($('semChart'));
   sc.setOption({
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{
-      const s=ZK.SEM.find(r=>r[0]+' → '+r[1]===p[0].name);return `${p[0].name}<br>系数 ${p[0].value.toFixed(2)}<br><span style="color:#8fa3bf">${s?s[3]:''}</span>`;
+      const s=ZK.SEM.find(r=>r[0]+' → '+r[1]===p[0].name);return `${p[0].name}<br>力度 ${p[0].value.toFixed(2)}<br><span style="color:#8fa3bf">${s?s[3]:''}</span>`;
     }},
     grid:{left:86,right:40,top:8,bottom:20},
     xAxis:{type:'value',min:0,max:0.8,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},

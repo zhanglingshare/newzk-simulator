@@ -15,6 +15,9 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
 .hero .sub{font-size:12.5px;color:#8fa3bf}
 .pulse{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.qbar{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+.qbar button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:4px 12px;border-radius:14px;font-size:11.5px;cursor:pointer}
+.qbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff}
 .pu{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:9px 12px;font-size:12.5px;color:#cbd5e1;flex:1;min-width:240px}
 .pu b{display:block;font-size:11px;color:#7dd3fc;margin-bottom:3px}
 .towns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
@@ -61,8 +64,10 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="pulse" id="pulse"></div>
+  <div class="qbar" id="qbar"></div>
   <div class="gt">谁最近人气旺（公开打卡热度档，非人数）</div>
   <div class="chart" id="popChart"></div>
+  <p class="ana" style="margin:2px 0 10px">绿色＝高人气、黄色＝较高、橙色＝中。条长的镇街最近有实事撑着（碌鹅季、彩街、新园区开放）；条短不代表不好，是没热点——这本身就是信息：人气是"事"带出来的。</p>
   <div class="towns" id="towns"></div>
 
   <div class="season" id="season"></div>
@@ -74,31 +79,42 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 <script>
 const $=i=>document.getElementById(i);
 const LV={'高':'#3ddc97','较高':'#fbbf24','中':'#fb923c'};
+const isPark=t=>/园|智慧区/.test(t.n);
 fetch('life.json').then(r=>r.json()).then(d=>{
   $('pulse').innerHTML=d.pulse.map(p=>`<div class="pu"><b>今天大家在聊</b>${p}</div>`).join('');
-  /* 人气对比条形 */
-  const LVn={'高':3,'较高':2,'中':1};
-  const popData=[...d.towns].map(function(t){return {name:t.n,level:LVn[t.level]||1,raw:t.level};}).reverse();
-  const pc=echarts.init($('popChart'));
-  pc.setOption({
-    backgroundColor:'transparent',
-    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'<br>人气档：'+p[0].data.raw;}},
-    grid:{left:64,right:30,top:8,bottom:18},
-    xAxis:{type:'value',min:0,max:3,interval:1,axisLabel:{show:false},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#cbd5e1',fontSize:10},axisLine:{lineStyle:{color:'#22304a'}}},
-    series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#3ddc97',2:'#fbbf24',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
+  /* 快捷筛选：全部 / 镇街 / 园区 */
+  const bar=$('qbar');
+  bar.innerHTML=['all:全部','town:镇街','park:园区'].map(k=>{const[f,l]=k.split(':');return `<button class="${f==='all'?'on':''}" data-f="${f}">${l}</button>`;}).join('');
+  bar.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    bar.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));render(b.dataset.f);
   });
-  window.__pop=pc;
-  $('towns').innerHTML=d.towns.map(t=>`
-    <div class="tw">
-      <span class="tag">${t.tag}</span>
-      <h3>${t.n}</h3>
-      <span class="hot">${t.hot}<i> 人气档</i></span>
-      <div class="why">${t.why}</div>
-      <div class="plays">${(t.plays||[]).join(' · ')}</div>
-      ${t.foods?`<div class="foods">${t.foods.join(' · ')}</div>`:''}
-      <span class="lv" style="color:${LV[t.level]||'#8fa3bf'};border:1px solid ${LV[t.level]||'#8fa3bf'}44">人气：${t.level}</span>
-    </div>`).join('');
+  function render(f){
+    const list=d.towns.filter(t=>f==='all'||(f==='town'?!isPark(t):isPark(t)));
+    /* 人气对比条形 */
+    const LVn={'高':3,'较高':2,'中':1};
+    const popData=[...list].map(function(t){return {name:t.n,level:LVn[t.level]||1,raw:t.level};}).reverse();
+    const pc=echarts.init($('popChart'));
+    pc.setOption({
+      backgroundColor:'transparent',
+      tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'<br>人气档：'+p[0].data.raw;}},
+      grid:{left:64,right:30,top:8,bottom:18},
+      xAxis:{type:'value',min:0,max:3,interval:1,axisLabel:{show:false},splitLine:{lineStyle:{color:'#1c2739'}}},
+      yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#cbd5e1',fontSize:10},axisLine:{lineStyle:{color:'#22304a'}}},
+      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#3ddc97',2:'#fbbf24',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
+    });
+    window.__pop=pc;
+    $('towns').innerHTML=list.map(t=>`
+      <div class="tw">
+        <span class="tag">${t.tag}</span>
+        <h3>${t.n}</h3>
+        <span class="hot">${t.hot}<i> 人气档</i></span>
+        <div class="why">${t.why}</div>
+        <div class="plays">${(t.plays||[]).join(' · ')}</div>
+        ${t.foods?`<div class="foods">${t.foods.join(' · ')}</div>`:''}
+        <span class="lv" style="color:${LV[t.level]||'#8fa3bf'};border:1px solid ${LV[t.level]||'#8fa3bf'}44">人气：${t.level}</span>
+      </div>`).join('');
+  }
+  render('all');
   $('season').innerHTML=`<b>当季：${d.season||''}</b><span>${d.note||''} · 更新：${d.updated||''}</span>`;
 }).catch(()=>{
   $('pulse').innerHTML='<div class="pu"><b>今天大家在聊</b>智谷彩街招商完成约80%，力争12月整体开业</div><div class="pu"><b>今天大家在聊</b>跟着鹅香去沥林：市级非遗“沥林碌鹅”曾登央视，每年引大湾区食客超10万人次</div>';

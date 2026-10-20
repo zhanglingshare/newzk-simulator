@@ -16,6 +16,10 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
 .hero .sub{font-size:12.5px;color:#8fa3bf}
+.qbar{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 14px}
+.qbar button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer}
+.qbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.s.hide{display:none}
 .hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
 .s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
 .s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
@@ -71,14 +75,20 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <span class="tag">决策者看：家底的结构与成色</span>
   </div>
 
-  <div class="s">
+  <div class="qbar" id="qbar">
+    <button class="on" data-g="a">先看家底</button>
+    <button data-g="b">再看产业</button>
+    <button data-g="c">横向对比</button>
+  </div>
+
+  <div class="s" data-g="a">
     <h2>家底速览 <span class="tag">2025 年官方口径</span></h2>
     <div class="kpis" id="kpis"></div>
     <div class="gt">直接说</div>
     <p class="one">仲恺是典型的"产业高新区"：工业占七成，服务业只有三成出头，2024 年第三产业还负增长过——产业旺、城市弱，就是它的底色。</p>
   </div>
 
-  <div class="s">
+  <div class="s" data-g="a">
     <h2>三次产业结构：一根长板 + 一根短板</h2>
     <div class="chart" id="pie"></div>
     <div class="gt">怎么读</div>
@@ -86,33 +96,33 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <p class="ana" id="pieNote"></p>
   </div>
 
-  <div class="s">
+  <div class="s" data-g="b">
     <h2>三根柱子：谁在扛产值</h2>
     <div class="chart" id="pillar"></div>
     <div class="gt">直接说</div>
     <p class="one">智能终端 1212 亿、超高清 976 亿、能源电子 812 亿——三根柱子占了规上工业的大部分；能源电子是增长最快的（+18.7%），显示是第二引擎（+23.6%）。</p>
   </div>
 
-  <div class="s">
+  <div class="s" data-g="b">
     <h2>新赛道：官方押注的四个方向</h2>
     <div class="chart" id="newc"></div>
     <div class="ana">四个新赛道都还在"起步期"——这正是官方"新旧动能转换任务依然艰巨"那句话的注脚。</div>
   </div>
 
-  <div class="s">
+  <div class="s" data-g="b">
     <h2>园区版图：「1+1+2」千亿布局</h2>
     <div class="park" id="park"></div>
     <div class="ana">仲恺片区合计约 55.9 平方公里，是"十五五"规上工业冲 6500 亿的主战场。</div>
   </div>
 
-  <div class="s">
+  <div class="s" data-g="c">
     <h2>跟兄弟区比一下</h2>
     <div class="chart" id="radar"></div>
     <div class="duo">
       <div class="d"><b>仲恺</b><p>工业强度全市最高（95），三产与城市配套垫底（45/40）——产业大区、生活洼地。</p></div>
       <div class="d"><b>对照</b><p>大亚湾风险集中度更高（单一产业纵深）；惠城三产和城市功能最全。仲恺的短板一目了然。</p></div>
     </div>
-    <p class="ana">雷达为定性估计（血统 D 级），用于相对比较，不用于精确排名。</p>
+    <p class="ana">雷达为定性估计（可信度 D），用于相对比较，不用于精确排名。</p>
   </div>
 
   <div class="next"><a href="network.html">下一步：把 68 个主体连成一张网 →</a></div>
@@ -183,5 +193,12 @@ radar.setOption({
     ]}]
 });
 window.addEventListener('resize',()=>[pie,pillar,newc,radar].forEach(x=>x.resize()));
+/* 分组 Tab */
+const qbar=document.getElementById('qbar');
+qbar.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  qbar.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.s[data-g]').forEach(s=>s.classList.toggle('hide',s.dataset.g!==b.dataset.g));
+  window.dispatchEvent(new Event('resize'));
+});
 </script>
 </body></html>

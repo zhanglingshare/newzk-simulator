@@ -81,7 +81,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <div class="q4" id="q4"></div>
     <div class="gt">直接说</div>
     <p class="one">产值今天还在涨（+12.2%），是存量在撑；但新开工的投资全部在下滑——五年后 6500 亿的新增量，从哪来？这是全站最该盯的一个数。</p>
-    <p class="ana">口径：旧科研版录入的投资增速（官方统计口径，血统 A 轨可信待复核）。基建 -41.2% 意味着园区配套的投入在收缩，和"三产滞后、城市弱"是同一件事的两面。</p>
+    <p class="ana">口径：旧科研版录入的投资增速（官方统计口径，官方口径 A 级·待复核）。基建 -41.2% 意味着园区配套的投入在收缩，和"三产滞后、城市弱"是同一件事的两面。</p>
   </div>
 
   <div class="s">
@@ -93,9 +93,9 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="s">
-    <h2>三个缺口，补哪个回报大 <span class="tag">敏感性区间 · 基准到进取</span></h2>
+    <h2>三个缺口，补哪个回报大 <span class="tag">基准到进取 · 补了能多留多少</span></h2>
     <div class="chart" id="gapChart"></div>
-    <p class="ana">纵轴是基准档到进取档的落地金额。区间越长＝这根弦越有弹性：算力本地系数从 0.30 提到 0.50，数据中心留在仲恺的钱能翻一倍多——这跟官方"提高算力本地转化率"的方向一致。都是模型推演，血统 D 级。</p>
+    <p class="ana">纵轴是基准档到进取档的落地金额。区间越长＝这根弦越有弹性：算力本地系数从 0.30 提到 0.50，数据中心留在仲恺的钱能翻一倍多——这跟官方"提高算力本地转化率"的方向一致。都是模型推算（可信度 D）。</p>
   </div>
 
   <div class="next"><a href="mylife.html">下一步：这些数字跟我有什么关系 →</a></div>
@@ -115,7 +115,7 @@ const BLIND=[
 $('blind').innerHTML=BLIND.map(b=>`<div class="bd"><div class="n">官方自认 · ${b[3]}</div><b>${b[0]}</b><p>${b[1]}</p><div class="src">${b[2]}</div></div>`).join('');
 const Q4=[['-23.6%','工业投资'],['-22.3%','固定资产投资'],['-22.4%','技术改造投资'],['-41.2%','基建投资']];
 $('q4').innerHTML=Q4.map(q=>`<div class="qi"><div class="v">${q[0]}</div><div class="l">${q[1]}</div><div class="d">同期官方口径</div></div>`).join('');
-/* 三个缺口：基准 vs 进取（与 report 敏感性同源） */
+/* 三个缺口：基准 vs 进取（与 report 弹性同源） */
 const GAP=[['算力本地系数','0.30→0.50',12,28],['本地配套率','30%→60%',32,58],['消费承接','低→高',12,18]];
 const gc=echarts.init($('gapChart'));
 gc.setOption({
