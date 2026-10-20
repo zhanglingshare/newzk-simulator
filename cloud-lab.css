@@ -288,3 +288,57 @@ body[data-page="town"] .season span{color:#5e6e7d!important}
  .wind-layout>.s:last-of-type{order:1}
  .wind-layout>.s:first-of-type{order:2}
 }
+
+
+/* Contrast pass: old dark-theme child typography on new light surfaces. */
+body[data-page="index"] .q3 .t,body[data-page="future"] .q3 .t{color:#245bdb!important;font-size:18px!important}
+body[data-page="index"] .q3 .q b,body[data-page="future"] .q3 .q b{color:#203650!important;font-size:15px!important}
+body[data-page="index"] .q3 .q span,body[data-page="future"] .q3 .q span{color:#536782!important;font-size:13px!important}
+body[data-page="index"] .vote .s{background:transparent!important;border:0!important;color:#536782!important;box-shadow:none!important;padding:0!important;font-size:14px!important}
+body[data-page="index"] .vote .out{color:#415a77!important;font-size:14px!important}
+body[data-page="index"] .big .nums span,body[data-page="index"] .big .links{color:#536782!important}
+body[data-page="index"] .big .links i{color:#245bdb!important}
+body[data-page="index"] .topic{background:#fff!important;border:1px solid #dfe7f2!important;border-radius:13px!important}
+body[data-page="index"] .topic:hover{background:#f6f9ff!important}
+body[data-page="index"] .top1{background:linear-gradient(125deg,#eef4ff,#fff)!important}
+body[data-page="index"] .topic .rank{color:#245bdb!important}
+body[data-page="index"] .topic .meta,body[data-page="index"] .topic .detail{color:#536782!important}
+body[data-page="index"] .topic .src{background:#eaf1fc!important;color:#426081!important}
+body[data-page="index"] .scan-info{color:#536782!important}
+body[data-page="who"] .pk p{color:#415877!important}
+body[data-page="who"] .pk b{color:#1c3350!important}
+body[data-page="who"] .duo .d b{color:#245bdb!important}
+body[data-page="blindspot"] .hero .sub{color:#536782!important}
+body[data-page="blindspot"] .bd b,body[data-page="blindspot"] .sh b{color:#1e3654!important}
+body[data-page="blindspot"] .bd p,body[data-page="blindspot"] .sh p{color:#536782!important}
+body[data-page="blindspot"] .bd .src,body[data-page="blindspot"] .qi .d{color:#6b7f96!important}
+body[data-page="blindspot"] .bd .n,body[data-page="blindspot"] .qi .v{color:#b3424d!important}
+body[data-page="mylife"] .card b,body[data-page="mylife"] .qlife .q b{color:#213a56!important}
+body[data-page="mylife"] .card p,body[data-page="mylife"] .row2 .lab{color:#536782!important}
+body[data-page="mylife"] .card .num{color:#245bdb!important}
+body[data-page="mylife"] .row2{color:#405a76!important}
+body[data-page="mylife"] .qlife .opts button{background:#f3f7ff!important;border:1px solid #d8e4f5!important;color:#405a76!important;min-height:44px}
+body[data-page="mylife"] .qlife .opts button.on{background:#245bdb!important;border-color:#245bdb!important;color:#fff!important}
+body[data-page="ending"] .loop .n b,body[data-page="ending"] .ac b{color:#1d3553!important}
+body[data-page="ending"] .ac p{color:#536782!important}
+body[data-page="ending"] .steps .s2{background:#f5f9ff!important;border:1px solid #dfe7f2!important;color:#405a76!important}
+body[data-page="ending"] .steps .s2 b{color:#245bdb!important}
+body[data-page="ending"] .quote .q{color:#1d3553!important}
+body[data-page="ending"] .quote .w{color:#245bdb!important}
+body[data-page="future"] .contrib .c{background:#f8fbff!important;border:1px solid #dfe7f2!important}
+body[data-page="future"] .contrib .l,body[data-page="future"] .spanline .lab,body[data-page="future"] .gapbar .lab{color:#536782!important}
+body[data-page="future"] .spanline .seg,body[data-page="future"] .gapbar .tr{background:#edf3fb!important;color:#294363!important}
+body[data-page="future"] .spanline .seg b{color:#245bdb!important}
+body[data-page="future"] .bar{background:#e6eef9!important}
+body[data-page="future"] .q3{background:#fff!important;border:1px solid #dfe7f2!important;padding:20px!important;border-radius:16px!important}
+body[data-page="future"] .q3 .q{background:#f7faff!important;border:1px solid #e0e9f5!important;padding:12px!important}
+body[data-page="windtunnel"] .roadhit,body[data-page="windtunnel"] .roadhit b{color:#294363!important}
+body[data-page="choices"] .roadcard .h{color:#1e3654!important}
+body[data-page="choices"] .notes{color:#536782!important}
+body[data-page="choices"] .win .hd{color:#526783!important}
+body[data-page="choices"] .sl .lab{color:#415877!important}
+body[data-page="choices"] .code .seg button.on{background:#245bdb!important;color:#fff!important}
+body[data-page="choices"] .code .seg button{background:#fff!important;border:1px solid #d6e2f3!important;color:#3f5673!important;min-height:44px}
+body[data-page="choices"] .code .seg button.on{background:#245bdb!important;color:#fff!important}
+body[data-page="choices"] .roadcard p{color:#536782!important}
+body[data-page="choices"] .mx2 div,body[data-page="choices"] .win div{color:#203955}
