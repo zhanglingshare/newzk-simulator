@@ -207,3 +207,40 @@ body[data-page="choices"] .workbench .r{min-height:54px}
   .guide-steps a{padding:17px;gap:3px}
   .guide-steps b{font-size:18px}
 }
+
+/* Compact grouped navigation replaces the 12-link horizontal strip. */
+.site-header{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:11px max(20px,calc((100vw - 1400px)/2));background:rgba(255,255,255,.97);border-bottom:1px solid #dfe7f2;box-shadow:0 4px 18px rgba(30,62,109,.045);backdrop-filter:blur(12px)}
+.site-brand{display:inline-flex;align-items:center;gap:10px;flex:none;text-decoration:none;color:#142b4b}
+.site-brand-mark{display:grid;place-items:center;width:37px;height:37px;background:#245bdb;border-radius:11px;color:white;font-size:21px;font-weight:900;box-shadow:0 5px 12px rgba(36,91,219,.15)}
+.site-brand strong{display:block;font-size:18px;line-height:1.15;letter-spacing:-.5px}
+.site-brand small{display:block;font-size:10px;color:#7486a0;letter-spacing:1px;line-height:1.4}
+.site-navigation{display:flex;align-items:center;gap:7px}
+.site-group{position:relative}
+.site-group>summary{list-style:none;display:flex;align-items:center;gap:7px;padding:11px 14px;border-radius:10px;min-height:44px;color:#526781;font-size:14px;font-weight:700;cursor:pointer;user-select:none;white-space:nowrap}
+.site-group>summary::-webkit-details-marker{display:none}
+.site-group>summary:after{content:'⌄';font-size:15px;color:#8ca1bc;line-height:1;transition:transform .15s}
+.site-group[open]>summary:after{transform:rotate(180deg)}
+.site-group-active>summary,.site-group[open]>summary{background:#eaf1ff;color:#245bdb}
+.site-group>summary:hover{background:#f0f5fd}
+.site-menu{position:absolute;top:calc(100% + 9px);right:0;min-width:195px;padding:7px;background:#fff;border:1px solid #dfe7f2;border-radius:14px;box-shadow:0 16px 38px rgba(31,65,111,.14);display:flex;flex-direction:column;gap:2px}
+.site-menu a{display:block;padding:10px 13px;border-radius:8px;text-decoration:none;color:#3d5574;font-size:14px;white-space:nowrap}
+.site-menu a:hover,.site-menu a.current{background:#eaf1ff;color:#245bdb}
+.site-menu a.current{font-weight:800}
+.site-group>summary:focus-visible,.site-menu a:focus-visible{outline:3px solid #78a9f9;outline-offset:2px}
+@media(max-width:760px){
+  .site-header{padding:8px 10px;gap:5px}
+  .site-brand{gap:6px}
+  .site-brand-mark{width:31px;height:31px;font-size:18px;border-radius:9px}
+  .site-brand strong{font-size:14px}
+  .site-brand small{display:none}
+  .site-navigation{gap:0;flex:1;justify-content:space-evenly}
+  .site-group>summary{font-size:11px;padding:10px 5px;gap:2px;min-height:44px}
+  .site-group>summary:after{font-size:12px}
+  .site-menu{position:fixed;top:55px;right:10px;left:10px;min-width:0;max-height:70vh;overflow:auto}
+  .site-menu a{font-size:15px;padding:12px 15px}
+}
+@media(max-width:390px){
+  .site-brand-mark{width:28px;height:28px}
+  .site-brand strong{font-size:13px}
+  .site-group>summary{font-size:10.5px;padding-inline:3px}
+}
