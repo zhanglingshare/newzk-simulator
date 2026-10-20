@@ -197,6 +197,30 @@ function draw(){
   });
   svg.innerHTML=s;
   bind(svg);
+  flyIn(svg);
+}
+/* 节点飞入：从画布外错峰飞进（对标力导向涌现感，轻量实现） */
+function flyIn(svg){
+  const gs=svg.querySelectorAll('.node');
+  const L=[['chain','oem'],['part','park'],['fac','cap','tal'],['life','vill','gap']];
+  gs.forEach(g=>{
+    const id=g.dataset.n,ly=ZK.layerOf(id);
+    const m=(g.getAttribute('transform')||'').match(/translate\(([\d.]+),([\d.]+)\)/);
+    if(!m)return;
+    const x=+m[1],y=+m[2];
+    const li=Math.max(0,L.findIndex(band=>band.includes(ly)));
+    /* 同层同向：链主/整机从上、园区/设施从左、资本/人才从右、生活/乡村从下 */
+    const from=[[0,-1],[1,0],[-1,0],[0,1]][li]||[0,1];
+    const dist=340;
+    const dx=from[0]*dist,dy=from[1]*dist;
+    g.setAttribute('transform',`translate(${x+dx},${y+dy})`);
+    g.style.opacity='0';
+    g.style.transition=`transform .85s cubic-bezier(.2,.7,.3,1) ${li*0.18+(gs.length?Math.random()*0.12:0)}s, opacity .55s ease-out ${li*0.18+0.15}s`;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      g.setAttribute('transform',`translate(${x},${y})`);
+      g.style.opacity='1';
+    }));
+  });
 }
 function svgPt(svg,e){
   const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;
@@ -219,7 +243,7 @@ function bind(svg){
     g.onmouseleave=()=>{tipOff();if(locked===id)return;svg.querySelectorAll('.node').forEach(x=>x.classList.remove('dim'));svg.querySelectorAll('.link').forEach(l=>l.classList.remove('hi'));};
     g.onclick=e=>{locked=locked===id?null:id;hl(e);};
     /* 拖拽 */
-    g.addEventListener('pointerdown',e=>{e.preventDefault();drag={id:id,g:g};g.setPointerCapture(e.pointerId);g.classList.add('drag');});
+    g.addEventListener('pointerdown',e=>{e.preventDefault();drag={id:id,g:g};g.setPointerCapture(e.pointerId);g.classList.add('drag');g.style.transition='none';});
     g.addEventListener('pointermove',e=>{
       if(!drag||drag.id!==id)return;
       const q=svgPt(svg,e);
