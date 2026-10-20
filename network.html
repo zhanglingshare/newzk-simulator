@@ -93,7 +93,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
       <button class="on" data-f="all">全部</button>
       <button data-f="solid">只看实线关系</button>
       <button data-f="chain">只看链主链</button>
-      <button data-f="village">乡村与生活</button>
+      <button data-f="life">只看生活</button>
     </div>
     <div class="layerbar" id="layerBar"></div>
     <div class="legend" id="legend"></div>
@@ -142,6 +142,13 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 <script>
 const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#00c2d9','park':'#3b82f6','fac':'#8ba6bd','cap':'#a06bff','tal':'#3ddc97','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
 const LNAME={'chain':'链主/龙头','oem':'整机','part':'零部件','park':'园区','fac':'设施','cap':'资本/要素','tal':'人才','life':'生活','vill':'乡村','gap':'缺失·待核实'};
+/* 乡村并入生活（不再单列"乡村"笼统类别） */
+const LY=ly=>ly==='vill'?'life':ly;
+/* 节点基础大小（谁大谁小一目了然）+ 按连接数再放大 */
+const R_BASE={'chain':58,'oem':50,'park':46,'cap':44,'fac':40,'part':40,'tal':38,'life':38,'gap':34};
+const deg={};ZK.NO.forEach(n=>deg[n[0]]=0);ZK.LK.forEach(l=>{deg[l[0]]++;deg[l[1]]++;});
+const LAYER_KEYS=Object.keys(LNAME).filter(k=>k!=='vill');
+const FS={'chain':13,'oem':12.5,'park':12,'cap':11.5,'fac':11,'part':11,'tal':11,'life':11,'gap':11};
 const tips=$('#tip');
 function $(i){return document.getElementById(i)}
 function tip(e,h){tips.innerHTML=h;tips.style.display='block';const x=e.clientX,y=e.clientY;tips.style.left=Math.min(x+14,innerWidth-300)+'px';tips.style.top=Math.max(y-12,8)+'px'}
@@ -150,8 +157,8 @@ function tipOff(){tips.style.display='none'}
 /* 图例 + 层开关 + 快捷筛选 */
 let hidden={},quick='all';
 function legend(){
-  $('legend').innerHTML=Object.keys(LCOL).map(k=>`<span><i style="background:${LCOL[k]}"></i>${LNAME[k]}</span>`).join('');
-  $('layerBar').innerHTML=Object.keys(LNAME).map(k=>`<button data-l="${k}" class="${hidden[k]?'':'on'}">${LNAME[k]}</button>`).join('');
+  $('legend').innerHTML=LAYER_KEYS.map(k=>`<span><i style="background:${LCOL[k]}"></i>${LNAME[k]}</span>`).join('');
+  $('layerBar').innerHTML=LAYER_KEYS.map(k=>`<button data-l="${k}" class="${hidden[k]?'':'on'}">${LNAME[k]}</button>`).join('');
   $('layerBar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
     const k=b.dataset.l;hidden[k]=!hidden[k];b.classList.toggle('on',!hidden[k]);draw();
   });
@@ -166,33 +173,56 @@ const pos={};ZK.NO.forEach(n=>pos[n[0]]=[n[3],n[4]]);
 let drag=null;
 function draw(){
   const svg=$('net');
-  const off={}; /* 快捷筛选下的隐藏层 */
+  const off={}; /* 快捷筛选下的隐藏节点 */
   if(quick==='solid')ZK.LK.forEach(l=>{if(l[3]){off[l[0]]=1;off[l[1]]=1;}});
   const qc={}; /* chain 模式保留的层 */
   if(quick==='chain'){['chain','oem','part'].forEach(k=>qc[k]=1);}
+  const vis=ly=>{
+    ly=LY(ly);
+    if(hidden[ly])return false;
+    if(quick==='chain'&&!qc[ly])return false;
+    if(quick==='life'&&ly!=='life')return false;
+    return true;
+  };
   let s=`<rect width="1240" height="920" fill="#0a1018" rx="10"/>`;
+  /* 群落背景：同层节点抱团，一眼看出谁和谁一伙（gap 是散点不圈） */
+  const clu={};
+  ZK.NO.forEach(n=>{
+    if(off[n[0]]||!vis(n[2]))return;
+    const ly=LY(n[2]);
+    if(ly==='gap')return;
+    const b=clu[ly]=clu[ly]||{x1:1e9,y1:1e9,x2:-1e9,y2:-1e9,n:0};
+    const p=pos[n[0]],r=R_BASE[ly]||40;
+    b.x1=Math.min(b.x1,p[0]-r-16);b.y1=Math.min(b.y1,p[1]-r-14);
+    b.x2=Math.max(b.x2,p[0]+r+16);b.y2=Math.max(b.y2,p[1]+r+14);b.n++;
+  });
+  Object.keys(clu).forEach(ly=>{
+    const b=clu[ly],c=LCOL[ly];
+    s+=`<g class="clu"><rect x="${b.x1}" y="${b.y1}" width="${b.x2-b.x1}" height="${b.y2-b.y1}" rx="20" fill="${c}" opacity=".07" stroke="${c}" stroke-width="1.3" stroke-dasharray="7 5" stroke-opacity=".5"/>
+      <rect x="${b.x1+10}" y="${b.y1+8}" width="${LNAME[ly].length*12+14}" height="20" rx="6" fill="#0a1018" opacity=".85"/>
+      <text x="${b.x1+17}" y="${b.y1+22}" fill="${c}" font-size="11.5" font-weight="700" opacity=".95">${LNAME[ly]}</text></g>`;
+  });
   /* 连线 */
   ZK.LK.forEach(l=>{
     const a=ZK.NO.find(n=>n[0]===l[0]),b=ZK.NO.find(n=>n[0]===l[1]);
     if(!a||!b)return;
-    if(quick==='chain'&&!qc[a[2]]&&!qc[b[2]])return;
+    if(!vis(a[2])||!vis(b[2]))return;
     if(off[a[0]]||off[b[0]])return;
-    if(hidden[a[2]]||hidden[b[2]])return;
     const dash=l[3];
     const p1=pos[l[0]],p2=pos[l[1]];
-    s+=`<line class="link${dash?' dash':''}" data-a="${l[0]}" data-b="${l[1]}" x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${LCOL[a[2]]}" stroke-width="${dash?1:(l[2]===2?2:1)}" opacity=".35"/>`;
+    s+=`<line class="link${dash?' dash':''}" data-a="${l[0]}" data-b="${l[1]}" x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${LCOL[LY(a[2])]}" stroke-width="${dash?1:(l[2]===2?2:1)}" opacity=".35"/>`;
   });
-  /* 节点 */
+  /* 节点：大小随层级与连接数分级（链主最大、待核实最小） */
   ZK.NO.forEach(n=>{
-    if(quick==='chain'&&!qc[n[2]])return;
-    if(off[n[0]])return;
-    if(hidden[n[2]])return;
-    const c=LCOL[n[2]],dim=n[5]?0.6:1;
+    if(off[n[0]]||!vis(n[2]))return;
+    const ly=LY(n[2]),c=LCOL[ly],dim=n[5]?0.6:1;
     const p=pos[n[0]];
+    const r=(R_BASE[ly]||40)*(1+Math.min(deg[n[0]]||0,6)*0.05);
+    const rx=r,ry=r*0.36,fs=FS[ly]||11;
     s+=`<g class="node" data-n="${n[0]}" transform="translate(${p[0]},${p[1]})">
-      <ellipse rx="45" ry="17" fill="${c}" opacity="${dim}" stroke="#0d1a24"/>
-      <text text-anchor="middle" y="-1" font-size="11" font-weight="700" fill="#0d1a24">${n[1].length>7?n[1].slice(0,7):n[1]}</text>
-      <text text-anchor="middle" y="12" font-size="9" fill="${dim<1?'#cbd5e1':'#081018'}" opacity="${dim<1?1:0.9}">${LNAME[n[2]]}${n[5]?'·待核实':''}</text>
+      <ellipse rx="${rx}" ry="${ry}" fill="${c}" opacity="${dim}" stroke="#0d1a24"/>
+      <text text-anchor="middle" y="-${Math.round(ry*0.28)}" font-size="${fs}" font-weight="${ly==='chain'||ly==='oem'?800:700}" fill="#0d1a24">${n[1].length>(ly==='chain'?8:7)?n[1].slice(0,ly==='chain'?8:7):n[1]}</text>
+      <text text-anchor="middle" y="${Math.round(ry*1.15)}" font-size="9" fill="${dim<1?'#cbd5e1':'#081018'}" opacity="${dim<1?1:0.9}">${LNAME[ly]}${n[5]?'·待核实':''}</text>
     </g>`;
   });
   svg.innerHTML=s;
@@ -204,7 +234,7 @@ function flyIn(svg){
   const gs=svg.querySelectorAll('.node');
   const L=[['chain','oem'],['part','park'],['fac','cap','tal'],['life','vill','gap']];
   gs.forEach(g=>{
-    const id=g.dataset.n,ly=ZK.layerOf(id);
+    const id=g.dataset.n,ly=LY(ZK.layerOf(id));
     const m=(g.getAttribute('transform')||'').match(/translate\(([\d.]+),([\d.]+)\)/);
     if(!m)return;
     const x=+m[1],y=+m[2];
@@ -234,7 +264,7 @@ function bind(svg){
       const c=ZK.LK.filter(l=>l[0]===id||l[1]===id);
       const w=c.reduce((a,b)=>a+(b[2]||0),0);
       const hits=c.map(l=>ZK.nm(l[0]===id?l[1]:l[0]));
-      tip(e,`<b>${ZK.nm(id)}</b> · ${LNAME[ZK.layerOf(id)]}${ZK.NO.find(n=>n[0]===id)[5]?'（待核实）':''}<br>连接 ${c.length} 条 · 强度合计 ${w}<br><span style="color:#8fa3bf">连向：${hits.slice(0,8).join('、')||'暂无'}</span>`);
+      tip(e,`<b>${ZK.nm(id)}</b> · ${LNAME[LY(ZK.layerOf(id))]}${ZK.NO.find(n=>n[0]===id)[5]?'（待核实）':''}<br>连接 ${c.length} 条 · 强度合计 ${w}<br><span style="color:#8fa3bf">连向：${hits.slice(0,8).join('、')||'暂无'}</span>`);
       svg.querySelectorAll('.node').forEach(x=>x.classList.toggle('dim',x!==g&&locked!==id));
       svg.querySelectorAll('.link').forEach(l=>l.classList.toggle('hi',l.dataset.a===id||l.dataset.b===id));
     };
