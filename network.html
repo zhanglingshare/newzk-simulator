@@ -110,7 +110,6 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     <div class="lab5-empty" id="lab5SearchStatus" role="status" hidden></div>
     <div class="lab5-mode" role="group" aria-label="网络状态切换"><button id="lab5ModeBase" class="active" type="button">A · 原始结构</button><button id="lab5ModeTest" type="button">B · 假设结构</button><span>拖动节点＝调整画面；关闭节点或连线＝仅修改假设结构。</span></div>
     <div class="network-layout"><div class="network-canvas" aria-label="可拖动的产业网络画布"><svg id="net" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg></div><aside class="network-side" aria-label="网络节点信息"><h3>网络速览</h3><p id="selectedNode" class="selected-node" aria-live="polite">点击网络中的主体，查看名称、所属层级与连接数量。</p>
-    <div class="stat" id="stat"></div>
     <div class="lab5-sandbox" id="lab5Sandbox">
       <h3>结构假设实验</h3>
       <div id="lab5Selection" aria-live="polite">点击任一主体或连线，开始一次可撤销的实验。</div>
@@ -123,6 +122,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
       <button type="button" id="lab5Save">保存本地结构实验</button>
       <p class="lab5-note" id="lab5Note">模型原始关系保持不变。下方比较的是网络连通性，不是产值或企业经营预测。</p>
     </div>
+    <div class="stat" id="stat"></div>
     <div class="gt">连接最密的主体（按连接多少排序）</div>
     <div class="chart" id="topChart"></div>
     <p class="ana" style="margin-top:6px">连接最多＝这张网上最离不开的"腰"：链主和几大园区一断，大半张网跟着晃。</p></aside></div>
