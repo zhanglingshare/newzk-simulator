@@ -65,6 +65,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 <link rel="stylesheet" href="lab5.css?v=5">
 <link rel="stylesheet" href="network-v10.css?v=1">
 <link rel="stylesheet" href="network-v11.css?v=1">
+<link rel="stylesheet" href="network-v12.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -87,6 +88,76 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 <div class="wrap">
 
 
+
+<section class="v12-game" id="v12Game" aria-labelledby="v12Title" data-chapter="1" data-cut="no">
+  <div class="v12-orbit-bg" aria-hidden="true"></div>
+  <div class="v12-game-header">
+    <div class="v12-logo-line"><span class="v12-beacon"></span> NEWZK · 连接的秘密 <small>INTERACTIVE STORY / 01</small></div>
+    <div class="v12-time-mark"><span>◷</span> 约30秒 · 无需任何专业知识</div>
+  </div>
+  <div class="v12-game-heading">
+    <span class="v12-pretitle">有些联系，断了还有别的路。有些却没有。</span>
+    <h1 id="v12Title">断掉一根线，<br><em>会发生什么？</em></h1>
+    <p id="v12Lead">这里有三个相互关联的主体。你只要按一次按钮，看看会怎样。</p>
+  </div>
+  <div class="v12-game-arena">
+    <div class="v12-arena-hud">
+      <span><i class="v12-hud-light"></i> <span id="v12SceneName">第一关 · 还有别的联系吗？</span></span>
+      <span id="v12Progress">01 / 02</span>
+    </div>
+    <div class="v12-graph-frame">
+      <svg id="v12Graph" viewBox="0 0 900 425" role="img" aria-label="依据仲恺模型局部真实关系绘制的概念网络。点击屏幕下方按钮，可体验假设中断开关系后的结构变化。">
+        <defs>
+          <radialGradient id="v12Glow"><stop offset="0%" stop-color="#268fb9" stop-opacity=".29"/><stop offset="100%" stop-color="#268fb9" stop-opacity="0"/></radialGradient>
+          <linearGradient id="v12Energy" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#53dff5"/><stop offset="50%" stop-color="#d8fcff"/><stop offset="100%" stop-color="#4ab4f1"/></linearGradient>
+        </defs>
+        <ellipse cx="450" cy="210" rx="390" ry="192" fill="url(#v12Glow)"/>
+        <g id="v12GraphEdges"></g>
+        <g id="v12GraphSignals"></g>
+        <g id="v12GraphNodes"></g>
+        <g id="v12GraphImpact"></g>
+      </svg>
+      <div class="v12-moment" id="v12Moment" aria-live="polite">
+        <span id="v12MomentKicker">这条线代表模型中的一条关联</span>
+        <strong id="v12MomentTitle">现在，它们彼此连着。</strong>
+        <p id="v12MomentCaption">关系是公开资料建模记录，不代表已经核实的真实交易。</p>
+      </div>
+    </div>
+    <div class="v12-game-foot">
+      <div class="v12-game-hint" id="v12Hint"><span class="v12-hint-dot"></span> <span>不需要看懂所有圆点，只管看断线后有没有替代联系。</span></div>
+      <button type="button" class="v12-big-action" id="v12Action">✦ 断开这条线 <span aria-hidden="true">→</span></button>
+    </div>
+    <div class="v12-game-dots" aria-label="游戏进度"><span class="active"></span><span></span><span></span></div>
+  </div>
+  <div class="v12-final" id="v12Final" hidden>
+    <div class="v12-final-mark">✓ 你已经掌握了一种判断方法</div>
+    <h2>同样少一条联系，<br><em>结果为什么不一样？</em></h2>
+    <p>因为重要的不只是有多少条线，<strong>还要看有没有别的联系能替代。</strong></p>
+    <div class="v12-rule"><span>01</span><strong>先找有没有替代关系</strong></div>
+    <div class="v12-rule"><span>02</span><strong>再查关键关系是否真实</strong></div>
+    <div class="v12-rule"><span>03</span><strong>最后才判断现实影响</strong></div>
+    <p class="v12-final-disclaimer">这是公开资料模型的结构小游戏，不证明现实出现故障，也不预测GDP、企业损失或交通后果。</p>
+    <div class="v12-final-actions">
+      <button type="button" id="v12Again" class="v12-big-action">↺ 再玩一次</button>
+      <button type="button" id="v12GoDeep" class="v12-deep-action">我想试试自己的判断 ↗</button>
+    </div>
+  </div>
+  <div class="v12-proof">
+    <span>光线动起来是为了方便理解，不是测得的资金流或物流。</span>
+    <button type="button" id="v12ShowMath" aria-expanded="false" aria-controls="v12Math">为什么会这样？看真实模型数字 <span aria-hidden="true">⌄</span></button>
+    <div id="v12Math" hidden>
+      <div class="v12-math-columns">
+        <div><span>第一关 / 普通关联</span><strong id="v12MathA">104 → 103</strong><small>连通组 3 → 3 · 最大连通群 66 → 66</small></div>
+        <div><span>第二关 / 桥接关联</span><strong id="v12MathB">104 → 103</strong><small>连通组 3 → 4 · 最大连通群 66 → 65</small></div>
+      </div>
+      <p>来自相同的68节点、104条模型关系。第一关沿“亿纬锂能—储能系统集成”关闭一条关系；二者仍通过“锂电正极”连接。第二关关闭“深惠城际—跨区通勤”（模型待核实关联）；由于目前只记录这一条跨区通勤连接，该节点会成为孤立点。此结果是图论计算，不是经济损失估计。</p>
+    </div>
+  </div>
+</section>
+
+<details class="v12-next-level" id="v12NextLevel">
+  <summary><span>可选 · 不用学会也能离开</span><strong>还想更深入地玩？</strong><small>体验个人判断卡 · 动态网络 · 资金留存 · 完整专业图谱</small><i aria-hidden="true">↗</i></summary>
+  <div class="v12-next-level-body">
 <section class="v11-experience" id="v11Experience" aria-labelledby="v11ExpHeading">
   <div class="v11-exp-head">
     <div class="v11-exp-mark"><span class="v11-exp-light"></span> THE DECISION EXPERIENCE · 约3分钟</div>
@@ -350,6 +421,9 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     </div>
   </div>
 
+  </div>
+</details>
+
   <div class="next"><a href="choices.html">下一步：仲恺的五条路 →</a></div>
   <div class="disc">主体与连线基于公开信息整理，可信度分级标注；资金分配和传导关系含有未验证的模型假设，不能视为真实交易流水或因果效应。</div>
 </div>
@@ -576,4 +650,5 @@ window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()))
 <script src="network-lab-v5.js?v=5"></script>
 <script src="network-v10.js?v=1"></script>
 <script src="network-v11.js?v=1"></script>
+<script src="network-v12.js?v=1"></script>
 </body></html>
