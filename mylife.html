@@ -46,24 +46,23 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .qlife .opts button.on{background:#7c3aed;border-color:#a78bfa;color:#fff;font-weight:700}
 .chart{width:100%;height:220px}
 @media(max-width:760px){.chart{height:190px}}
-</style><link rel="stylesheet" href="cloud-lab.css?v=2">
-<script src="cloud-lab-ui.js?v=2" defer></script>
-</head><body data-page="mylife">
+</style>
+<link rel="stylesheet" href="visual-polish-v4.css?v=4"></head><body data-v4="mylife">
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">01 今日仲恺</a>
-  <a href="who.html">02 仲恺是什么</a>
-  <a href="network.html">03 产业链地图</a>
-  <a href="choices.html">04 五条路</a>
-  <a href="future.html">05 未来2030</a>
-  <a href="windtunnel.html">06 风洞</a>
-  <a href="blindspot.html">07 忽略了什么</a>
-  <a href="mylife.html" class="on">08 跟我的关系</a>
-  <a href="report.html">09 分析报告</a>
-  <a href="ending.html">10 结语</a>
-  <a href="guide.html">11 使用指南</a>
-  <a href="town.html">12 生活地图</a>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html" class="on">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
 </div>
 
 <div class="wrap">
@@ -74,17 +73,8 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <span class="tag">决策者看：三产滞后、消费外流的实感证据</span>
   </div>
 
-
   <div class="s">
-    <h2>你的三个选择，模型里对应哪根弦 <span class="tag">点一点，看影响</span></h2>
-    <div class="qlife" id="qlife"></div>
-    <div class="chart" id="lifeChart"></div>
-    <div class="ana" id="lifeNote"></div>
-  </div>
-
-
-  <div class="s">
-    <h2>就业：产业变化可能怎样影响岗位</h2>
+    <h2>就业：厂在，岗位就在；厂走，岗位先走</h2>
     <div class="grid2">
       <div class="card"><div class="e">产业</div><b>今天：产业人口撑起仲恺</b><p>规上工业 1144 家、用电 102 亿度，数十万产业人口在这里上班。链主每加一条产线，配套厂就多一批岗位。</p></div>
       <div class="card"><div class="e">就业</div><b>未来：新增约 3 万个岗位（估算）</b><p>按"新增 2300 亿产值 × 每亿约 15 个岗位"估算（模型换算，可信度 D），岗位跟着园区走——人安好，厂才留得住。</p></div>
@@ -96,12 +86,12 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <div class="row2"><span class="lab">工资留在仲恺</span><div class="tr"><i style="left:0;width:35%;background:#f472b6"></i></div><span class="v">约 35%</span></div>
     <div class="row2"><span class="lab">流去惠城/深圳</span><div class="tr"><i style="left:35%;width:65%;background:#475569"></i></div><span class="v">约 65%</span></div>
     <div class="gt">直接说</div>
-    <p class="one">这是模型中值得进一步核实的一环：模型假设下，一部分消费可能发生在仲恺之外。钱不在仲恺转，商业街就起不来，三产就滞后——这跟你每月在哪买菜、周末去哪逛街，是同一件事。</p>
+    <p class="one">这是传导链里最松的一环：工人挣的钱，六成以上花在了仲恺之外。钱不在仲恺转，商业街就起不来，三产就滞后——这跟你每月在哪买菜、周末去哪逛街，是同一件事。</p>
     <p class="ana">比例＝模型推算（可信度 D），指向"消费外流"方向，具体数待实地走访核实。</p>
   </div>
 
   <div class="s">
-    <h2>教育医疗：近期公开信息中的新进展</h2>
+    <h2>教育医疗：这两年的新进展</h2>
     <div class="grid2">
       <div class="card"><div class="e">学位</div><b>新增公办学位</b><p class="num">2400 个</p><p>2026 年新增公办学位，配套新建学校落地（廖承志红军学校幸福校区等）。</p></div>
       <div class="card"><div class="e">医疗</div><b>医院分院开建</b><p class="num">2 家新院</p><p>区人民医院潼侨分院、惠环医院新院推进——看病人不用都往市区跑。</p></div>
@@ -114,7 +104,14 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <h2>住房与通勤：住在哪、怎么上班</h2>
     <div class="ana" style="margin-bottom:6px">深惠城际、四环路全线闭环（R 线仲恺往惠阳方向 2026.10.30 通车）——通勤圈在拉开。跨区通勤是虚线：住惠城、上班仲恺的人不少，他们的钱也大部分花在了惠城。</div>
     <div class="gt">决策者看</div>
-    <p class="one">这一页就是"服务业滞后、消费外流"的实感证据，也是第04页"城市与人"那条路（民生优先下排第一）的底气：把人留住，钱才留得住。</p>
+    <p class="one">这一页就是"服务业滞后、消费外流"的实感证据，也是第④页"城市与人"那条路（民生优先下排第一）的底气：把人留住，钱才留得住。</p>
+  </div>
+
+  <div class="s">
+    <h2>你的三个选择，模型里对应哪根弦 <span class="tag">点一点，看影响</span></h2>
+    <div class="qlife" id="qlife"></div>
+    <div class="chart" id="lifeChart"></div>
+    <div class="ana" id="lifeNote"></div>
   </div>
 
   <div class="next"><a href="report.html">下一步：看分析报告与可信度 →</a></div>
