@@ -64,6 +64,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <link rel="stylesheet" href="lab5.css?v=5">
 <link rel="stylesheet" href="network-v10.css?v=1">
+<link rel="stylesheet" href="network-v11.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -85,18 +86,100 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 
 <div class="wrap">
 
+
+<section class="v11-experience" id="v11Experience" aria-labelledby="v11ExpHeading">
+  <div class="v11-exp-head">
+    <div class="v11-exp-mark"><span class="v11-exp-light"></span> THE DECISION EXPERIENCE · 约3分钟</div>
+    <div class="v11-exp-index">从一个疑问开始，带走一种判断方法</div>
+    <h2 id="v11ExpHeading">真实世界的数据总是不完整。<br><em>你要怎样做决定？</em></h2>
+    <p>这里没有标准答案，也不要求你学会复杂网络分析。只需要选择一个你在意的现实问题，然后完成一次推理。</p>
+  </div>
+  <div class="v11-steps" role="list" aria-label="决策体验四步">
+    <span role="listitem" class="is-done" data-step-index="1"><b>01</b>发现问题</span>
+    <span role="listitem" data-step-index="2"><b>02</b>做个假设</span>
+    <span role="listitem" data-step-index="3"><b>03</b>看见后果</span>
+    <span role="listitem" data-step-index="4"><b>04</b>补齐证据</span>
+  </div>
+  <div class="v11-exp-content">
+    <div class="v11-exp-step" id="v11Step1">
+      <div class="v11-step-eyebrow">STEP 01 / PICK A QUESTION</div>
+      <h3>此刻，你最想弄清楚什么？</h3>
+      <div class="v11-case-grid" role="group" aria-label="选择一个决策困境">
+        <button class="v11-case is-selected" data-case="supplier" type="button" aria-pressed="true">
+          <span class="v11-case-id">01 · 供应链</span>
+          <strong>一家大企业，<br>真的能带动本地配套吗？</strong>
+          <small>从亿纬锂能和生产性服务业的待核实关系出发</small><i aria-hidden="true">↗</i>
+        </button>
+        <button class="v11-case" data-case="consumer" type="button" aria-pressed="false">
+          <span class="v11-case-id">02 · 城市消费</span>
+          <strong>工厂有订单，<br>钱为什么未必留得下？</strong>
+          <small>从生产性服务业与消费承接的待核实连接出发</small><i aria-hidden="true">↗</i>
+        </button>
+        <button class="v11-case" data-case="talent" type="button" aria-pressed="false">
+          <span class="v11-case-id">03 · 人才生活</span>
+          <strong>产业招到了人，<br>生活配套跟得上吗？</strong>
+          <small>从人才公寓与消费承接的待核实关系出发</small><i aria-hidden="true">↗</i>
+        </button>
+      </div>
+      <div class="v11-action-row">
+        <span>无需了解任何术语 · 全部基于现有公开模型关系</span>
+        <button type="button" id="v11Start" class="v11-primary">带着这个问题进入 →</button>
+      </div>
+    </div>
+    <div class="v11-exp-step" id="v11Step2" hidden>
+      <div class="v11-step-eyebrow">STEP 02 / FORM A HYPOTHESIS</div>
+      <h3 id="v11HypothesisTitle">如果这条关系并不存在呢？</h3>
+      <p id="v11HypothesisCopy">不用猜未来有多少亿元，先观察网络结构会不会改变。</p>
+      <div class="v11-premise" id="v11Premise"></div>
+      <div class="v11-judgment-options">
+        <button type="button" data-judgment="keep" class="v11-judge"><span>A · 假设仍然存在</span><strong>先保留这条关系</strong><small>看看当前网络的结构</small></button>
+        <button type="button" data-judgment="remove" class="v11-judge"><span>B · 假设关系失效</span><strong>暂时拿掉这条关系</strong><small>看看图上的连接会变什么</small></button>
+      </div>
+      <div class="v11-action-row"><button class="v11-back" data-back="1" type="button">← 换一个问题</button><button class="v11-primary" id="v11Run" type="button" disabled>观察结构变化 →</button></div>
+    </div>
+    <div class="v11-exp-step" id="v11Step3" hidden>
+      <div class="v11-step-eyebrow">STEP 03 / SEE THE CONSEQUENCE</div>
+      <h3 id="v11ResultTitle">结构究竟发生了什么？</h3>
+      <div class="v11-result-graphic" role="img" aria-label="相同底图中仅对选中一条关系施加情景变化的A/B拓扑比较">
+        <div class="v11-result-side"><span>A · 模型记录</span><strong id="v11ResultA">104</strong><small>关系条数</small></div>
+        <div class="v11-result-middle" id="v11ResultGlyph">↔</div>
+        <div class="v11-result-side v11-result-b"><span>B · 你的假设</span><strong id="v11ResultB">103</strong><small>关系条数</small></div>
+      </div>
+      <div class="v11-impact-stats"><span id="v11ResultComponents">连通组：—</span><span id="v11ResultLargest">最大连通群：—</span></div>
+      <p id="v11ResultMeaning" class="v11-result-explain"></p>
+      <div class="v11-unknown">你已经看到的是<strong>模型拓扑变化</strong>。但仅凭这张图，你仍不知道企业实际有没有交易、交易金额是多少、现实经济会损失多少。</div>
+      <div class="v11-action-row"><button class="v11-back" data-back="2" type="button">← 改变假设</button><button type="button" id="v11EvidenceNext" class="v11-primary">那下一步查什么？ →</button></div>
+    </div>
+    <div class="v11-exp-step" id="v11Step4" hidden>
+      <div class="v11-step-eyebrow">STEP 04 / WHAT WOULD CHANGE YOUR MIND?</div>
+      <h3>如果只能再获得一条信息，<br>你会优先核实什么？</h3>
+      <div class="v11-evidence-options" role="group" aria-label="选择下一步核验的证据" id="v11EvidenceOptions"></div>
+      <div id="v11EvidenceFeedback" class="v11-evidence-feedback" aria-live="polite">真正的决策，从知道自己还不知道什么开始。</div>
+      <div class="v11-action-row"><button class="v11-back" data-back="3" type="button">← 返回对比</button><button type="button" id="v11Finish" class="v11-primary" disabled>生成我的思考卡 →</button></div>
+    </div>
+    <div class="v11-exp-step" id="v11Step5" hidden>
+      <div class="v11-step-eyebrow">DECISION COMPLETE / 一次完整的思考</div>
+      <h3>你完成的不是一道题，<br><em>而是一次有证据意识的判断。</em></h3>
+      <div class="v11-takeaway" id="v11Takeaway" aria-live="polite"></div>
+      <div class="v11-three-rules"><span>分清<strong>事实</strong>与<strong>假设</strong></span><span>先看<strong>结构</strong>再谈<strong>后果</strong></span><span>让<strong>新证据</strong>决定下一步</span></div>
+      <div class="v11-action-row"><button type="button" id="v11Again" class="v11-back">↶ 再试一个问题</button><button type="button" id="v11Copy" class="v11-primary">复制我的思考卡</button></div>
+      <p class="v11-save-status" id="v11SaveStatus" role="status"></p>
+    </div>
+  </div>
+</section>
+
 <section class="v10-theater" aria-labelledby="v10Title">
   <div class="v10-headline">
     <div>
       <div class="v10-kicker"><span class="v10-ping"></span> NEWZK / NETWORK ENGINE / 03</div>
-      <h1 id="v10Title">这不是一张关系图。<br><em>这是仲恺的连接方式。</em></h1>
-      <p>先看一条关系如何被记录，再动手改变它。数字、结构、可疑的空白，要一起给你回应。</p>
+      <h1 id="v10Title">不是先看懂68个点。<br><em>是亲手做一次判断。</em></h1>
+      <p>三分钟，走完一次真实的思考闭环：发现问题、提出假设、观察结构、寻找证据，最后带走自己的判断。</p>
     </div>
     <div class="v10-head-summary">
       <div><span>模型主体</span><strong id="v10HeadNodes">—</strong></div>
       <div><span>网络关系</span><strong id="v10HeadEdges">—</strong></div>
       <div><span>待核实线</span><strong id="v10HeadUnknown">—</strong></div>
-      <small>基于现有模型整理；连接 ≠ 交易金额或经济因果。</small>
+      <small>完整的研究底座，体验只需要一条关键连接。</small>
     </div>
   </div>
   <div class="v10-exhibit">
@@ -154,12 +237,12 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
       <div class="v10-focus-edge"><span>本次可修改的真实模型关系</span><strong id="v10EdgeLabel">请选择一个切面</strong><small id="v10EdgeStatus">选择后可断开或恢复</small></div>
       <button type="button" class="v10-cut" id="v10Cut">在 B 方案断开这条关系 <span>✕</span></button>
       <div class="v10-undo-row"><button type="button" id="v10Undo">↶ 撤销上一步</button><button type="button" id="v10Reset">↻ 恢复全图</button></div>
-      <a class="v10-open" href="#v10Editor">进入完整68主体实验台 <span>↗</span></a>
+      <a class="v10-open" href="#v11Expert">专业玩家：进入完整网络 <span>↗</span></a>
       <p class="v10-director-note">断线后展示的是<strong>连通性变化</strong>，不是因果冲击传播。可疑连接的证据等级来自原模型，动画不代表现实事件。</p>
     </aside>
   </div>
 </section>
-<div id="v10Editor" class="v10-workbench-label"><span>FULL NETWORK / 实验工作台</span><h2>68个主体，都在这里。</h2><p>上面先看局部；下面保留完整可拖动、可缩放、可筛选的网络，以及原有A/B结构实验和所有研究图表。</p></div>
+<details id="v11Expert" class="v11-expert"><summary><span>进阶探索 · ADVANCED</span><strong>完整68主体、104关系，在需要时展开</strong><small>主体搜索 / 缩放 / A/B修改 / 撤销 / 保存 / 专业指标</small></summary><div id="v10Editor" class="v10-workbench-label"><span>FULL NETWORK / 专业数据底座</span><h2>68个主体，都在这里。</h2><p>下面是可自由操作的完整结构，折叠不会丢失你的B方案。只看或隐藏节点，不等于删除关系。</p></div>
   <div class="hero">
     <div class="hu">仲恺是一张怎么样的网？</div>
     <div class="sub">68 个真实主体：谁跟谁有业务往来、钱从哪来、在哪一层漏掉。点亮一个点看它的连接。</div>
@@ -207,35 +290,35 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     <p class="one">链主和园区之间连得密，但"生产 → 生活 → 消费"这一层几乎全是虚线。</p>
     <p class="ana">把鼠标放到任意主体上：橙色＝链主，青色＝零部件，蓝色＝园区，粉色＝生活。虚线＝待核实的连接（消费承接、生产性服务业、外资落地），这些正是官方承认的"服务业滞后、消费外流"。<b>想换视角就点住一个点拖一拖</b>——地图是活的。</p>
   </div>
+</details>
 
   <div class="s">
-    <h2>② 钱流四层漏损：仲恺每一块钱转几圈 <span class="tag">1 亿订单去哪了</span></h2>
+    <div class="v11-panel-eyebrow">拓展体验 / 01 · 资金留存</div><h2>同样1亿元订单，钱可能留在哪里？</h2>
     <p class="ana">链主每收到 1 亿订单，钱在仲恺里一层层留下来——每一层都会漏出去一部分。</p>
-    <table class="mul" id="mul"></table>
-    <div class="chart" id="leakChart"></div>
+    <div id="v11MoneyStream" class="v11-money-stream"></div><div id="v11MoneyNote" class="v11-money-note" role="status">选择一段示例分配，了解模型里的假设。</div><details class="v11-raw"><summary>想看原始分配表和旧图表？展开 ↗</summary><table class="mul" id="mul"></table><div class="chart" id="leakChart"></div></details>
     <div class="gt">怎么读</div>
     <p class="one">1 亿订单 → 约 <b id="multK">0.62 亿</b> 留在仲恺——相当于 1 块钱在仲恺转出约 <b id="multN">1.6</b> 块钱的活。配套率从 30% 提到 60%、工人消费多留一点，能转到 2 块以上——这就是"产业旺"变不成"城市兴"的原因：钱没在本地转起来。</p>
   </div>
 
   <div class="two">
     <div class="s">
-      <h2>③ 传导链：哪一环最松 <span class="tag">一环扣一环 · 哪环最松</span></h2>
-      <div class="chart" id="semChart"></div>
+      <div class="v11-panel-eyebrow">拓展体验 / 02 · 因果边界</div><h2>这座城最值得核实哪条传导？</h2>
+      <div class="v11-sem-strip" id="v11SemJourney"></div><div class="v11-sem-detail" id="v11SemDetail"></div><details class="v11-raw"><summary>查看模型假设系数的原始图表 ↗</summary><div class="chart" id="semChart"></div></details>
       <div class="gt">怎么读</div>
       <p class="one">这条链是"产城人"闭环：产业投入 → 创新 → 工资 → 本地消费 → 生活配套 → 人才留驻 → 再投入。</p>
       <p class="ana">数字＝这一环的传导力度（越大越紧）。<b style="color:#bf3b49">"工资 → 本地消费"只有 0.35，是全链最松的一环</b>——工人的钱流去了惠城和深圳。这些力度是按公开信息推算的（可信度 D：推算值·待核实），数值只说明松紧方向，不是实测。</p>
     </div>
     <div class="s">
-      <h2>④ 因果回路：断在哪一环 <span class="tag">一环扣一环的循环</span></h2>
-      <div class="loop" id="loop"></div>
+      <div class="v11-panel-eyebrow">拓展体验 / 03 · 反馈思维</div><h2>增长的正反馈，凭什么能一直持续？</h2>
+      <div id="v11LoopStage" class="v11-loop-stage"></div><details class="v11-raw"><summary>查看原始反馈路径 ↗</summary><div class="loop" id="loop"></div></details>
       <div class="gt">怎么读</div>
       <p class="one">投资 → 配套 → 订单 → 链主 → 税收 → 基建 → 人才 → 创新 → 新订单，是一个正反馈闭环。</p>
-      <p class="ana">官方说"投资仍未止跌回稳"（工业投资 <b style="color:#bf3b49">-23.6%</b>）——回路在<b style="color:#bf3b49">第一环"投资"就断了</b>：今天产值还在涨，是因为存量在撑；五年后增量从哪来，要看投资回不回补。</p>
+      <p class="ana">工业投资 -23.6% 是公开数据中的风险信号，但不能据此断定整个反馈回路已经断裂。箭头表示值得检验的研究假设，并非测得的因果传导。</p>
     </div>
   </div>
 
   <div class="next"><a href="choices.html">下一步：仲恺的五条路 →</a></div>
-  <div class="disc">主体与连线基于公开信息整理，可信度分级标注；所有数字为情景推演，非预测值。</div>
+  <div class="disc">主体与连线基于公开信息整理，可信度分级标注；资金分配和传导关系含有未验证的模型假设，不能视为真实交易流水或因果效应。</div>
 </div>
 
 <div class="tip" id="tip"></div>
@@ -459,4 +542,5 @@ window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()))
 </script>
 <script src="network-lab-v5.js?v=5"></script>
 <script src="network-v10.js?v=1"></script>
+<script src="network-v11.js?v=1"></script>
 </body></html>
