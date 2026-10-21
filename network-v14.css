@@ -1,0 +1,77 @@
+/* NewZK V14 · unlockable secret city maps. This is a game stage, not a research interface. */
+.v14-unlock{background:linear-gradient(105deg,#a2fce9,#80d6ff,#c6a5ff)!important;border:1px solid #c5fbff!important;box-shadow:0 7px 0 rgba(51,75,124,.6),0 15px 34px rgba(99,196,241,.3)!important;color:#14243e!important}
+.v14-secret{--color:#89ebff;position:relative;isolation:isolate;overflow:hidden;max-width:1150px;margin:27px auto 28px;padding:26px 28px 21px;border-radius:20px;border:1px solid rgba(125,220,249,.53);background:radial-gradient(ellipse at 22% 19%,rgba(54,148,231,.29),transparent 60%),radial-gradient(ellipse at 88% 82%,rgba(149,89,200,.22),transparent 62%),linear-gradient(137deg,#0b233e,#132047 52%,#101735);box-shadow:0 25px 67px rgba(0,0,0,.26),inset 0 0 35px rgba(100,199,243,.03);scroll-margin-top:24px}
+.v14-secret[hidden]{display:none!important}
+.v14-secret[data-area="life"]{--color:#f2aee1;background:radial-gradient(ellipse at 22% 19%,rgba(188,70,177,.27),transparent 62%),linear-gradient(132deg,#231338,#202547 65%,#171b35)}
+.v14-secret[data-area="mobile"]{--color:#ffca9b;background:radial-gradient(ellipse at 22% 19%,rgba(227,135,56,.2),transparent 63%),linear-gradient(132deg,#2b203c,#152a45 65%,#101c36)}
+.v14-secret-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.v14-live-badge{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:850;letter-spacing:.12em;color:#9feafe}
+.v14-live-badge i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#a4fde4;box-shadow:0 0 9px #75d8ee}
+.v14-close{border:1px solid rgba(160,205,244,.24);border-radius:8px;padding:7px 12px;background:rgba(29,58,92,.49);font-size:11px;font-weight:790;color:#d9edf9;cursor:pointer}
+.v14-close:hover{background:rgba(47,101,151,.65)}
+.v14-secret h2{margin:0;font-weight:950;font-size:clamp(33px,4.6vw,59px);line-height:1.16;color:#f8fdff;letter-spacing:-.065em}
+.v14-secret h2 em{font-style:normal;color:#a4fcdf;text-shadow:0 0 20px rgba(112,251,216,.15)}
+.v14-secret>p:not(.v14-smallprint){font-size:12.5px;line-height:1.8;color:#b9cde6;margin:11px 0 17px}
+.v14-places{display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap}
+.v14-place{flex:1;min-height:46px;border:1px solid rgba(151,205,242,.34);border-radius:10px;background:rgba(25,53,91,.75);color:#e8f4ff;padding:10px 16px;font-size:13px;font-weight:830;cursor:pointer;transition:transform .15s,background .15s}
+.v14-place:hover{background:#24547d;transform:translateY(-2px)}
+.v14-place.is-active{background:linear-gradient(125deg,#1e859f,#2955a0);border-color:#a7f9fb;color:#fff;box-shadow:0 0 16px rgba(74,184,224,.18)}
+.v14-secret[data-area="life"] .v14-place.is-active{background:linear-gradient(125deg,#ba5c9d,#684aa6);border-color:#f6bce7}
+.v14-secret[data-area="mobile"] .v14-place.is-active{background:linear-gradient(125deg,#a67358,#674c9e);border-color:#f7c89d}
+.v14-sandbox{position:relative;overflow:hidden;border:1px solid rgba(141,204,238,.26);border-radius:15px;background:radial-gradient(ellipse at 45% 50%,rgba(37,110,160,.17),transparent 69%),linear-gradient(180deg,rgba(7,21,42,.73),rgba(11,23,52,.89))}
+.v14-sandbox:before{content:"";position:absolute;inset:0;opacity:.21;pointer-events:none;background-image:linear-gradient(rgba(141,199,242,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(141,199,242,.08) 1px,transparent 1px);background-size:38px 38px}
+.v14-sandbox-hud{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:13px 17px;border-bottom:1px solid rgba(148,203,241,.14);font-size:12px;color:#effbff;font-weight:830}
+.v14-combo{font-size:11px;color:#ffcd94;background:rgba(203,113,87,.17);border:1px solid rgba(254,187,134,.31);border-radius:90px;padding:5px 10px;font-variant-numeric:tabular-nums}
+body[data-page="network"] svg#v14FreeGraph{position:relative;z-index:2;display:block;width:100%;height:auto;max-height:550px;min-height:360px;background:transparent;overflow:visible;filter:drop-shadow(0 12px 28px rgba(6,12,32,.18))}
+#v14FreeGraph .v14-link{fill:none;stroke:#68d7f0;stroke-opacity:.74;stroke-width:4.6;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(98,214,244,.33));transition:stroke-opacity .18s,stroke .18s}
+#v14FreeGraph .v14-link.is-uncertain{stroke:#efb080;stroke-dasharray:7 11}
+#v14FreeGraph .v14-link.is-cut{stroke:#fc8d9d;stroke-opacity:.15;stroke-dasharray:6 11;stroke-width:3}
+#v14FreeGraph .v14-edge-hit{fill:none;stroke:transparent;stroke-width:29;pointer-events:stroke;cursor:crosshair}
+#v14FreeGraph .v14-edge-hit:hover{stroke:rgba(255,242,203,.23);filter:drop-shadow(0 0 8px #fff0aa)}
+#v14FreeGraph .v14-edge-hit:focus-visible{stroke:rgba(255,249,198,.4);outline:none}
+#v14FreeGraph .v14-glimmer{fill:#bafaff;opacity:.92;filter:drop-shadow(0 0 7px #89f0fa)}
+#v14FreeGraph .v14-glimmer.is-uncertain{fill:#ffdaa3;filter:drop-shadow(0 0 7px #ffd2a0)}
+#v14FreeGraph .v14-cut-dot{fill:#ffadb5;filter:drop-shadow(0 0 11px #ff99aa);animation:v14Pulse .7s ease-out alternate infinite}
+@keyframes v14Pulse{from{opacity:.2}to{opacity:.95}}
+#v14FreeGraph .v14-character-halo{fill:rgba(45,134,173,.2);stroke:rgba(143,228,248,.42);stroke-width:2}
+#v14FreeGraph .v14-character-core{fill:#183951;stroke:#a6eafd;stroke-width:2.7}
+#v14FreeGraph .v14-character-dot{fill:#d5faff;filter:drop-shadow(0 0 9px #84eaff)}
+#v14FreeGraph .v14-character.is-hero .v14-character-core{fill:#236682;stroke:#a7ffea;stroke-width:3.4;filter:drop-shadow(0 0 15px rgba(118,245,226,.41))}
+#v14FreeGraph .v14-character.is-stranded .v14-character-core{fill:#62354f;stroke:#ffc2ae}
+#v14FreeGraph .v14-character.is-stranded .v14-character-dot{fill:#ffb99e;filter:drop-shadow(0 0 10px #ffaf91)}
+#v14FreeGraph .v14-character-name{font-size:15px;font-weight:850;fill:#e5f8ff;stroke:#0b1d39;stroke-width:4;paint-order:stroke;stroke-linejoin:round;pointer-events:none}
+.v14-result{position:relative;z-index:3;text-align:center;max-width:820px;margin:-4px auto 11px;padding:0 13px;min-height:80px}
+.v14-result>span{display:block;color:#d5bafb;font-size:10px;letter-spacing:.1em;font-weight:830}
+.v14-result>strong{display:block;color:#f2fdff;font-size:clamp(17px,2.7vw,27px);font-weight:900;line-height:1.5;margin:5px 0 0}
+.v14-impact .v14-result>strong{animation:v14Pop .32s cubic-bezier(.2,1.8,.4,1)}
+@keyframes v14Pop{from{opacity:.5;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
+.v14-sandbox-bottom{display:flex;align-items:center;justify-content:space-between;gap:11px;padding:12px 16px;background:rgba(3,13,29,.35);border-top:1px solid rgba(142,196,238,.15);color:#9fbbd5;font-size:10px}
+.v14-sandbox-bottom span i{display:inline-block;width:7px;height:7px;background:#b4f7e5;border-radius:50%;box-shadow:0 0 8px #85eed6;margin-right:6px}
+.v14-sandbox-bottom button{cursor:pointer;min-height:37px;color:#def4ff;border:1px solid rgba(162,211,237,.3);border-radius:8px;background:rgba(28,60,91,.62);padding:8px 13px;font-size:11px;font-weight:820}
+.v14-sandbox-bottom button:hover{background:#2c648b}
+.v14-smallprint{font-size:10px!important;color:#8bacc5!important;line-height:1.7;margin:12px 0 0!important}
+@media(max-width:700px){
+ .v14-secret{padding:15px 10px 14px;margin:17px auto;border-radius:14px}
+ .v14-secret-top{margin-bottom:7px}
+ .v14-live-badge{font-size:8px}
+ .v14-close{font-size:10px}
+ .v14-secret h2{font-size:36px}
+ .v14-secret>p:not(.v14-smallprint){font-size:10.5px;margin:9px 0 11px}
+ .v14-places{gap:5px}
+ .v14-place{padding:7px 5px;min-height:41px;font-size:11px}
+ .v14-sandbox-hud{font-size:10px;padding:9px}
+ .v14-combo{font-size:9px;padding:5px 8px}
+ body[data-page="network"] svg#v14FreeGraph{min-height:240px;max-height:380px}
+ #v14FreeGraph .v14-character-name{font-size:23px;stroke-width:5}
+ #v14FreeGraph .v14-edge-hit{stroke-width:37}
+ .v14-result{min-height:65px;margin:1px 0 9px}
+ .v14-result>strong{font-size:18px}
+ .v14-sandbox-bottom{padding:9px;flex-wrap:wrap;justify-content:center;text-align:center;font-size:9px}
+ .v14-sandbox-bottom button{min-height:35px}
+ .v14-smallprint{font-size:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #v14FreeGraph .v14-glimmer{display:none!important}
+ #v14FreeGraph .v14-cut-dot,.v14-impact .v14-result>strong{animation:none!important}
+ .v14-place{transition:none!important}
+}
