@@ -67,6 +67,14 @@ function render(){
   });
   byId('lab5ShockMapA').innerHTML=mapMarkup(a,b);
   byId('lab5ShockMapB').innerHTML=mapMarkup(b,a);
+  for(const [id,affected,other] of [['lab5ShockListA',A,B],['lab5ShockListB',B,A]]){
+    const el=byId(id);el.replaceChildren();
+    affected.forEach(nodeId=>{
+      const span=document.createElement('span');
+      span.className='lab5-shock-chip'+(other.has(nodeId)?' lab5-shock-common':'');
+      span.textContent=ZK.nm(nodeId);el.appendChild(span);
+    });
+  }
   byId('lab5ShockNote').textContent='A独有：'+(onlyA.slice(0,4).map(id=>ZK.nm(id)).join('、')||'无')
     +'；B独有：'+(onlyB.slice(0,4).map(id=>ZK.nm(id)).join('、')||'无')
     +'。蓝色为两种情景共同波及的主体；橙色为本图独有波及主体。不是现实损失预测。';
