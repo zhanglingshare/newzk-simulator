@@ -67,6 +67,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 <link rel="stylesheet" href="network-v11.css?v=1">
 <link rel="stylesheet" href="network-v12.css?v=1">
 <link rel="stylesheet" href="network-v13.css?v=1">
+<link rel="stylesheet" href="network-v14.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -151,12 +152,42 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     <div class="v13-final-one-liner">咦？同样剪一刀，结果竟然完全不同。</div>
     <p class="v12-final-disclaimer">游戏规则取材于公开资料模型中的连接；断线仅为虚拟效果，不代表现实企业或道路发生故障。</p>
     <div class="v12-final-actions">
+      <button type="button" id="v14SecretOpen" class="v12-big-action v14-unlock">🔓 解锁秘密街区 <span aria-hidden="true">↗</span></button>
       <button type="button" id="v13Poster" class="v12-big-action">✦ 生成通关海报</button>
       <button type="button" id="v12Again" class="v12-deep-action">↺ 再来两刀</button>
       <button type="button" id="v12GoDeep" class="v12-deep-action">↗ 看幕后彩蛋</button>
     </div>
     <p id="v13PosterStatus" class="v13-poster-status" role="status" aria-live="polite"></p>
   </div>
+
+  <section class="v14-secret" id="v14Secret" aria-label="秘密街区自由剪线游戏" hidden>
+    <div class="v14-secret-top"><span class="v14-live-badge"><i></i> HIDDEN LEVEL UNLOCKED</span><button type="button" id="v14SecretClose" class="v14-close" aria-label="关闭秘密街区">✕ 关掉</button></div>
+    <h2>秘密街区，<em>随便剪！</em></h2>
+    <p>不止两刀了。选择一个小世界，点你想剪的发光线。看看它还有没有别的路。</p>
+    <div class="v14-places" role="group" aria-label="选择秘密街区">
+      <button type="button" class="v14-place is-active" data-area="battery" aria-pressed="true">⚡ 电池城</button>
+      <button type="button" class="v14-place" data-area="mobile" aria-pressed="false">📱 手机城</button>
+      <button type="button" class="v14-place" data-area="life" aria-pressed="false">🌙 夜生活</button>
+    </div>
+    <div class="v14-sandbox">
+      <div class="v14-sandbox-hud"><span id="v14AreaLabel">⚡ 电池城</span><span class="v14-combo" id="v14Combo">0 连击</span></div>
+      <svg id="v14FreeGraph" viewBox="0 0 900 570" role="img" aria-label="精选八个模型主体组成的小世界。点击任意发光连接，可模拟在这个街区断开或恢复关系。">
+        <defs><radialGradient id="v14Sky"><stop stop-color="#3ea5d7" stop-opacity=".23"/><stop offset="1" stop-color="#3ea5d7" stop-opacity="0"/></radialGradient></defs>
+        <ellipse cx="450" cy="260" rx="370" ry="250" fill="url(#v14Sky)"/>
+        <g id="v14Edges"></g><g id="v14Lights"></g><g id="v14Nodes"></g><g id="v14Sparks"></g>
+      </svg>
+      <div class="v14-result" aria-live="polite">
+        <span id="v14ResultType">点击一条发光的线</span>
+        <strong id="v14Result">看看能不能找到另一条路！</strong>
+      </div>
+      <div class="v14-sandbox-bottom">
+        <span><i></i> 可点击的连线 · 再点一次可以恢复</span>
+        <button type="button" id="v14Reset">↺ 全部复原</button>
+      </div>
+    </div>
+    <p class="v14-smallprint">街区只包含部分真实模型连接；绕行结果按当前可见子图计算。断线完全虚拟，不是现实中的企业或城市故障。</p>
+  </section>
+
   <div class="v12-proof">
     <span>温馨提示：这是公开模型的连接小游戏，不是现实事故演练。</span>
     <button type="button" id="v12ShowMath" aria-expanded="false" aria-controls="v12Math">偷偷看看游戏规则 <span aria-hidden="true">⌄</span></button>
@@ -666,4 +697,5 @@ window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()))
 <script src="network-v10.js?v=1"></script>
 <script src="network-v11.js?v=1"></script>
 <script src="network-v13.js?v=1"></script>
+<script src="network-v14.js?v=1"></script>
 </body></html>
