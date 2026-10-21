@@ -155,7 +155,7 @@ function hist(){
   r.results.forEach(v=>{let b=Math.floor((v-min)/bw);if(b<0)b=0;if(b>=bins)b=bins-1;cnt[b]++;});
   const mx=Math.max(...cnt);
   const hc=echarts.init($('hist'));
-  hc.setOption({
+  hc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{
       const v0=min+Math.floor(p[0].value)*bw,v1=v0+bw;
       return `${v0}—${v1} 亿<br>跑出 ${p[0].value} 次${v1>=ZK.TARGET?' · 已过目标线':''}`;
@@ -166,9 +166,9 @@ function hist(){
     series:[{type:'bar',barWidth:'98%',
       data:cnt.map((c,i)=>({value:c,itemStyle:{color:min+(i+1)*bw>=ZK.TARGET?'rgba(245,158,11,.85)':'rgba(37,99,235,.65)',borderRadius:1}})),
       markLine:{silent:true,symbol:'none',lineStyle:{color:'#bf3b49',type:'dashed',width:1.5},
-        label:{color:'#bf3b49',fontSize:11,formatter:'目标 6500'},
+        label:{color:'#bf3b49',fontSize:12,formatter:'目标 6500'},
         data:[{xAxis:ZK.TARGET}]}}],
-    graphic:[{type:'text',left:8,top:10,style:{text:'1000 次结果堆叠 · 橙色柱＝落在 6500 以上 · 悬停看计数',fill:'#536782',fontSize:10.5}}]
+    graphic:[{type:'text',left:8,top:10,style:{text:'1000 次结果堆叠 · 橙色柱＝落在 6500 以上 · 悬停看计数',fill:'#536782',fontSize:11.5}}]
   });
   charts.push(hc);
 }
@@ -179,13 +179,13 @@ function box(){
     const q=(f)=>{const i=Math.floor(f*(v.length-1));return Math.round(v[i]);};
     return [q(.05),q(.25),q(.5),q(.75),q(.95)];
   });
-  bc.setOption({
+  bc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'item',formatter:p=>{
       const v=p.value;return `${p.name}<br>最坏 5%：${v[0]} 亿<br>下四分位：${v[1]} 亿<br>中位数：${v[2]} 亿<br>上四分位：${v[3]} 亿<br>最好 5%：${v[4]} 亿`;
     }},
-    legend:{data:['分布','目标线'],textStyle:{color:'#536782',fontSize:11},top:0},
+    legend:{data:['分布','目标线'],textStyle:{color:'#536782',fontSize:12},top:0},
     grid:{left:50,right:18,top:30,bottom:26},
-    xAxis:{type:'category',data:['乐观','基准','恶劣'],axisLabel:{color:'#17243d',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    xAxis:{type:'category',data:['乐观','基准','恶劣'],axisLabel:{color:'#17243d',fontSize:12.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
     yAxis:{type:'value',axisLabel:{color:'#536782',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
     series:[
       {name:'分布',type:'boxplot',boxWidth:44,itemStyle:{color:'rgba(37,99,235,.25)',borderColor:'#245bdb',borderWidth:1.5},
