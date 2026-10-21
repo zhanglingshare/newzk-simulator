@@ -1,7 +1,7 @@
 /* NewZK V14 · Five Future Gates. Main surface is an immersive world, legacy analytics live backstage. */
 :root{--v14-accent:#74e6f7}
 body[data-page="choices"]{background:#07101f;color:#eef8ff}
-body[data-page="choices"]>.nav{display:none!important}
+body[data-page="choices"]>.nav,body[data-page="choices"]>.site-header{display:none!important}
 body[data-page="choices"] .wrap{max-width:1660px;padding:12px clamp(8px,2.8vw,42px) 58px}
 .v14-world{position:relative;overflow:hidden;isolation:isolate;min-height:940px;border:1px solid rgba(141,197,242,.23);border-radius:24px;padding:16px clamp(14px,3vw,46px) 32px;background:radial-gradient(ellipse 50% 65% at 7% 45%,rgba(52,76,155,.22),transparent 78%),radial-gradient(ellipse 60% 70% at 92% 43%,color-mix(in srgb,var(--v14-accent) 18%,transparent),transparent 82%),linear-gradient(150deg,#081227,#0d1b37 48%,#081527);box-shadow:0 30px 90px rgba(1,5,19,.37);transition:background .4s ease}
 .v14-world:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(rgba(121,171,223,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(121,171,223,.05) 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(transparent 0,#000 35%,#000 80%,transparent 100%)}
