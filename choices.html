@@ -360,8 +360,8 @@ function renderWin(){
 }
 
 function initPair(){
-  $('tab_mx').onclick=()=>{pairTab='mx';$('tab_mx').className='on';$('tab_win').className='';$('mx2').style.display='';$('win').style.display='none';$('pairNote').textContent='格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。';};
-  $('tab_win').onclick=()=>{pairTab='win';$('tab_win').className='on';$('tab_mx').className='';$('mx2').style.display='none';$('win').style.display='';renderWin();};
+  $('tab_mx').onclick=()=>{$('matrixMobile').hidden=false;pairTab='mx';$('tab_mx').className='on';$('tab_win').className='';$('mx2').style.display='';$('win').style.display='none';$('pairNote').textContent='格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。';};
+  $('tab_win').onclick=()=>{$('matrixMobile').hidden=true;pairTab='win';$('tab_win').className='on';$('tab_mx').className='';$('mx2').style.display='none';$('win').style.display='';renderWin();};
 }
 
 const charts=[];
