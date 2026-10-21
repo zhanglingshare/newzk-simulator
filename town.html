@@ -5,38 +5,38 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .sub{font-size:12.5px;color:#536782}
 .pulse{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .qbar{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
-.qbar button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:4px 12px;border-radius:14px;font-size:11.5px;cursor:pointer}
-.qbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff}
-.pu{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:9px 12px;font-size:12.5px;color:#cbd5e1;flex:1;min-width:240px}
+.qbar button{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:4px 12px;border-radius:14px;font-size:11.5px;cursor:pointer}
+.qbar button.on{background:#245bdb;border-color:#245bdb;color:#fff}
+.pu{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:9px 12px;font-size:12.5px;color:#405773;flex:1;min-width:240px}
 .pu b{display:block;font-size:11px;color:#7dd3fc;margin-bottom:3px}
 .towns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
 @media(max-width:760px){.towns{grid-template-columns:1fr}}
-.tw{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:13px;position:relative}
-.tw .tag{display:inline-block;font-size:10.5px;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:1px 8px;border-radius:10px;margin-bottom:6px}
+.tw{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:13px;position:relative}
+.tw .tag{display:inline-block;font-size:10.5px;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:1px 8px;border-radius:10px;margin-bottom:6px}
 .tw h3{font-size:16px;margin:0 0 4px;color:#fff}
-.tw .hot{position:absolute;top:12px;right:12px;font-size:12px;color:#fbbf24;font-weight:800}
-.tw .hot i{font-style:normal;font-size:10px;color:#5b6b82;font-weight:400}
-.tw .why{font-size:12px;color:#8fa3bf;margin-bottom:8px}
-.tw .plays{font-size:11.5px;color:#cbd5e1;margin-bottom:4px}
-.tw .foods{font-size:11.5px;color:#fbbf24}
+.tw .hot{position:absolute;top:12px;right:12px;font-size:12px;color:#b96a20;font-weight:800}
+.tw .hot i{font-style:normal;font-size:10px;color:#6c7d94;font-weight:400}
+.tw .why{font-size:12px;color:#536782;margin-bottom:8px}
+.tw .plays{font-size:11.5px;color:#405773;margin-bottom:4px}
+.tw .foods{font-size:11.5px;color:#b96a20}
 .tw .lv{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:9px;margin-top:6px}
-.season{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;background:rgba(255,255,255,.03);border:1px solid #22304a;border-radius:10px;padding:11px 13px}
+.season{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;background:rgba(255,255,255,.03);border:1px solid #d8e3f0;border-radius:10px;padding:11px 13px}
 .season b{color:#a3e635;font-size:13px}
-.season span{font-size:12px;color:#8fa3bf}
+.season span{font-size:12px;color:#536782}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 .chart{width:100%;height:240px;margin:4px 0 10px}
 @media(max-width:760px){.chart{height:200px}}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
@@ -80,7 +80,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <script>
 const $=i=>document.getElementById(i);
-const LV={'高':'#3ddc97','较高':'#fbbf24','中':'#fb923c'};
+const LV={'高':'#168366','较高':'#b96a20','中':'#fb923c'};
 const isPark=t=>/园|智慧区/.test(t.n);
 fetch('life.json').then(r=>r.json()).then(d=>{
   $('pulse').innerHTML=d.pulse.map(p=>`<div class="pu"><b>今天大家在聊</b>${p}</div>`).join('');
@@ -102,7 +102,7 @@ fetch('life.json').then(r=>r.json()).then(d=>{
       grid:{left:64,right:30,top:8,bottom:18},
       xAxis:{type:'value',min:0,max:3,interval:1,axisLabel:{show:false},splitLine:{lineStyle:{color:'#e8eef6'}}},
       yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#405a76',fontSize:10},axisLine:{lineStyle:{color:'#dbe6f2'}}},
-      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#3ddc97',2:'#fbbf24',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#405a76',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
+      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#168366',2:'#b96a20',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#405a76',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
     });
     window.__pop=pc;
     $('towns').innerHTML=list.map(t=>`
@@ -113,7 +113,7 @@ fetch('life.json').then(r=>r.json()).then(d=>{
         <div class="why">${t.why}</div>
         <div class="plays">${(t.plays||[]).join(' · ')}</div>
         ${t.foods?`<div class="foods">${t.foods.join(' · ')}</div>`:''}
-        <span class="lv" style="color:${LV[t.level]||'#8fa3bf'};border:1px solid ${LV[t.level]||'#8fa3bf'}44">人气：${t.level}</span>
+        <span class="lv" style="color:${LV[t.level]||'#536782'};border:1px solid ${LV[t.level]||'#536782'}44">人气：${t.level}</span>
       </div>`).join('');
   }
   render('all');
