@@ -32,38 +32,7 @@
       details.appendChild(menu);nav.appendChild(details);
       details.addEventListener('toggle',()=>{if(details.open)nav.querySelectorAll('.site-group').forEach(other=>{if(other!==details)other.open=false;});});
     });
-    header.appendChild(nav);
-    const mobileMenu=document.createElement('button');
-    mobileMenu.type='button';mobileMenu.className='mobile-menu-toggle';
-    mobileMenu.textContent='全部页面';mobileMenu.setAttribute('aria-label','展开全部页面');mobileMenu.setAttribute('aria-expanded','false');
-    header.appendChild(mobileMenu);
-    const mobileNav=document.createElement('nav');mobileNav.className='mobile-bottom-nav';mobileNav.setAttribute('aria-label','手机主导航');
-    const mobileOverlay=document.createElement('div');mobileOverlay.className='mobile-nav-overlay';mobileOverlay.hidden=true;
-    mobileOverlay.innerHTML='<div class="mobile-nav-head"><strong>选择页面</strong><button type="button" aria-label="关闭菜单">关闭</button></div>';
-    groups.forEach((g,i)=>{
-      const a=document.createElement('button');a.type='button';a.textContent=g.label;
-      a.className='mobile-bottom-item'+(g.pages.some(p=>p[0]===page)?' active':'');
-      a.addEventListener('click',()=>openMobileMenu(i));
-      mobileNav.appendChild(a);
-      const section=document.createElement('section');section.className='mobile-nav-section';
-      const h=document.createElement('h3');h.textContent=g.label;section.appendChild(h);
-      g.pages.forEach(p=>{const link=document.createElement('a');link.href=p[0];link.textContent=p[1];if(p[0]===page)link.setAttribute('aria-current','page');section.appendChild(link);});
-      mobileOverlay.appendChild(section);
-    });
-    function openMobileMenu(i){
-      mobileOverlay.hidden=false;document.body.classList.add('mobile-nav-open');
-      mobileMenu.setAttribute('aria-expanded','true');
-      mobileOverlay.querySelectorAll('.mobile-nav-section').forEach((section,index)=>section.classList.toggle('selected',i===undefined||i===index));
-      mobileOverlay.querySelector('.mobile-nav-head button').focus();
-    }
-    function closeMobileMenu(){
-      mobileOverlay.hidden=true;document.body.classList.remove('mobile-nav-open');mobileMenu.setAttribute('aria-expanded','false');
-    }
-    mobileMenu.addEventListener('click',()=>mobileOverlay.hidden?openMobileMenu():closeMobileMenu());
-    mobileOverlay.querySelector('.mobile-nav-head button').addEventListener('click',closeMobileMenu);
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mobileOverlay.hidden)closeMobileMenu();});
-    document.body.append(mobileNav,mobileOverlay);
-    original.replaceWith(header);
+    header.appendChild(nav);original.replaceWith(header);
     document.addEventListener('click',e=>{if(!header.contains(e.target))nav.querySelectorAll('details').forEach(d=>d.open=false);});
     document.addEventListener('keydown',e=>{if(e.key==='Escape')nav.querySelectorAll('details').forEach(d=>d.open=false);});
   }
