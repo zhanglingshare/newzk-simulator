@@ -391,3 +391,14 @@ body[data-v4="town"] .season span{color:#6d7d8c!important}
  body[data-v4="choices"] .mx2{overflow-x:auto;min-width:0;scrollbar-color:#b9cfe8 transparent}
  body[data-v4="choices"] .mx2 div{font-size:11.5px!important}
 }
+
+
+/* Do not mistake descriptive sub-elements named .s for section cards. */
+body[data-v4="index"] .vote > .s,
+body[data-v4="windtunnel"] .card > .s,
+body[data-v4="windtunnel"] .cards .card .s{
+  display:block!important;background:transparent!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  padding:0!important;margin:4px 0 10px!important;
+  color:#536b86!important;font-size:14px!important;line-height:1.7!important;
+}
