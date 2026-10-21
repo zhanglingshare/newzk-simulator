@@ -100,6 +100,30 @@ body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"Ping
     <span class="tag">决策者看：换尺子，排序怎么翻</span>
   </div>
 
+  <section class="s lab5-path-lab" aria-label="五条路经济情景对比实验">
+    <div class="lab5-section-head">
+      <div><span class="lab5-eyebrow">真实模型计算 · 假设实验</span>
+      <h2>把五条路拉一拉，2030 会怎样？</h2>
+      <p class="ana">本页另一组滑块调的是<strong>评价权重</strong>，只影响排序；这里拖动的是五条路径的<strong>假设新增贡献</strong>，将用原有 model.js 重新模拟。</p></div>
+      <span class="lab5-pin">A 基准 / B 实验</span>
+    </div>
+    <div class="lab5-path-grid">
+      <div class="lab5-path-controls">
+        <div class="lab5-path-head"><strong>调整 B 方案</strong><button type="button" id="lab5PathsReset">恢复默认</button></div>
+        <div id="lab5PathInputs"></div>
+        <div class="lab5-warn">这是情景假设，不包含土地、财政、人才等资源容量约束。把五条路都拉高不代表现实中能同时实现。</div>
+      </div>
+      <div class="lab5-path-outcomes">
+        <div class="lab5-path-compare" id="lab5PathKpis" aria-live="polite"></div>
+        <div class="lab5-chart-label">两种方案的结果分布 · 同一种子、同样1000次抽样</div>
+        <div class="lab5-path-chart" id="lab5PathChart" role="img" aria-label="基准与自定义方案的未来产值概率分布比较"></div>
+        <div class="lab5-path-status" id="lab5PathStatus" role="status"></div>
+        <button type="button" id="lab5PathsSave">在浏览器保存本次对比</button>
+      </div>
+    </div>
+    <p class="ana">注意：本实验使用现有 ZK.run 模型计算，路径波动参数维持默认，修改的只有用户输入的假设平均贡献。结果为模型条件下的推演，不是现实预测；与上方单路径2000次分布统计是两个独立实验。</p>
+  </section>
+
   <div class="code">
     <div class="t">你的决策码 · 三把旋钮，一套参照</div>
     <div class="row">
@@ -130,29 +154,7 @@ body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"Ping
   </div>
 
 
-  <section class="s lab5-path-lab" aria-label="五条路经济情景对比实验">
-    <div class="lab5-section-head">
-      <div><span class="lab5-eyebrow">真实模型计算 · 假设实验</span>
-      <h2>把五条路拉一拉，2030 会怎样？</h2>
-      <p class="ana">上面的滑块是<strong>评价权重</strong>，只影响排序；这里拖动的是五条路径的<strong>假设新增贡献</strong>，将用原有 model.js 重新模拟。</p></div>
-      <span class="lab5-pin">A 基准 / B 实验</span>
-    </div>
-    <div class="lab5-path-grid">
-      <div class="lab5-path-controls">
-        <div class="lab5-path-head"><strong>调整 B 方案</strong><button type="button" id="lab5PathsReset">恢复默认</button></div>
-        <div id="lab5PathInputs"></div>
-        <div class="lab5-warn">这是情景假设，不包含土地、财政、人才等资源容量约束。把五条路都拉高不代表现实中能同时实现。</div>
-      </div>
-      <div class="lab5-path-outcomes">
-        <div class="lab5-path-compare" id="lab5PathKpis" aria-live="polite"></div>
-        <div class="lab5-chart-label">两种方案的结果分布 · 同一种子、同样1000次抽样</div>
-        <div class="lab5-path-chart" id="lab5PathChart" role="img" aria-label="基准与自定义方案的未来产值概率分布比较"></div>
-        <div class="lab5-path-status" id="lab5PathStatus" role="status"></div>
-        <button type="button" id="lab5PathsSave">在浏览器保存本次对比</button>
-      </div>
-    </div>
-    <p class="ana">注意：本实验使用现有 ZK.run 模型计算，路径波动参数维持默认，修改的只有用户输入的假设平均贡献。结果为模型条件下的推演，不是现实预测；与上方单路径2000次分布统计是两个独立实验。</p>
-  </section>
+
 
   <div class="s">
     <h2>五条路各跑 2000 遍：分布长这样 <span class="tag">同一种子 · 同结果</span></h2>
