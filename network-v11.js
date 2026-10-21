@@ -51,7 +51,11 @@ for(const [id,c] of Object.entries(scenes)){
  if(!links.some(e=>e.key===edgeKey(...c.edge)))throw Error('Missing recorded model relation for '+id);
 }
 const baseMetrics=metrics(null);
-let currentCase='supplier',judgment=null,evidenceIndex=null,step=1,result=baseMetrics,copyText='';
+const bridgePair=['n38','n55'];
+const bridgeKey=edgeKey(...bridgePair);
+if(!links.some(e=>e.key===bridgeKey&&e.uncertain))throw Error('Bridge teaching example must be a flagged uncertain model link');
+const bridgeMetrics=metrics(bridgeKey);
+let currentCase='supplier',judgment=null,evidenceIndex=null,step=1,result=baseMetrics,copyText='',bridgeViewed=false;
 function metrics(cut){
  const adj=new Map(dataNodes.map(id=>[id,[]]));
  let count=0;
@@ -132,6 +136,14 @@ function showResult(){
   meaning='假设关系失效：连通组 '+baseMetrics.components+' → '+result.components+'，最大连通群 '+baseMetrics.largest+' → '+result.largest+'。这是图论意义上的变化，不代表真实企业倒闭或经济损失。';
  }
  text('v11ResultMeaning',meaning);
+ text('v11MyCutName',x.edge.map(name).join(' — '));
+ text('v11MyCutMetrics','连通组 '+baseMetrics.components+' → '+result.components+' · 最大群 '+baseMetrics.largest+' → '+result.largest);
+ text('v11BridgeMetrics','连通组 '+baseMetrics.components+' → '+bridgeMetrics.components+' · 最大群 '+baseMetrics.largest+' → '+bridgeMetrics.largest);
+ text('v11BridgeInsight','这条“深惠城际—跨区通勤”是当前模型里标为待核实的桥接关系。如果只假设它不再存在，跨区通勤节点会成为独立节点，连通组 '+baseMetrics.components+' → '+bridgeMetrics.components+'，最大连通群 '+baseMetrics.largest+' → '+bridgeMetrics.largest+'。这不是现实交通中断，也不代表已计算任何经济损失。');
+ bridgeViewed=false;
+ $('v11BridgeReveal').hidden=true;
+ $('v11RevealBridge').setAttribute('aria-expanded','false');
+ $('v11RevealBridge').textContent='揭开真正的桥接点 ↓';
  go(3);
 }
 function prepareEvidence(){
@@ -175,6 +187,7 @@ function finish(){
   '必须警惕：结构连通性≠现实交易强度，不能由此得出产值损失或因果结论。',
   '优先查证：'+e[0]+'。',
   '核验理由：'+e[1],
+  ...(bridgeViewed?['对照发现：同样是减少一条模型关系，结构位置不同，连通性变化可能不同；桥接作用并非实测经济影响。']:[]),
   '下一步：获取可核实、合规来源的事实，回来修正假设，而不是急着下结论。',
   '方法：提出问题 → 明确假设 → 观察有限结果 → 承认证据缺口 → 决定下一步。'
  ];
@@ -243,6 +256,13 @@ $('v11Start').addEventListener('click',()=>{chooseCase(currentCase);go(2);});
 sel('.v11-case').forEach(b=>b.addEventListener('click',()=>chooseCase(b.dataset.case)));
 sel('.v11-judge').forEach(b=>b.addEventListener('click',()=>chooseJudgment(b.dataset.judgment)));
 $('v11Run').addEventListener('click',showResult);
+$('v11RevealBridge').addEventListener('click',()=>{
+ const reveal=$('v11BridgeReveal');
+ const now=!reveal.hidden;
+ reveal.hidden=now;bridgeViewed=!now;
+ $('v11RevealBridge').setAttribute('aria-expanded',String(!now));
+ $('v11RevealBridge').textContent=now?'揭开真正的桥接点 ↓':'收起对照 ↑';
+});
 $('v11EvidenceNext').addEventListener('click',prepareEvidence);
 $('v11Finish').addEventListener('click',finish);
 sel('[data-back]').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.back))));
