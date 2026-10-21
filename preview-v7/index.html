@@ -6,6 +6,7 @@
 <title>NewZK · 仲恺经济世界 | 从结构的裂缝开始</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2309142a'/%3E%3Cpath d='M6 23V9l10 12V9m0 12 10-12v14' stroke='%2384e1f2' stroke-width='3' fill='none'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="portal-v7.css?v=1">
+<link rel="stylesheet" href="portal-impact-v8.css?v=1">
 <script src="../model.js"></script>
 </head>
 <body class="zkportal">
@@ -44,14 +45,35 @@
         <circle cx="327" cy="280" r="245" fill="url(#portalGraphA)"/>
         <circle cx="327" cy="280" r="198" fill="none" stroke="#65bed8" stroke-opacity=".15" stroke-dasharray="3 12"/>
         <circle cx="327" cy="280" r="155" fill="none" stroke="#d7e9ff" stroke-opacity=".08"/>
-        <g id="portalLinks"></g><g id="portalNodes"></g>
+        <g id="portalLinks"></g><g id="portalEnergy"></g><g id="portalNodes"></g><g id="portalImpactFX"></g>
       </svg>
+      <section class="portal-impact-ui" aria-label="首屏结构冲击短片">
+        <div class="portal-impact-top"><span class="portal-impact-icon" aria-hidden="true">◈</span><span class="portal-impact-kicker">STRUCTURE IN MOTION / 结构视觉叙事</span><span class="portal-impact-count" id="portalImpactCount">01 / 03</span></div>
+        <div class="portal-impact-tabs" role="group" aria-label="选择结构视觉片段">
+          <button type="button" class="portal-impact-tab is-active" data-scene="rupture" aria-pressed="true">断裂</button>
+          <button type="button" class="portal-impact-tab" data-scene="congestion" aria-pressed="false">堵塞</button>
+          <button type="button" class="portal-impact-tab" data-scene="extraction" aria-pressed="false">抽离</button>
+        </div>
+        <div class="portal-impact-narrative" aria-live="off">
+          <div class="portal-impact-phase" id="portalImpactPhase">流动中 / FLOW</div>
+          <strong id="portalImpactTitle">一条待核实的连接，发生了什么？</strong>
+          <span id="portalImpactDescription">沿着真实模型关联做视觉演示。中断不代表现实已发生。</span>
+        </div>
+        <div class="portal-impact-player">
+          <div class="portal-impact-progress" aria-hidden="true"><i></i></div>
+          <div class="portal-impact-player-actions">
+            <span id="portalImpactRuntime">00:00 / 00:08</span>
+            <button type="button" id="portalImpactReplay" aria-label="重播当前结构短片">↺ 重播</button>
+            <button type="button" id="portalImpactPause" aria-pressed="false" aria-label="暂停结构短片">Ⅱ 暂停</button>
+          </div>
+        </div>
+      </section>
       <a class="portal-core-cta" href="../network.html">
         <span>模型中的最大连接枢纽</span>
         <strong><span id="portalHubName">正在读取</span> <i id="portalHubDegree">—</i><small>条关联</small></strong>
         <span class="portal-core-cta-link">进入完整68主体关系世界 <span aria-hidden="true">↗</span></span>
       </a>
-      <div class="portal-graph-notice">只展示最关键主体的局部连线 · 位置为视觉编排，不是真实地图</div>
+      <div class="portal-graph-notice">局部关系 + 象征性中断动画 · 不是已发生事件、真实传播或产值损失</div>
     </div>
     <div class="portal-hero-side" aria-label="三个问题的快速入口">
       <a href="#focus-hub" class="portal-side-index"><span>01</span><strong>最大的支点</strong><span>↓</span></a>
@@ -124,4 +146,5 @@
 </main>
 <footer class="portal-bottom"><span>NEWZK / 城市经济实验室</span><span>公开数据 + 模型结构 · 所有推演均非现实预测 · 首页仅供发现问题与选择入口</span><a href="../guide.html">研究方法与使用说明 ↗</a></footer>
 <script src="portal-v7.js?v=1"></script>
+<script src="portal-impact-v8.js?v=1"></script>
 </body></html>
