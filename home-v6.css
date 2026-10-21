@@ -197,3 +197,20 @@ body[data-page="index"] .wh-original .radar{display:none}
  .wh-signal,.wh-eyebrow-pulse{box-shadow:none!important}
  .wh-world *, .wh-world *::before, .wh-world *::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
+
+/* Touchable graph nodes: invisible SVG hit targets, meaningful glow on state changes. */
+.wh-network-wrap .wh-node .wh-tap{fill:transparent;stroke:none;pointer-events:all;cursor:pointer}
+.wh-network-wrap .wh-node.wh-major .wh-aura{animation:whAura 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.wh-network-wrap .wh-node.wh-major:nth-child(3n) .wh-aura{animation-delay:-1s}
+.wh-network-wrap .wh-node.wh-major:nth-child(4n) .wh-aura{animation-delay:-2s}
+@keyframes whAura{0%,100%{opacity:.65;transform:scale(.92)}50%{opacity:1;transform:scale(1.16)}}
+.wh-network-wrap .wh-edge.is-lit{animation:whLink 2s ease-in-out infinite alternate}
+@keyframes whLink{from{stroke-opacity:.5}to{stroke-opacity:.94}}
+@media(max-width:600px){
+ .wh-network-wrap .wh-node.wh-quiet text{display:none}
+ .wh-network-wrap .wh-node.wh-quiet.is-picked text,.wh-network-wrap .wh-node.wh-quiet.is-hit text,.wh-network-wrap .wh-node.wh-quiet:focus text{display:block}
+ .wh-network-wrap .wh-node.wh-major text{font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){
+ .wh-network-wrap .wh-node.wh-major .wh-aura,.wh-network-wrap .wh-edge.is-lit{animation:none!important}
+}
