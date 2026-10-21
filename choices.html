@@ -7,39 +7,39 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
-.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
 .stand{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
-.stand button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:9px 18px;border-radius:20px;font-size:13px;cursor:pointer}
-.stand button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.stand button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:9px 18px;border-radius:20px;font-size:13px;cursor:pointer}
+.stand button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
 .rank{display:flex;flex-direction:column;gap:8px;margin:10px 0}
-.r{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center}
-.r .n{font-size:18px;font-weight:800;color:#fbbf24;min-width:26px;text-align:center}
+.r{background:#f8fbff;border:1px solid #e5ebf4;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.r .n{font-size:18px;font-weight:800;color:#b96a20;min-width:26px;text-align:center}
 .r .m{font-size:12px;color:#67e8f9;font-weight:700;min-width:52px}
 .r .b{flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden}
 .r .b i{display:block;height:100%;border-radius:8px;transition:width .5s}
-.r .t{font-size:13.5px;font-weight:600;color:#e6edf3;min-width:96px}
-.notes{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:9px 12px;font-size:12px;color:#8fa3bf;margin-bottom:14px}
-.twist{background:linear-gradient(135deg,#1e1b4b,#0e1523);border:1px solid #a78bfa;border-radius:12px;padding:13px 15px;margin-bottom:14px}
-.twist .t{font-size:13px;font-weight:800;color:#a78bfa;margin-bottom:4px}
-.twist .one{color:#e6edf3;font-size:14px;font-weight:600}
-.roadcard{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:10px}
+.r .t{font-size:13.5px;font-weight:600;color:#17243d;min-width:96px}
+.notes{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:9px 12px;font-size:12px;color:#536782;margin-bottom:14px}
+.twist{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #7158c8;border-radius:12px;padding:13px 15px;margin-bottom:14px}
+.twist .t{font-size:13px;font-weight:800;color:#7158c8;margin-bottom:4px}
+.twist .one{color:#17243d;font-size:14px;font-weight:600}
+.roadcard{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:10px}
 .roadcard .h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .roadcard .h b{font-size:15px}
-.roadcard .h span{font-size:11px;color:#8fa3bf;background:#131c2b;border:1px solid #22304a;padding:2px 8px;border-radius:10px}
-.roadcard p{font-size:13px;color:#cbd5e1;margin:4px 0}
+.roadcard .h span{font-size:11px;color:#536782;background:#f5f8fd;border:1px solid #d8e3f0;padding:2px 8px;border-radius:10px}
+.roadcard p{font-size:13px;color:#405773;margin:4px 0}
 .roadcard .act{font-size:12px;color:#67e8f9}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 .roads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:760px){.roads{grid-template-columns:1fr}}
 .chart{width:100%;height:280px}
@@ -48,28 +48,28 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .mx2 div{height:34px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#0d1a24}
 .sliders{margin:10px 0}
 .sl{display:flex;align-items:center;gap:10px;margin:8px 0}
-.sl .lab{min-width:76px;font-size:12.5px;color:#cbd5e1}
-.sl input{flex:1;accent-color:#3b82f6}
+.sl .lab{min-width:76px;font-size:12.5px;color:#405773}
+.sl input{flex:1;accent-color:#245bdb}
 .sl .v{min-width:26px;text-align:right;font-size:13px;font-weight:700;color:#67e8f9}
-.reset{border:1px solid #334155;background:#131c2b;color:#93a4bd;padding:7px 16px;border-radius:16px;font-size:12px;cursor:pointer}
+.reset{border:1px solid #334155;background:#f5f8fd;color:#536782;padding:7px 16px;border-radius:16px;font-size:12px;cursor:pointer}
 .reset:hover{color:#fff}
-.code{background:linear-gradient(135deg,#0c1a2e,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
-.code .t{font-size:13px;font-weight:800;color:#a78bfa;margin-bottom:8px}
+.code{background:linear-gradient(135deg,#eef4ff,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.code .t{font-size:13px;font-weight:800;color:#7158c8;margin-bottom:8px}
 .code .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .seg{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
-.seg b{font-size:11px;color:#8fa3bf;min-width:44px;text-align:right}
-.seg button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:5px 12px;border-radius:14px;font-size:12px;cursor:pointer}
-.seg button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.seg b{font-size:11px;color:#536782;min-width:44px;text-align:right}
+.seg button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:5px 12px;border-radius:14px;font-size:12px;cursor:pointer}
+.seg button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
 .code .lock{margin-left:auto;display:flex;align-items:center;gap:8px}
-.lock button{background:#0e7490;color:#fff;border:1px solid #22d3ee;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer}
-.lock button.un{background:#b45309;border-color:#fbbf24}
+.lock button{background:#0e7490;color:#fff;border:1px solid #1689b5;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer}
+.lock button.un{background:#b45309;border-color:#b96a20}
 .code .chip{font-size:13px;color:#67e8f9;font-weight:800;letter-spacing:.5px}
-.code .hint{font-size:11px;color:#5b6b82;margin-top:8px;line-height:1.7}
+.code .hint{font-size:11px;color:#6c7d94;margin-top:8px;line-height:1.7}
 .segbar{display:flex;gap:8px;margin:8px 0}
-.segbar button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:6px 16px;border-radius:16px;font-size:12.5px;cursor:pointer}
-.segbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.segbar button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:6px 16px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.segbar button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
 .win{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:8px 0}
-.win .hd{height:24px;background:transparent;color:#8fa3bf;font-size:10.5px;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;padding:0 2px}
+.win .hd{height:24px;background:transparent;color:#536782;font-size:10.5px;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;padding:0 2px}
 .win div{height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#0d1a24}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <script src="cloud-lab-ui.js?v=2" defer></script>
@@ -143,7 +143,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="s" style="background:transparent;border:none;padding:0">
-    <h2 style="font-size:15.5px;margin:14px 0 8px;border-left:3px solid #3b82f6;padding-left:9px">五条路，各自是什么</h2>
+    <h2 style="font-size:15.5px;margin:14px 0 8px;border-left:3px solid #245bdb;padding-left:9px">五条路，各自是什么</h2>
     <div class="roads" id="roads"></div>
   </div>
 
@@ -153,7 +153,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <script>
 const $=i=>document.getElementById(i);
-const COLOR={'链主做强':'#3b82f6','新赛道抢跑':'#8b5cf6','园区扩容':'#06b6d4','服务补短':'#fbbf24','城市与人':'#f87171'};
+const COLOR={'链主做强':'#245bdb','新赛道抢跑':'#8b5cf6','园区扩容':'#06b6d4','服务补短':'#b96a20','城市与人':'#bf3b49'};
 const ROAD_ACT={
   '链主做强':'目标：规模做强、技术做深、标准做高、品牌做大',
   '新赛道抢跑':'动作：OPC行动·AI示范场景10个 / 低空制造基地 / 仲力磁场一期',
@@ -203,14 +203,14 @@ function renderRadar(){
   const radar=echarts.init($('radar'));
   radar.setOption({
     backgroundColor:'transparent',tooltip:{},
-    legend:{data:['产值优先','均衡','民生优先'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+    legend:{data:['产值优先','均衡','民生优先'],textStyle:{color:'#536782',fontSize:11},top:0},
     radar:{indicator:ZK.ROADS.map(r=>({name:r.length>4?r.slice(0,4):r,max:10})),radius:'62%',center:['50%','56%'],
-      axisName:{color:'#8fa3bf',fontSize:10.5},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#0e1523','#111b2b']}}},
+      axisName:{color:'#536782',fontSize:10.5},splitLine:{lineStyle:{color:'#e5ebf4'}},splitArea:{areaStyle:{color:['#f8fbff','#eff4fb']}}},
     series:[{type:'radar',symbolSize:4,
       data:[
-        {name:'产值优先',value:ZK.AH['产值优先'].map(r=>r[1]),lineStyle:{color:'#3b82f6'},itemStyle:{color:'#3b82f6'},areaStyle:{opacity:.2}},
-        {name:'均衡',value:ZK.AH['均衡'].map(r=>r[1]),lineStyle:{color:'#3ddc97'},itemStyle:{color:'#3ddc97'},areaStyle:{opacity:.15}},
-        {name:'民生优先',value:ZK.AH['民生优先'].map(r=>r[1]),lineStyle:{color:'#fbbf24'},itemStyle:{color:'#fbbf24'},areaStyle:{opacity:.15}}
+        {name:'产值优先',value:ZK.AH['产值优先'].map(r=>r[1]),lineStyle:{color:'#245bdb'},itemStyle:{color:'#245bdb'},areaStyle:{opacity:.2}},
+        {name:'均衡',value:ZK.AH['均衡'].map(r=>r[1]),lineStyle:{color:'#168366'},itemStyle:{color:'#168366'},areaStyle:{opacity:.15}},
+        {name:'民生优先',value:ZK.AH['民生优先'].map(r=>r[1]),lineStyle:{color:'#b96a20'},itemStyle:{color:'#b96a20'},areaStyle:{opacity:.15}}
       ]}]
   });
   charts.push(radar);
@@ -247,7 +247,7 @@ function renderMatrix(){
   }));
   $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>{
     const c=mx[i][j];
-    return `<div style="background:${c.hi?'#3b82f6':'#1c2739'}" title="${c.t}">${i===j?'—':c.v.toFixed(1)}</div>`;
+    return `<div style="background:${c.hi?'#245bdb':'#e5ebf4'}" title="${c.t}">${i===j?'—':c.v.toFixed(1)}</div>`;
   }).join('')).join('');
 }
 function renderRoads(){
@@ -309,10 +309,10 @@ function renderDist(){
   const dist=echarts.init($('dist'));
   dist.setOption({
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'cross'}},
-    legend:{data:ZK.DEFAULT_PATHS.map(p=>p.name),textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+    legend:{data:ZK.DEFAULT_PATHS.map(p=>p.name),textStyle:{color:'#536782',fontSize:11},top:0},
     grid:{left:44,right:14,top:34,bottom:28},
-    xAxis:{type:'category',data:xs.map(x=>x+'亿'),axisLabel:{color:'#8fa3bf',fontSize:10.5,interval:Math.ceil(bins/9)},axisLine:{lineStyle:{color:'#22304a'}}},
-    yAxis:{type:'value',name:'密度',nameTextStyle:{color:'#5b6b82',fontSize:10},axisLabel:{color:'#5b6b82',fontSize:10},splitLine:{lineStyle:{color:'#1c2739'}}},
+    xAxis:{type:'category',data:xs.map(x=>x+'亿'),axisLabel:{color:'#536782',fontSize:10.5,interval:Math.ceil(bins/9)},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    yAxis:{type:'value',name:'密度',nameTextStyle:{color:'#6c7d94',fontSize:10},axisLabel:{color:'#6c7d94',fontSize:10},splitLine:{lineStyle:{color:'#e5ebf4'}}},
     series
   });
   charts.push(dist);
@@ -330,11 +330,11 @@ function renderWin(){
   for(let i=0;i<R.length;i++){
     let row=`<div class="hd">${R[i].name.slice(0,3)}</div>`;
     for(let j=0;j<R.length;j++){
-      if(i===j){row+=`<div style="background:#22304a;color:#8fa3bf">—</div>`;continue;}
+      if(i===j){row+=`<div style="background:#d8e3f0;color:#536782">—</div>`;continue;}
       let w=0;const a=dists[i],b=dists[j];
       for(let k=0;k<N;k++)if(a[k]>b[k])w++;
       const pct=Math.round(w/N*100);
-      const bg=pct>=70?'#0e7490':pct>=55?'#1d4ed8':'#475569';
+      const bg=pct>=70?'#0e7490':pct>=55?'#245bdb':'#475569';
       row+=`<div style="background:${bg}" title="${R[i].name} 对 ${R[j].name} 占优 ${pct}%">${pct}%</div>`;
     }
     cells.push(row);
