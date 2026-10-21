@@ -7,41 +7,41 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .sub{font-size:12.5px;color:#536782}
 .loop{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0;font-size:13px}
-.loop .n{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:10px 14px;text-align:center;color:#cbd5e1}
+.loop .n{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:10px;padding:10px 14px;text-align:center;color:#405773}
 .loop .n b{display:block;font-size:14px;color:#fff;margin-bottom:2px}
-.loop .ar{color:#3ddc97;font-weight:800;font-size:16px}
+.loop .ar{color:#168366;font-weight:800;font-size:16px}
 .chart{width:100%;height:270px}
 @media(max-width:760px){.chart{height:215px}}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
-.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3ddc97;padding-left:9px}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #168366;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .act{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 @media(max-width:760px){.act{grid-template-columns:1fr}}
-.ac{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:12px}
-.ac b{font-size:13.5px;color:#e6edf3;display:block;margin-bottom:5px}
-.ac p{font-size:12px;color:#8fa3bf;margin:0;line-height:1.7}
+.ac{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:12px}
+.ac b{font-size:13.5px;color:#17243d;display:block;margin-bottom:5px}
+.ac p{font-size:12px;color:#536782;margin:0;line-height:1.7}
 .steps{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0;font-size:12px}
-.steps .s2{background:#0f1a2c;border:1px solid #2b4a77;border-radius:20px;padding:7px 14px;color:#cbd5e1}
+.steps .s2{background:#0f1a2c;border:1px solid #2b4a77;border-radius:20px;padding:7px 14px;color:#405773}
 .steps .s2 b{color:#7dd3fc}
-.steps .ar{color:#3ddc97;font-weight:800}
-.quote{background:linear-gradient(135deg,#1e1b4b,#0e1523);border:1px solid #a78bfa;border-radius:12px;padding:16px;margin-bottom:14px;text-align:center}
+.steps .ar{color:#168366;font-weight:800}
+.quote{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #7158c8;border-radius:12px;padding:16px;margin-bottom:14px;text-align:center}
 .quote .q{font-size:17px;font-weight:800;color:#fff;line-height:1.8}
-.quote .w{font-size:12px;color:#a78bfa;margin-top:8px}
+.quote .w{font-size:12px;color:#7158c8;margin-top:8px}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="ending">
@@ -116,16 +116,16 @@ $('loop').innerHTML=`
 const wc=echarts.init($('worldChart'));
 wc.setOption({
   backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>产业 ${p[0].value} / 城市 ${p[1].value} / 人 ${p[2].value}`},
-  legend:{data:['产业','城市','人'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+  legend:{data:['产业','城市','人'],textStyle:{color:'#536782',fontSize:11},top:0},
   grid:{left:84,right:30,top:28,bottom:18},
-  xAxis:{type:'value',max:10,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['深圳南山','合肥','东莞松山湖','成都高新区','仲恺'].reverse(),axisLabel:{color:'#cbd5e1',fontSize:10.5},axisLine:{lineStyle:{color:'#22304a'}}},
+  xAxis:{type:'value',max:10,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+  yAxis:{type:'category',data:['深圳南山','合肥','东莞松山湖','成都高新区','仲恺'].reverse(),axisLabel:{color:'#405773',fontSize:10.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[
-    {name:'产业',type:'bar',barWidth:9,data:[9,8,7,6,9].reverse().map(v=>({value:v,itemStyle:{color:'#3b82f6'}}))},
-    {name:'城市',type:'bar',barWidth:9,data:[9,7,7,8,5].reverse().map(v=>({value:v,itemStyle:{color:'#3ddc97'}}))},
-    {name:'人',type:'bar',barWidth:9,data:[9,6,8,8,4].reverse().map(v=>({value:v,itemStyle:{color:'#fbbf24'}}))}
+    {name:'产业',type:'bar',barWidth:9,data:[9,8,7,6,9].reverse().map(v=>({value:v,itemStyle:{color:'#245bdb'}}))},
+    {name:'城市',type:'bar',barWidth:9,data:[9,7,7,8,5].reverse().map(v=>({value:v,itemStyle:{color:'#168366'}}))},
+    {name:'人',type:'bar',barWidth:9,data:[9,6,8,8,4].reverse().map(v=>({value:v,itemStyle:{color:'#b96a20'}}))}
   ],
-  graphic:[{type:'text',left:8,bottom:0,style:{text:'评分仅示意打法 · 可信度 D',fill:'#8fa3bf',fontSize:10}}]
+  graphic:[{type:'text',left:8,bottom:0,style:{text:'评分仅示意打法 · 可信度 D',fill:'#536782',fontSize:10}}]
 });
 window.addEventListener('resize',()=>wc.resize());
 </script>
