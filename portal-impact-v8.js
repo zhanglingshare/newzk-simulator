@@ -37,7 +37,7 @@ const stages=[
  {at:5360,name:'aftermath',label:4}
 ];
 const cycleMs=8000;
-let scene='rupture',phase='flow',paused=false,elapsed=0,startedAt=0,timeouts=[],ticker=null,hasReducedMotion=false;
+let scene='rupture',phase='flow',paused=false,elapsed=0,carry=0,startedAt=0,timeouts=[],ticker=null,hasReducedMotion=false;
 try{hasReducedMotion=!!window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(err){}
 const criticalIndex=Math.max(0,wires.findIndex(w=>w.classList.contains('uncertain')));
 const keyWire=wires[criticalIndex];
@@ -120,7 +120,7 @@ function clearTimers(){
 }
 function timelineFrom(offset){
  clearTimers();
- startedAt=Date.now();
+ carry=offset;startedAt=Date.now();
  const current=stages.reduce((now,s)=>s.at<=offset?s.name:now,'flow');
  setPhase(current);updateClock(offset);
  for(const s of stages){
@@ -148,7 +148,7 @@ function beginCycle(){
 }
 function pause(){
  if(paused)return;
- elapsed=Math.min(cycleMs,elapsed+(Date.now()-startedAt));
+ elapsed=Math.min(cycleMs,carry+(Date.now()-startedAt));
  clearTimers();paused=true;root.classList.add('is-paused');setPauseLabel();updateClock(elapsed);
 }
 function resume(){
