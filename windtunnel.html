@@ -7,57 +7,57 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:960px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
-.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
 .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
 @media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}}
-.card{background:#131c2b;border:1px solid #22304a;border-radius:12px;padding:13px 11px;cursor:pointer;text-align:center;transition:.2s}
-.card:hover{border-color:#f87171}
-.card.on{background:linear-gradient(160deg,#3f1d1d,#131c2b);border-color:#f87171;box-shadow:0 0 0 1px #f8717144}
+.card{background:#f5f8fd;border:1px solid #d8e3f0;border-radius:12px;padding:13px 11px;cursor:pointer;text-align:center;transition:.2s}
+.card:hover{border-color:#bf3b49}
+.card.on{background:linear-gradient(160deg,#3f1d1d,#f5f8fd);border-color:#bf3b49;box-shadow:0 0 0 1px #bf3b4944}
 .card .e{font-size:22px}
-.card .t{font-size:13px;font-weight:700;margin:6px 0 3px;color:#e6edf3}
-.card .s{font-size:11px;color:#8fa3bf;line-height:1.5}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
-.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.card .t{font-size:13px;font-weight:700;margin:6px 0 3px;color:#17243d}
+.card .s{font-size:11px;color:#536782;line-height:1.5}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #245bdb;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .result{display:none}
 .result.on{display:block}
 .impact{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.impact .p{background:rgba(248,113,113,.1);border:1px solid #f8717155;color:#fecaca;border-radius:8px;padding:5px 10px;font-size:12px}
-.impact .p.ok{background:rgba(61,220,151,.08);border-color:#3ddc9755;color:#a7f3d0}
+.impact .p{background:rgba(248,113,113,.1);border:1px solid #bf3b4955;color:#fecaca;border-radius:8px;padding:5px 10px;font-size:12px}
+.impact .p.ok{background:rgba(61,220,151,.08);border-color:#16836655;color:#a7f3d0}
 .stat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 @media(max-width:760px){.stat{grid-template-columns:1fr}}
-.stat .c{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:10px 12px}
-.stat .v{font-size:17px;font-weight:800;color:#f87171}
-.stat .l{font-size:11px;color:#8fa3bf}
+.stat .c{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:10px 12px}
+.stat .v{font-size:17px;font-weight:800;color:#bf3b49}
+.stat .l{font-size:11px;color:#536782}
 .lv{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin:6px 0}
 .lv i{display:block;height:100%;border-radius:6px}
-.roadhit{margin:6px 0;font-size:13px;color:#cbd5e1}
-.roadhit b{color:#e6edf3}
+.roadhit{margin:6px 0;font-size:13px;color:#405773}
+.roadhit b{color:#17243d}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 .chart{width:100%;height:230px}
 @media(max-width:760px){.chart{height:190px}}
 .chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0;font-size:12px}
-.chain .n{background:#0f1a2c;border:1px solid #22304a;border-radius:8px;padding:5px 10px;color:#cbd5e1}
-.chain .ar{color:#f87171;font-weight:800}
-.chain .ok{color:#3ddc97}
+.chain .n{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:8px;padding:5px 10px;color:#405773}
+.chain .ar{color:#bf3b49;font-weight:800}
+.chain .ok{color:#168366}
 table.detail{width:100%;border-collapse:collapse;margin:10px 0;font-size:11.5px}
-table.detail th,table.detail td{border:1px solid #22304a;padding:6px 8px;text-align:left;color:#8fa3bf}
-table.detail th{background:#131c2b;color:#cbd5e1}
-table.detail td b{color:#e6edf3}
+table.detail th,table.detail td{border:1px solid #d8e3f0;padding:6px 8px;text-align:left;color:#536782}
+table.detail th{background:#f5f8fd;color:#405773}
+table.detail td b{color:#17243d}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="windtunnel">
@@ -130,7 +130,7 @@ const TL={'chain':{'e':'外迁','t':'链主外迁/订单转移','s':'一家链�
 'ai':{'e':'算力','t':'AI算力过剩','s':'算力价格战，数据中心收益低于预期'},
 'talent':{'e':'人才','t':'高端人才流失','s':'工程师流向深莞，创新链松脱'}};
 let cur='chain';
-const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#00c2d9','park':'#3b82f6','fac':'#8ba6bd','cap':'#a06bff','tal':'#3ddc97','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
+const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#1689b5','park':'#245bdb','fac':'#8ba6bd','cap':'#7158c8','tal':'#168366','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
 function cards(){
   $('cards').innerHTML=SH.map(s=>{const k=s[2];return `<div class="card ${k===cur?'on':''}" data-k="${k}"><div class="e">${TL[k].e}</div><div class="t">${s[0]}</div><div class="s">${TL[k].s}</div></div>`;}).join('');
   $('cards').querySelectorAll('.card').forEach(c=>c.onclick=()=>{cur=c.dataset.k;cards();run();});
@@ -151,13 +151,13 @@ function run(){
     const ah=hits.includes(a[0]),bh=hits.includes(b[0]);
     if(!ah&&!bh)return;
     const broken=ah||bh;
-    s+=`<line x1="${a[3]}" y1="${a[4]}" x2="${b[3]}" y2="${b[4]}" stroke="${broken?'#f87171':'#334155'}" stroke-width="${broken?1.5:1}" stroke-dasharray="${broken?'4 3':'none'}" opacity="${broken?.8:.25}"/>`;
+    s+=`<line x1="${a[3]}" y1="${a[4]}" x2="${b[3]}" y2="${b[4]}" stroke="${broken?'#bf3b49':'#334155'}" stroke-width="${broken?1.5:1}" stroke-dasharray="${broken?'4 3':'none'}" opacity="${broken?.8:.25}"/>`;
   });
   ZK.NO.forEach(n=>{
     if(!hits.includes(n[0]))return;
     const c=LCOL[n[2]];
     s+=`<g transform="translate(${n[3]},${n[4]})">
-      <ellipse rx="45" ry="17" fill="${c}" opacity=".35" stroke="#f87171" stroke-width="1.5"/>
+      <ellipse rx="45" ry="17" fill="${c}" opacity=".35" stroke="#bf3b49" stroke-width="1.5"/>
       <text text-anchor="middle" y="-1" font-size="11" font-weight="700" fill="#0d1a24">${n[1].length>7?n[1].slice(0,7):n[1]}</text>
       <text text-anchor="middle" y="12" font-size="9" fill="#536782">${n[5]?'待核实':LCOL[n[2]]? '波及':''}</text>
     </g>`;
@@ -167,13 +167,13 @@ function run(){
   $('stat').innerHTML=`
     <div class="c"><div class="v">${hits.length}</div><div class="l">直接波及主体数（全图 ${ZK.NO.length}）</div></div>
     <div class="c"><div class="v">${Math.round(hits.length/ZK.NO.length*100)}%</div><div class="l">网络波及面</div></div>
-    <div class="c"><div class="v" style="color:#3ddc97">${safe.length}</div><div class="l">暂时稳的主体</div></div>
+    <div class="c"><div class="v" style="color:#168366">${safe.length}</div><div class="l">暂时稳的主体</div></div>
     <div class="c"><div class="v">${rl.r.split('、')[0]}</div><div class="l">最受压的一条路</div></div>`;
   /* 结论 */
   $('conc').textContent='这张牌打下来：'+rl.note;
   $('road').innerHTML='<b>最受压：</b>'+rl.r+'<br><b>缓冲垫：</b>其余路径仍在跑，网络没有整体崩塌——所以压测的意义是"提前知道断点在哪，把最松的一环先补上"。';
   /* 连锁传导（第一轮） */
-  $('chain').innerHTML=`<span class="n" style="border-color:#f87171;color:#f87171">${TL[cur].t}</span><span class="ar">→</span>`
+  $('chain').innerHTML=`<span class="n" style="border-color:#bf3b49;color:#bf3b49">${TL[cur].t}</span><span class="ar">→</span>`
     +hits.slice(0,6).map(id=>`<span class="n">${ZK.nm(id)}</span>`).join('<span class="ar">→</span>')
     +`<span class="ar">→</span><span class="n ok">其余 ${safe.length} 个主体暂稳</span>`;
 }
@@ -183,9 +183,9 @@ function bar5(){
   bc.setOption({
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>波及 ${p[0].value} 个主体（占全图 ${rows.find(r=>r.name===p[0].name).pct}%）`},
     grid:{left:112,right:36,top:8,bottom:20},
-    xAxis:{type:'value',axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:rows.map(r=>r.name.length>9?r.name.slice(0,9):r.name).reverse(),axisLabel:{color:'#cbd5e1',fontSize:10.5},axisLine:{lineStyle:{color:'#22304a'}}},
-    series:[{type:'bar',barWidth:15,data:rows.map((r,i)=>({value:r.n,itemStyle:{color:i===rows.length-1?'#3b82f6':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:'{c} 主体'}}))}]
+    xAxis:{type:'value',axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    yAxis:{type:'category',data:rows.map(r=>r.name.length>9?r.name.slice(0,9):r.name).reverse(),axisLabel:{color:'#405773',fontSize:10.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:15,data:rows.map((r,i)=>({value:r.n,itemStyle:{color:i===rows.length-1?'#245bdb':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:10,formatter:'{c} 主体'}}))}]
   });
   charts.push(bc);
   /* 断边明细表 */
