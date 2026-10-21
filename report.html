@@ -55,18 +55,18 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">① 今日仲恺</a>
-  <a href="who.html">② 仲恺是什么</a>
-  <a href="network.html">③ 产业链地图</a>
-  <a href="choices.html">④ 五条路</a>
-  <a href="future.html">⑤ 未来2030</a>
-  <a href="windtunnel.html">⑥ 风洞</a>
-  <a href="blindspot.html">⑦ 忽略了什么</a>
-  <a href="mylife.html">⑧ 跟我的关系</a>
-  <a href="report.html" class="on">⑨ 分析报告</a>
-  <a href="ending.html">⑩ 结语</a>
-  <a href="guide.html">⑪ 使用指南</a>
-  <a href="town.html">⑫ 生活地图</a>
+  <a href="index.html">01 今日仲恺</a>
+  <a href="who.html">02 仲恺是什么</a>
+  <a href="network.html">03 产业链地图</a>
+  <a href="choices.html">04 五条路</a>
+  <a href="future.html">05 未来2030</a>
+  <a href="windtunnel.html">06 风洞</a>
+  <a href="blindspot.html">07 忽略了什么</a>
+  <a href="mylife.html">08 跟我的关系</a>
+  <a href="report.html" class="on">09 分析报告</a>
+  <a href="ending.html">10 结语</a>
+  <a href="guide.html">11 使用指南</a>
+  <a href="town.html">12 生活地图</a>
 </div>
 
 <div class="wrap">
@@ -115,7 +115,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="next"><a href="ending.html">下一步：收尾，产城人闭环 →</a></div>
-  <div class="disc">弹性区间为模型推算（可信度 D）；官方锚点见第②页 A 轨清单。非预测值。</div>
+  <div class="disc">弹性区间为模型推算（可信度 D）；官方锚点见第02页 A 轨清单。非预测值。</div>
 </div>
 
 <script>
@@ -194,7 +194,7 @@ const MX=[
   ['城市与人','乐观 319 / 恶劣 221','中','人才流失牌直接命中']
 ];
 $('matrix').innerHTML=MX.map(m=>`<div class="mx"><b>${m[0]}</b><p>${m[1]}</p><p><span class="tag" style="background:${m[2]==='抗压强'?'rgba(61,220,151,.15)':m[2]==='抗压弱'?'rgba(248,113,113,.15)':'rgba(251,191,36,.12)'};color:${m[2]==='抗压强'?'#3ddc97':m[2]==='抗压弱'?'#f87171':'#fbbf24'}">${m[2]}</span> ${m[3]}</p></div>`).join('');
-const R=['1️⃣ 目标可行但靠努力：基准情景过线概率约 39%——6500 亿不是躺着能到，也不是够不着，但要靠五条路真落地。','2️⃣ 命门在本地配套率与消费承接：工业再强，钱留不住也是空转。','3️⃣ 最该先核实三个数：本地配套率实测、工人消费流向、中韩外资落地实况（全是 D 级虚线）。'];
+const R=['01 目标可行但靠努力：基准情景过线概率约 39%——6500 亿不是躺着能到，也不是够不着，但要靠五条路真落地。','02 命门在本地配套率与消费承接：工业再强，钱留不住也是空转。','03 最该先核实三个数：本地配套率实测、工人消费流向、中韩外资落地实况（全是 D 级虚线）。'];
 $('robust').innerHTML=R.map(r=>r+'<br>').join('');
 const r=ZK.run(20261020,1000,ZK.DEFAULT_PATHS);
 $('robust2').textContent='（基准情景模型输出：中位数 '+Math.round(r.p50)+' 亿，过线概率 '+r.hit.toFixed(0)+'%，区间 '+Math.round(r.p10)+'—'+Math.round(r.p90)+' 亿）';
