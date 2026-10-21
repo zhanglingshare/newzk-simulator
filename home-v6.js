@@ -15,7 +15,7 @@ const names=new Map(ZK.NO.map(n=>[n[0],n]));
 const adj=new Map(ZK.NO.map(n=>[n[0],[]]));
 const edges=ZK.LK.map(l=>({a:l[0],b:l[1],strength:l[2],unverified:!!l[3]}));
 edges.forEach(e=>{adj.get(e.a)?.push(e.b);adj.get(e.b)?.push(e.a);});
-const mainNames=new Set([...ZK.NO].sort((a,b)=>adj.get(b[0]).length-adj.get(a[0]).length).slice(0,9).map(n=>n[0]));
+const mainNames=new Set([...ZK.NO].sort((a,b)=>adj.get(b[0]).length-adj.get(a[0]).length).slice(0,9).map(n=>n[0]).concat(['n52','n55','n56']));
 const elNodes=new Map(),elLinks=[];
 let mode='explore',selected=null,shock='chain',mu=ZK.DEFAULT_PATHS[0].mu,chart=null,timer=null;
 const setText=(id,value)=>{const element=$(id);if(element)element.textContent=value;};
@@ -61,7 +61,8 @@ function buildNetwork(){
     const dot=svgEl('circle',{class:'wh-dot',r:major?10.5:6.5});
     const label=svgEl('text',{x:0,y:major?-25:-20,'text-anchor':'middle'});
     label.textContent=n[1].length>11?n[1].slice(0,11)+'…':n[1];
-    group.append(aura,dot,label);
+    const tap=svgEl('circle',{class:'wh-tap',r:35});
+    group.append(aura,dot,label,tap);
     const title=svgEl('title');title.textContent=n[1]+' · '+degree+'条模型关系';group.appendChild(title);
     group.addEventListener('click',()=>focus(id));
     group.addEventListener('keydown',event=>{
@@ -124,13 +125,7 @@ function showStructural(){
 }
 function setMode(next){
   mode=next;
-  ['explore','shock','simulate'].forEach(name=>{
-    $('whExploreControls').hidden=next!=='explore';
-    $('whShockControls').hidden=next!=='shock';
-    $('whSimControls').hidden=next!=='simulate';
-  });
-  // Re-run visibility assignment using the proper mode per control.
-  $('whExploreControls').hidden=next!=='explore';
+   $('whExploreControls').hidden=next!=='explore';
   $('whShockControls').hidden=next!=='shock';
   $('whSimControls').hidden=next!=='simulate';
   document.querySelectorAll('.wh-scene-tab').forEach(button=>{
@@ -246,6 +241,10 @@ function restore(){
   }catch(e){}
 }
 buildCity();buildNetwork();
+if(window.matchMedia&&window.matchMedia('(max-width:600px)').matches){
+  $('whNetwork').setAttribute('viewBox','165 70 920 770');
+  elNodes.forEach(g=>g.querySelector('.wh-tap')?.setAttribute('r','49'));
+}
 setText('whBase',ZK.BASE.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}));
 setText('whTarget',fmt(ZK.TARGET));
 setText('whRelationCount',ZK.NO.length+' / '+ZK.LK.length);
