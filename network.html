@@ -305,12 +305,12 @@ function stat(){
     <div class="c"><div class="v">${top.map(n=>ZK.nm(n[0])).join(' · ')}</div><div class="l">连接最多的主体（度前 3）</div></div>`;
   const top10=[...ZK.NO].sort((a,b)=>deg[b[0]]-deg[a[0]]).slice(0,10).reverse();
   const tc=echarts.init($('topChart'));
-  tc.setOption({
+  tc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：连 ${p[0].value} 条`},
     grid:{left:96,right:26,top:8,bottom:20},
     xAxis:{type:'value',minInterval:1,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-    yAxis:{type:'category',data:top10.map(n=>ZK.nm(n[0]).length>9?ZK.nm(n[0]).slice(0,9):ZK.nm(n[0])),axisLabel:{color:'#405773',fontSize:10.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
-    series:[{type:'bar',barWidth:13,data:top10.map(n=>deg[n[0]]).map((v,i)=>({value:v,itemStyle:{color:ZK.NO.find(n=>n[0]===top10[i][0])?LCOL[ZK.layerOf(top10[i][0])]:'#245bdb',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#17243d',fontSize:10}}))}]
+    yAxis:{type:'category',data:top10.map(n=>ZK.nm(n[0]).length>9?ZK.nm(n[0]).slice(0,9):ZK.nm(n[0])),axisLabel:{color:'#405773',fontSize:11.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:13,data:top10.map(n=>deg[n[0]]).map((v,i)=>({value:v,itemStyle:{color:ZK.NO.find(n=>n[0]===top10[i][0])?LCOL[ZK.layerOf(top10[i][0])]:'#245bdb',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#17243d',fontSize:11}}))}]
   });
   charts.push(tc);
 }
@@ -320,13 +320,13 @@ function mul(){
   /* 1 亿订单去向：堆叠条形 */
   const parts=[[0.32,'本地配套采购','#1689b5'],[0.18,'本地工资','#168366'],[0.07,'工资本地消费','#b96a20'],[0.05,'本地税收','#7158c8'],[0.38,'漏到外地（消费外流/购买外部）','#334155']];
   const lc=echarts.init($('leakChart'));
-  lc.setOption({
+  lc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'item',formatter:p=>`${p.name}<br>${(p.value*100).toFixed(0)} 分（1 亿订单里占 ${(p.value).toFixed(2)} 亿）`},
     grid:{left:8,right:8,top:26,bottom:8},
     xAxis:{show:false,type:'value',max:1},
     yAxis:{show:false,type:'category'},
-    series:[{type:'bar',stack:'leak',barWidth:34,data:parts.map(p=>({value:p[0],name:p[1],itemStyle:{color:p[2]}})),label:{show:true,position:'inside',formatter:p=>(p.value*100).toFixed(0)+'%',color:'#0d1a24',fontSize:11,fontWeight:700}}],
-    legend:{data:parts.map(p=>p[1]),bottom:0,textStyle:{color:'#536782',fontSize:10},itemWidth:10,itemHeight:10}
+    series:[{type:'bar',stack:'leak',barWidth:34,data:parts.map(p=>({value:p[0],name:p[1],itemStyle:{color:p[2]}})),label:{show:true,position:'inside',formatter:p=>(p.value*100).toFixed(0)+'%',color:'#0d1a24',fontSize:12,fontWeight:700}}],
+    legend:{data:parts.map(p=>p[1]),bottom:0,textStyle:{color:'#536782',fontSize:11},itemWidth:10,itemHeight:10}
   });
   charts.push(lc);
 }
@@ -335,17 +335,17 @@ const charts=[];
 function sem(){
   const rows=[...ZK.SEM].reverse();
   const sc=echarts.init($('semChart'));
-  sc.setOption({
+  sc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{
       const s=ZK.SEM.find(r=>r[0]+' → '+r[1]===p[0].name);return `${p[0].name}<br>力度 ${p[0].value.toFixed(2)}<br><span style="color:#536782">${s?s[3]:''}</span>`;
     }},
     grid:{left:86,right:40,top:8,bottom:20},
     xAxis:{type:'value',min:0,max:0.8,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-    yAxis:{type:'category',data:rows.map(r=>r[0]+' → '+r[1]),axisLabel:{color:'#405773',fontSize:10},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    yAxis:{type:'category',data:rows.map(r=>r[0]+' → '+r[1]),axisLabel:{color:'#405773',fontSize:11},axisLine:{lineStyle:{color:'#d8e3f0'}}},
     series:[{type:'bar',barWidth:15,
       data:rows.map(r=>({value:r[2],itemStyle:{color:r[2]<0.4?'#bf3b49':r[2]>0.58?'#168366':'#245bdb',borderRadius:[0,5,5,0]},
-        label:{show:true,position:'right',color:r[2]<0.4?'#bf3b49':'#405773',fontSize:11,formatter:'{c}'}}))}],
-    graphic:[{type:'text',left:12,bottom:2,style:{text:'最松＝红 · 最紧＝绿（0.35 全链最松）',fill:'#536782',fontSize:10}}]
+        label:{show:true,position:'right',color:r[2]<0.4?'#bf3b49':'#405773',fontSize:12,formatter:'{c}'}}))}],
+    graphic:[{type:'text',left:12,bottom:2,style:{text:'最松＝红 · 最紧＝绿（0.35 全链最松）',fill:'#536782',fontSize:11}}]
   });
   charts.push(sc);
 }
