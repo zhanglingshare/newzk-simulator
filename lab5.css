@@ -115,3 +115,12 @@ body[data-page="network"] #net .lab5-hide-label{opacity:0!important;pointer-even
  .lab5-shock-maps svg{max-height:420px}
 }
 @media(prefers-reduced-motion:reduce){.lab5-path-stat,.lab5-shock-numbers>div{transition:none!important}}
+
+.lab5-shock-list{display:flex;flex-wrap:wrap;gap:5px;padding:9px 0 0}
+.lab5-shock-chip{font-size:12px;color:#89582a;background:#fff5e9;border:1px solid #f0d9ba;border-radius:99px;padding:5px 9px;line-height:1.45}
+.lab5-shock-chip.lab5-shock-common{color:#2955ac;background:#ecf3ff;border-color:#cdddf8}
+@media(max-width:760px){
+ body[data-page="network"] #net .node text:first-of-type{font-size:18px!important;font-weight:800!important}
+ body[data-page="network"] #net .node text:nth-of-type(2){display:none!important}
+ .lab5-shock-chip{font-size:13px;padding:7px 10px}
+}
