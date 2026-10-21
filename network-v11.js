@@ -193,8 +193,8 @@ function finish(){
  ];
  copyText=lines.join('\n');
  const holder=$('v11Takeaway');holder.replaceChildren();
- lines.slice(1,8).forEach((line,i)=>{
-  const row=document.createElement('div');row.className='v11-takeaway-row'+(i===6?' is-final':'');
+ lines.slice(1).forEach((line,i)=>{
+  const row=document.createElement('div');row.className='v11-takeaway-row'+(i===lines.length-2?' is-final':'');
   const marker=document.createElement('span');marker.textContent=String(i+1).padStart(2,'0');
   const body=document.createElement('p');body.textContent=line;row.append(marker,body);holder.append(row);
  });
