@@ -140,12 +140,12 @@ const sel=[0,0,0];
 function drawLife(){
   const v=DIM.map((d,i)=>LIFE.reduce((s,q,j)=>s+q.opts[sel[j]].v[i],0));
   const lc=echarts.init($('lifeChart'));
-  lc.setOption({
+  lc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 分`},
     grid:{left:70,right:20,top:12,bottom:20},
     xAxis:{type:'value',max:30,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#405773',fontSize:11},axisLine:{lineStyle:{color:'#d8e3f0'}}},
-    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#168366':x>=12?'#245bdb':'#bf3b49',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:10}}))}]
+    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#168366':x>=12?'#245bdb':'#bf3b49',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:11}}))}]
   });
   window.__lc=lc;
   const best=DIM[v.indexOf(Math.max(...v))];
