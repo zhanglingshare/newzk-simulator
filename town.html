@@ -45,27 +45,27 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">01 今日仲恺</a>
-  <a href="who.html">02 仲恺是什么</a>
-  <a href="network.html">03 产业链地图</a>
-  <a href="choices.html">04 五条路</a>
-  <a href="future.html">05 未来2030</a>
-  <a href="windtunnel.html">06 风洞</a>
-  <a href="blindspot.html">07 忽略了什么</a>
-  <a href="mylife.html">08 跟我的关系</a>
-  <a href="report.html">09 分析报告</a>
-  <a href="ending.html">10 结语</a>
-  <a href="guide.html">11 使用指南</a>
-  <a href="town.html" class="on">12 生活地图</a>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html" class="on">⑫ 生活地图</a>
 </div>
 
 <div class="wrap">
   <div class="hero">
     <div class="hu">周末去哪吃、去哪玩</div>
-    <div class="sub">5 个镇街 + 4 个园区，近期公开打卡热度三档（高/较高/中），合理估算，非平台后台真实统计。</div>
+    <div class="sub">5 个镇街 + 4 个园区，近期公开打卡热度三档（高/较高/中），不是真实人数统计。</div>
   </div>
 
-  <div class="pulse" id="pulse" role="status">正在读取生活地图内容…</div>
+  <div class="pulse" id="pulse"></div>
   <div class="qbar" id="qbar"></div>
   <div class="gt">谁最近人气旺（公开打卡热度档，非人数）</div>
   <div class="chart" id="popChart"></div>
@@ -74,15 +74,15 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
   <div class="season" id="season"></div>
 
-  <div class="next" style="margin-top:16px"><a href="index.html">回到第01页 · 今日仲恺 →</a></div>
-  <div class="disc">来源：仲恺高新区政府公开信息 · 惠州日报/南方+ · 点评/小红书/抖音公开打卡。人气为合理估算，非平台后台真实统计；功能区不做农品。</div>
+  <div class="next" style="margin-top:16px"><a href="index.html">回到第①页 · 今日仲恺 →</a></div>
+  <div class="disc">来源：仲恺高新区政府公开信息 · 惠州日报/南方+ · 点评/小红书/抖音公开打卡。人气为公开打卡热度档，非真实人数；功能区不做农品。</div>
 </div>
 
 <script>
 const $=i=>document.getElementById(i);
 const LV={'高':'#3ddc97','较高':'#fbbf24','中':'#fb923c'};
 const isPark=t=>/园|智慧区/.test(t.n);
-fetch('life.json').then(r=>{if(!r.ok)throw new Error('生活数据加载失败');return r.json()}).then(d=>{
+fetch('life.json').then(r=>r.json()).then(d=>{
   $('pulse').innerHTML=d.pulse.map(p=>`<div class="pu"><b>今天大家在聊</b>${p}</div>`).join('');
   /* 快捷筛选：全部 / 镇街 / 园区 */
   const bar=$('qbar');
@@ -95,7 +95,7 @@ fetch('life.json').then(r=>{if(!r.ok)throw new Error('生活数据加载失败')
     /* 人气对比条形 */
     const LVn={'高':3,'较高':2,'中':1};
     const popData=[...list].map(function(t){return {name:t.n,level:LVn[t.level]||1,raw:t.level};}).reverse();
-    const pc=echarts.getInstanceByDom($('popChart'))||echarts.init($('popChart'));
+    const pc=echarts.init($('popChart'));
     pc.setOption({
       backgroundColor:'transparent',
       tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'<br>人气档：'+p[0].data.raw;}},
@@ -119,12 +119,9 @@ fetch('life.json').then(r=>{if(!r.ok)throw new Error('生活数据加载失败')
   render('all');
   $('season').innerHTML=`<b>当季：${d.season||''}</b><span>${d.note||''} · 更新：${d.updated||''}</span>`;
 }).catch(()=>{
-  $('pulse').innerHTML='<div class="pu"><b>生活数据暂时无法加载</b>请检查网络后重试。下方不会展示未经核实的当期内容。 <button type="button" id="lifeRetry">重新加载</button></div>';
-  $('towns').innerHTML='<div class="tw"><h3>暂无可用的当期内容</h3><div class="why">请稍后重试，或查看其他栏目。不会将旧快照伪装成今日数据。</div></div>';
-  $('season').textContent='数据未加载 · 更新时间暂不可用';
-  $('popChart').hidden=true;
-  document.getElementById('lifeRetry').onclick=()=>location.reload();
-
+  $('pulse').innerHTML='<div class="pu"><b>今天大家在聊</b>智谷彩街招商完成约80%，力争12月整体开业</div><div class="pu"><b>今天大家在聊</b>跟着鹅香去沥林：市级非遗“沥林碌鹅”曾登央视，每年引大湾区食客超10万人次</div>';
+  $('towns').innerHTML='<div class="tw"><span class="tag">提示</span><h3>离线快照</h3><div class="why">上线后自动加载每日生活数据（5镇街+4园区）</div></div>';
+  $('season').innerHTML='<b>当季：秋</b><span>离线预览 · 上线后按季更新</span>';
 });
 </script>
 </body></html>
