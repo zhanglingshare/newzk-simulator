@@ -62,6 +62,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 .chart{width:100%;height:230px}
 @media(max-width:760px){.chart{height:200px}}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
+<link rel="stylesheet" href="lab5.css?v=5">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -172,7 +173,7 @@ const R_BASE={'chain':58,'oem':50,'park':46,'cap':44,'fac':40,'part':40,'tal':38
 const deg={};ZK.NO.forEach(n=>deg[n[0]]=0);ZK.LK.forEach(l=>{deg[l[0]]++;deg[l[1]]++;});
 const LAYER_KEYS=Object.keys(LNAME).filter(k=>k!=='vill');
 const FS={'chain':13,'oem':12.5,'park':12,'cap':11.5,'fac':11,'part':11,'tal':11,'life':11,'gap':11};
-const tips=$('#tip');
+const tips=$('tip');
 function $(i){return document.getElementById(i)}
 function tip(e,h){tips.innerHTML=h;tips.style.display='block';const x=e.clientX,y=e.clientY;tips.style.left=Math.min(x+14,innerWidth-300)+'px';tips.style.top=Math.max(y-12,8)+'px'}
 function tipOff(){tips.style.display='none'}
