@@ -1,0 +1,117 @@
+/* NewZK V5 | interactive laboratory surfaces.
+   These are additive styles; original charts, navigation, and content remain. */
+:root{--lab5-ink:#162e50;--lab5-blue:#245bdb;--lab5-slate:#5a708b;--lab5-border:#d8e4f4;--lab5-bg:#f6f9ff}
+.lab5-eyebrow{color:#245bdb;font-size:12px;font-weight:800;letter-spacing:.11em}
+.lab5-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:16px}
+.lab5-section-head h2{margin:6px 0 8px!important;font-size:clamp(21px,2.4vw,29px)!important;line-height:1.3!important;letter-spacing:-.035em!important}
+.lab5-section-head p{margin:0;max-width:740px}
+.lab5-pin{padding:8px 12px;border:1px solid #c7dafa;background:#eaf2ff;border-radius:100px;white-space:nowrap;font-size:12px;color:#2453bd;font-weight:800}
+.lab5-section-head button,.lab5-path-head button,.lab5-actions button,.lab5-toolbar button,.lab5-mode button,.lab5-shock-select button,#lab5PathsSave,#lab5Save{
+  font-family:inherit;cursor:pointer;border:1px solid #cbdcf2;border-radius:10px;min-height:44px;padding:9px 14px;background:#fff;color:#2450a6;font-size:13px;font-weight:750;
+}
+.lab5-section-head button:hover,.lab5-path-head button:hover,.lab5-actions button:hover,.lab5-toolbar button:hover,.lab5-mode button:hover,.lab5-shock-select button:hover,#lab5PathsSave:hover,#lab5Save:hover{border-color:#78a1ee;background:#eff5ff}
+.lab5-section-head button:focus-visible,.lab5-path-head button:focus-visible,.lab5-actions button:focus-visible,.lab5-toolbar button:focus-visible,.lab5-mode button:focus-visible,.lab5-shock-select button:focus-visible{outline:3px solid #8db4ff;outline-offset:2px}
+button:disabled{opacity:.48;cursor:not-allowed!important}
+.lab5-toolbar{display:flex;align-items:end;flex-wrap:wrap;gap:9px;padding:12px;margin:13px 0 7px;border:1px solid #dce8f7;border-radius:14px;background:#f6f9ff}
+.lab5-search{display:flex;flex-direction:column;gap:5px;flex:1;min-width:210px;font-size:12px;color:#4d6180;font-weight:700}
+.lab5-search input{width:100%;min-height:44px;padding:10px 12px;border:1px solid #cbdcf0;border-radius:10px;background:#fff;color:#182f50;font:14px inherit}
+.lab5-zoom{color:#5e728c;font-size:12px;min-width:42px;align-self:center;text-align:right;font-variant-numeric:tabular-nums}
+.lab5-empty{border:1px dashed #aec9ec;border-radius:10px;color:#526985;background:#f6f9ff;padding:10px 13px;font-size:13px;margin:7px 0}
+.lab5-empty[hidden]{display:none}
+.lab5-mode{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 13px;padding:6px;border-radius:13px;background:#edf4ff}
+.lab5-mode button{background:transparent;border-color:transparent}
+.lab5-mode button.active{background:#245bdb;border-color:#245bdb;color:#fff;box-shadow:0 4px 12px rgba(36,91,219,.17)}
+.lab5-mode span{flex:1;color:#536d89;font-size:12px;line-height:1.6;padding:4px 8px}
+body[data-page="network"] .network-layout{grid-template-columns:minmax(0,1fr) minmax(300px,335px)}
+body[data-page="network"] .network-canvas{overflow:hidden;min-height:560px;position:relative}
+body[data-page="network"] .network-canvas svg#net{min-width:0!important;width:100%!important;height:min(70vh,710px)!important;min-height:560px!important;max-height:none!important;touch-action:none;cursor:grab;display:block}
+body[data-page="network"] svg#net:active{cursor:grabbing}
+body[data-page="network"] #net .node{cursor:pointer}
+body[data-page="network"] #net .link{pointer-events:stroke;cursor:crosshair}
+body[data-page="network"] #net .link:hover{stroke-opacity:1!important;stroke-width:5!important}
+body[data-page="network"] #net .node.lab5-off{opacity:.13!important}
+body[data-page="network"] #net .link.lab5-cut{opacity:.13!important;stroke:#c54859!important;stroke-dasharray:6 4}
+body[data-page="network"] #net .link.lab5-picked{opacity:1!important;stroke:#e68d36!important;stroke-width:5!important}
+body[data-page="network"] #net .node.lab5-picked ellipse{stroke:#245bdb!important;stroke-width:5!important}
+body[data-page="network"] #net .lab5-hide-label{opacity:0!important;pointer-events:none}
+.lab5-sandbox{margin-top:19px;border-top:1px solid #d8e4f1;padding-top:17px}
+.lab5-sandbox h3{font-size:18px!important;margin:0 0 10px;color:#173556}
+#lab5Selection{font-size:13px;color:#45617f;line-height:1.7;min-height:40px;padding:10px 12px;background:#fff;border-radius:10px;border:1px solid #dce7f5}
+.lab5-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.lab5-actions button:first-child{background:#245bdb;color:#fff;border-color:#245bdb;flex:1}
+.lab5-actions button:first-child:hover{background:#1c4cb9}
+.lab5-compare-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.lab5-compare-stats>div{padding:12px;border:1px solid #dce7f4;border-radius:11px;background:#fff;display:flex;flex-direction:column;gap:5px}
+.lab5-compare-stats span{color:#61758d;font-size:12px}
+.lab5-compare-stats b{font-size:17px;color:#183a60;font-variant-numeric:tabular-nums}
+.lab5-compare-stats small{font-size:12px;color:#55708e}
+.lab5-note{font-size:12px!important;line-height:1.75;color:#596e87;margin:12px 0 0}
+#lab5Save{width:100%;margin-top:2px}
+.lab5-path-lab{border:1px solid #cbdcf6!important;background:linear-gradient(148deg,#f5f9ff,#fff 35%,#fff 100%)!important}
+.lab5-path-grid{display:grid;grid-template-columns:minmax(0,36fr) minmax(0,64fr);gap:18px;align-items:start}
+.lab5-path-controls{background:#f5f8ff;padding:18px;border:1px solid #dbe7f7;border-radius:16px}
+.lab5-path-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.lab5-path-head strong{font-size:17px;color:#173654}
+.lab5-path-row{display:grid;grid-template-columns:1fr auto;gap:7px 12px;margin:15px 0;border-bottom:1px solid #e0e8f3;padding-bottom:12px}
+.lab5-path-title{font-size:14px;font-weight:750;color:#27415e;display:flex;align-items:center;gap:8px}
+.lab5-path-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.lab5-path-value{color:#245bdb;font-size:15px;font-weight:900;font-variant-numeric:tabular-nums}
+.lab5-path-row input{grid-column:1/-1;width:100%;height:32px;accent-color:#245bdb;cursor:ew-resize}
+.lab5-path-row small{grid-column:1/-1;color:#70829a;font-size:11.5px}
+.lab5-warn{padding:12px 14px;background:#fff8ec;border:1px solid #f0ddba;border-radius:11px;color:#835c23;font-size:12.5px;line-height:1.75}
+.lab5-path-outcomes{min-width:0}
+.lab5-path-compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.lab5-path-stat{border:1px solid #dae6f6;border-radius:14px;padding:13px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.lab5-path-stat>span{font-size:12px;color:#60748c}
+.lab5-path-stat>div{display:flex;flex-direction:column;gap:4px}
+.lab5-path-stat small{color:#7486a0;font-size:11px}
+.lab5-path-stat b{font-size:clamp(13px,1.4vw,20px);color:#24446c;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.lab5-path-stat>div:nth-of-type(2) b{color:#245bdb}
+.lab5-path-stat em{margin-top:auto;font-style:normal;color:#2d648b;font-weight:750;font-size:12px;line-height:1.6}
+.lab5-chart-label{margin:16px 0 8px;font-size:13px;color:#365475;font-weight:750}
+.lab5-path-chart{height:330px;width:100%;border:1px solid #e0e8f4;border-radius:14px;background:#fff;overflow:hidden}
+.lab5-path-status{min-height:36px;color:#536782;font-size:12px;margin-top:10px}
+#lab5PathsSave{width:100%;background:#245bdb;color:#fff;border-color:#245bdb}
+.lab5-shock-lab{border-color:#cbdcf6!important;background:linear-gradient(145deg,#f6faff,#fff 40%)!important}
+.lab5-shock-select{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin:16px 0}
+.lab5-shock-select label,.lab5-shock-select>div{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:750;color:#425b79;min-width:200px;flex:1}
+.lab5-shock-select select{background:#fff;border:1px solid #c9daef;border-radius:10px;color:#23405e;padding:9px 12px;min-height:44px;font-size:14px}
+.lab5-shock-select>div>span{display:flex;align-items:center;min-height:44px;border:1px solid #d8e3f1;border-radius:10px;padding:9px 12px;background:#f6f9ff;color:#245bdb;font-size:14px}
+.lab5-shock-numbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.lab5-shock-numbers>div{border:1px solid #dce6f4;border-radius:12px;background:#fff;padding:13px;display:flex;flex-direction:column;gap:5px}
+.lab5-shock-numbers span{font-size:12px;color:#61758f}
+.lab5-shock-numbers b{font-size:29px;color:#245bdb;font-variant-numeric:tabular-nums}
+.lab5-shock-maps{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.lab5-shock-maps>div{min-width:0;background:#fff;border:1px solid #dce7f4;border-radius:14px;padding:12px}
+.lab5-shock-maps strong{font-size:13px;color:#36587b}
+.lab5-shock-maps svg{display:block;width:100%;height:auto;margin-top:8px;border:1px solid #e0e8f4;border-radius:11px;background:#f8fbff}
+@media(max-width:1150px){
+ body[data-page="network"] .network-layout{grid-template-columns:1fr}
+ body[data-page="network"] .network-side{position:static}
+ .lab5-path-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+ .lab5-section-head{flex-direction:column;gap:10px}
+ .lab5-path-controls{padding:13px}
+ .lab5-path-compare{grid-template-columns:1fr}
+ .lab5-path-stat{display:grid;grid-template-columns:minmax(0,1fr) 1fr 1fr;align-items:start;gap:8px}
+ .lab5-path-stat>span,.lab5-path-stat>em{grid-column:1/-1}
+ .lab5-path-stat b{font-size:17px}
+ .lab5-path-chart{height:280px}
+ .lab5-toolbar{padding:10px;gap:7px}
+ .lab5-search{flex-basis:100%;min-width:0}
+ .lab5-toolbar button{flex:1;padding:9px}
+ .lab5-mode{gap:4px}
+ .lab5-mode button{flex:1}
+ .lab5-mode span{flex-basis:100%}
+ body[data-page="network"] .network-canvas{min-height:50vh}
+ body[data-page="network"] .network-canvas svg#net{min-width:0!important;height:56vh!important;min-height:420px!important;max-width:100%;touch-action:none}
+ body[data-page="network"] .network-side{max-width:100%;overflow:hidden}
+ .lab5-compare-stats{grid-template-columns:1fr 1fr}
+ .lab5-shock-select{align-items:stretch}
+ .lab5-shock-select label,.lab5-shock-select>div{min-width:0;flex-basis:100%}
+ .lab5-shock-numbers{grid-template-columns:repeat(2,1fr)}
+ .lab5-shock-maps{grid-template-columns:1fr}
+ .lab5-shock-maps svg{max-height:420px}
+}
+@media(prefers-reduced-motion:reduce){.lab5-path-stat,.lab5-shock-numbers>div{transition:none!important}}
