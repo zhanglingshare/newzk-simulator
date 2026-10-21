@@ -229,7 +229,7 @@ function renderSliders(){
     $('s_'+r).oninput=e=>{
       const v=parseFloat(e.target.value);
       e.target.nextElementSibling.textContent=v;
-      manual=manual||{};manual[r]=v;
+      manual=manual||Object.fromEntries(ZK.ROADS.map(name=>[name,weightOf(name)]));manual[r]=v;
       renderRank();renderMatrix();
     };
   });
