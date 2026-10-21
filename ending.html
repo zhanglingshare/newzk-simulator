@@ -114,18 +114,18 @@ $('loop').innerHTML=`
   <div class="n"><b>再投入</b>消费→商业→税收→园区</div><div class="ar">→</div>
   <div class="n"><b>产业更旺</b>链主留 · 新项目来</div>`;
 const wc=echarts.init($('worldChart'));
-wc.setOption({
+wc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>产业 ${p[0].value} / 城市 ${p[1].value} / 人 ${p[2].value}`},
-  legend:{data:['产业','城市','人'],textStyle:{color:'#536782',fontSize:11},top:0},
+  legend:{data:['产业','城市','人'],textStyle:{color:'#536782',fontSize:12},top:0},
   grid:{left:84,right:30,top:28,bottom:18},
   xAxis:{type:'value',max:10,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-  yAxis:{type:'category',data:['深圳南山','合肥','东莞松山湖','成都高新区','仲恺'].reverse(),axisLabel:{color:'#405773',fontSize:10.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+  yAxis:{type:'category',data:['深圳南山','合肥','东莞松山湖','成都高新区','仲恺'].reverse(),axisLabel:{color:'#405773',fontSize:11.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[
     {name:'产业',type:'bar',barWidth:9,data:[9,8,7,6,9].reverse().map(v=>({value:v,itemStyle:{color:'#245bdb'}}))},
     {name:'城市',type:'bar',barWidth:9,data:[9,7,7,8,5].reverse().map(v=>({value:v,itemStyle:{color:'#168366'}}))},
     {name:'人',type:'bar',barWidth:9,data:[9,6,8,8,4].reverse().map(v=>({value:v,itemStyle:{color:'#b96a20'}}))}
   ],
-  graphic:[{type:'text',left:8,bottom:0,style:{text:'评分仅示意打法 · 可信度 D',fill:'#536782',fontSize:10}}]
+  graphic:[{type:'text',left:8,bottom:0,style:{text:'评分仅示意打法 · 可信度 D',fill:'#536782',fontSize:11}}]
 });
 window.addEventListener('resize',()=>wc.resize());
 </script>
