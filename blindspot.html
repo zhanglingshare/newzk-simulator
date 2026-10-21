@@ -120,17 +120,17 @@ $('q4').innerHTML=Q4.map(q=>`<div class="qi"><div class="v">${q[0]}</div><div cl
 /* 三个缺口：基准 vs 进取（与 report 弹性同源） */
 const GAP=[['算力本地系数','0.30→0.50',12,28],['本地配套率','30%→60%',32,58],['消费承接','低→高',12,18]];
 const gc=echarts.init($('gapChart'));
-gc.setOption({
+gc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>${p[0].dataIndex===0?'基准':''}${p[1].value} 亿 → ${p[0].dataIndex===0?GAP[p[0].dataIndex][3]:''}`},
-  legend:{data:['基准档','进取档'],textStyle:{color:'#536782',fontSize:11},top:0},
+  legend:{data:['基准档','进取档'],textStyle:{color:'#536782',fontSize:12},top:0},
   grid:{left:96,right:30,top:28,bottom:18},
   xAxis:{type:'value',axisLabel:{color:'#536782',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-  yAxis:{type:'category',data:GAP.map(g=>g[0]).reverse(),axisLabel:{color:'#405773',fontSize:11},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+  yAxis:{type:'category',data:GAP.map(g=>g[0]).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[
     {name:'基准档',type:'bar',barWidth:12,data:GAP.map(g=>g[2]).reverse().map(v=>({value:v,itemStyle:{color:'#334155'}}))},
     {name:'进取档',type:'bar',barWidth:12,data:GAP.map(g=>g[3]).reverse().map(v=>({value:v,itemStyle:{color:'#168366',borderRadius:[0,5,5,0]}}))}
   ],
-  graphic:[{type:'text',left:8,bottom:0,style:{text:'灰＝基准 · 绿＝进取 · 区间越长越有弹性',fill:'#536782',fontSize:10}}]
+  graphic:[{type:'text',left:8,bottom:0,style:{text:'灰＝基准 · 绿＝进取 · 区间越长越有弹性',fill:'#536782',fontSize:11}}]
 });
 window.addEventListener('resize',()=>gc.resize());
 </script>
