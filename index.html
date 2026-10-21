@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NewZK · 今日仲恺</title>
+<title>NewZK · 仲恺经济世界 | 城市经济实验室</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 <script src="model.js"></script>
 <script src="lib/echarts.min.js"></script>
@@ -72,6 +72,7 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
 .big .links{font-size:11.5px;color:#536782;line-height:1.9}
 .big .links i{color:#67e8f9;font-style:normal}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
+<link rel="stylesheet" href="home-v6.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="index">
 
@@ -91,7 +92,103 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
   <a href="town.html">⑫ 生活地图</a>
 </div>
 
-<div class="wrap">
+
+<!-- V6 immersive home | The legacy 12-page navigation, news, vote, and analysis remain below. -->
+<main class="wh-world" id="whWorld" aria-label="仲恺经济世界首页">
+  <section class="wh-shell" aria-label="城市经济互动沙盘">
+    <div class="wh-statusbar">
+      <div class="wh-brand"><span class="wh-brand-mark">N<span>·</span></span><span><b>NEWZK</b><small>仲恺城市经济实验室</small></span></div>
+      <div class="wh-status"><span class="wh-signal"></span> 正在展示模型与公开资料 <span class="wh-status-divider">/</span> <span id="whSourceUpdated">资料更新时间待读取</span></div>
+      <a class="wh-all-link" href="#whOriginal">完整今日仲恺 ↓</a>
+    </div>
+    <div class="wh-kpis" aria-label="模型状态">
+      <div class="wh-kpi"><span>2025 工业产值基准</span><b id="whBase">—</b><small>亿元 · 统计锚点</small></div>
+      <div class="wh-kpi"><span>2030 工业产值目标</span><b id="whTarget">—</b><small>亿元 · 规划目标</small></div>
+      <div class="wh-kpi wh-kpi-accent"><span>基准达标概率</span><b id="whBaselineHit">—</b><small>原模型1000次抽样</small></div>
+      <div class="wh-kpi"><span>模型产业关系</span><b id="whRelationCount">—</b><small>主体 / 关系</small></div>
+    </div>
+    <div class="wh-workspace">
+      <section class="wh-stage" aria-label="仲恺经济世界场景">
+        <div class="wh-sky"></div><div class="wh-halo"></div><div class="wh-sun"></div><div class="wh-mountains"></div>
+        <div class="wh-buildings wh-buildings-back" id="whBuildingsBack" aria-hidden="true"></div>
+        <div class="wh-buildings wh-buildings-front" id="whBuildingsFront" aria-hidden="true"></div>
+        <div class="wh-road" aria-hidden="true"><span class="wh-lanes"></span><i class="wh-car wh-car-one"></i><i class="wh-car wh-car-two"></i></div>
+        <div class="wh-stage-intro">
+          <div class="wh-eyebrow"><span class="wh-eyebrow-pulse"></span> REGIONAL ECONOMIC WORLD · LAB 06</div>
+          <h1>一座城的未来，<br><em>可以从一个变化开始。</em></h1>
+          <p>点亮企业与园区，改变一个条件，观察整个结构如何回应。</p>
+        </div>
+        <div class="wh-scene-nav" role="group" aria-label="沙盘视角">
+          <button class="wh-scene-tab is-active" type="button" data-wh-mode="explore" aria-pressed="true">探索结构</button>
+          <button class="wh-scene-tab" type="button" data-wh-mode="shock" aria-pressed="false">观察冲击</button>
+          <button class="wh-scene-tab" type="button" data-wh-mode="simulate" aria-pressed="false">推演未来</button>
+        </div>
+        <div class="wh-network-wrap">
+          <svg id="whNetwork" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet" role="img" aria-label="仲恺产业网络主体与连接关系。选择发光节点查看实际模型关系。">
+            <g id="whLinks"></g><g id="whNodes"></g>
+          </svg>
+        </div>
+        <div class="wh-node-info" id="whNodeInfo" role="status" aria-live="polite">点击发光节点，看看它连接了谁。</div>
+        <div class="wh-stage-foot"><span><i class="wh-key wh-key-blue"></i>模型主体</span><span><i class="wh-key wh-key-orange"></i>当前焦点/冲击</span><span><i class="wh-key wh-key-dash"></i>待核实连接</span><span class="wh-scene-caption">概念化背景 · 网络取自模型关系 · 不代表真实地理位置</span></div>
+      </section>
+      <aside class="wh-rail" aria-label="模型操作与今日事件">
+        <section class="wh-panel wh-control" id="whControlPanel">
+          <div class="wh-panel-eyebrow">01 / 亲手操作</div>
+          <h2>给这座城一个条件</h2>
+          <p class="wh-description">你的输入改变实验，而不是改变公开事实。</p>
+          <div id="whExploreControls" class="wh-control-view">
+            <label class="wh-field">寻找一个主体<input id="whFind" type="search" placeholder="例如：亿纬锂能、人工智能产业园" autocomplete="off"></label>
+            <button class="wh-ghost-button" id="whFindAction" type="button">定位主体 ↗</button>
+            <p class="wh-help">真实网络来自 <span id="whNetworkCount">—</span>，选中主体会高亮现有连接。</p>
+          </div>
+          <div id="whShockControls" class="wh-control-view" hidden>
+            <label class="wh-field">选择一个冲击<select id="whShockSelect"></select></label>
+            <p class="wh-help">仅高亮模型已定义的直接波及主体。此页不虚构传播速度、产值损失或因果关系。</p>
+            <div class="wh-shock-result" id="whShockResult" role="status"></div>
+            <a class="wh-deep-link" href="windtunnel.html">进入完整风洞与 A/B 比较 →</a>
+          </div>
+          <div id="whSimControls" class="wh-control-view" hidden>
+            <label class="wh-slider-label" for="whMu">链主做强 · 假设新增贡献 <strong id="whMuValue">—</strong></label>
+            <input class="wh-slider" id="whMu" type="range" min="0" max="1400" step="10" value="700">
+            <div class="wh-scale"><span>0亿</span><span>基准700亿</span><span>1400亿</span></div>
+            <button class="wh-ghost-button" id="whReset" type="button">恢复基准</button>
+            <p class="wh-help">只调整一条路径的情景假设；其他参数保持原值。使用原模型和相同随机种子重新计算。</p>
+          </div>
+        </section>
+        <section class="wh-panel wh-results" id="whResults">
+          <div class="wh-panel-eyebrow">02 / 观察变化</div>
+          <div class="wh-result-title"><h2>两种未来 · 一眼比较</h2><span class="wh-tag">A / B</span></div>
+          <div class="wh-ab-grid">
+            <div class="wh-ab wh-ab-a"><span>A · 基准</span><b id="whHitA">—</b><small>模型达标概率</small></div>
+            <div class="wh-ab wh-ab-b"><span>B · 实验</span><b id="whHitB">—</b><small>模型达标概率</small></div>
+          </div>
+          <div class="wh-delta" id="whDelta" aria-live="polite">请选择实验条件</div>
+          <div id="whDistribution" class="wh-distribution" role="img" aria-label="原模型计算的A与B结果分布曲线"></div>
+          <div class="wh-result-foot" id="whOutcome">使用相同模型、随机种子与抽样次数对比。</div>
+          <div class="wh-result-actions"><button type="button" id="whSave">保存此方案</button><a href="choices.html">完整五条路 ↗</a></div>
+          <p class="wh-disclaimer">仅为模型情景结果，不是现实经济预测。结构冲击实验不计算经济损失。</p>
+        </section>
+        <section class="wh-panel wh-news">
+          <div class="wh-news-heading"><span class="wh-panel-eyebrow">03 / 今日仲恺</span><a href="#whOriginal">查看全部话题 ↓</a></div>
+          <div id="whNewsItems" class="wh-news-items" aria-live="polite"><p class="wh-help">正在读取公开资讯…</p></div>
+          <p class="wh-news-foot" id="whNewsFoot">关注档来自编辑分级，不代表全网真实阅读量。</p>
+        </section>
+      </aside>
+    </div>
+    <div class="wh-dock" aria-label="快速进入功能">
+      <a href="network.html"><span>⌬</span>产业网络</a>
+      <a href="choices.html"><span>≋</span>五条路</a>
+      <a href="windtunnel.html"><span>✺</span>风洞实验</a>
+      <a href="future.html"><span>◈</span>未来2030</a>
+      <a href="mylife.html"><span>♙</span>跟我的关系</a>
+      <a href="report.html"><span>▤</span>分析报告</a>
+      <a href="#whOriginal"><span>☼</span>今日资讯与投票</a>
+      <a href="guide.html"><span>⋯</span>全部功能</a>
+    </div>
+  </section>
+</main>
+
+<div class="wrap wh-original" id="whOriginal">
   <div class="head">
     <svg class="radar" viewBox="0 0 80 80">
       <circle cx="40" cy="40" r="36" fill="none" stroke="#e5ebf4" stroke-width="1"/>
@@ -270,4 +367,5 @@ fetch('hot.json').then(r=>r.json()).then(d=>{
 });
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
+<script src="home-v6.js?v=1"></script>
 </body></html>
