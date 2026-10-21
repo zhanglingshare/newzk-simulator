@@ -138,8 +138,11 @@ const TL={'chain':{'e':'外迁','t':'链主外迁/订单转移','s':'一家链�
 let cur='chain';
 const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#00c2d9','park':'#3b82f6','fac':'#8ba6bd','cap':'#a06bff','tal':'#3ddc97','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
 function cards(){
-  $('cards').innerHTML=SH.map(s=>{const k=s[2];return `<div class="card ${k===cur?'on':''}" data-k="${k}"><div class="e">${TL[k].e}</div><div class="t">${s[0]}</div><div class="s">${TL[k].s}</div></div>`;}).join('');
-  $('cards').querySelectorAll('.card').forEach(c=>c.onclick=()=>{cur=c.dataset.k;cards();run();});
+  $('cards').innerHTML=SH.map(s=>{const k=s[2];return `<div class="card ${k===cur?'on':''}" data-k="${k}" role="button" tabindex="0" aria-pressed="${k===cur}"><div class="e">${TL[k].e}</div><div class="t">${s[0]}</div><div class="s">${TL[k].s}</div></div>`;}).join('');
+  $('cards').querySelectorAll('.card').forEach(c=>{
+    c.onclick=()=>{cur=c.dataset.k;cards();run();};
+    c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}};
+  });
 }
 function run(){
   const hits=ZK.shockHits(cur);
