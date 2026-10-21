@@ -7,58 +7,58 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
-.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
-.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #245bdb;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .scen{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
-.scen button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:8px 16px;border-radius:18px;font-size:13px;cursor:pointer}
-.scen button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:700}
+.scen button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:8px 16px;border-radius:18px;font-size:13px;cursor:pointer}
+.scen button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
 .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
-.kpi .c{flex:1;min-width:120px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:10px 12px;text-align:center}
+.kpi .c{flex:1;min-width:120px;background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:10px 12px;text-align:center}
 .kpi .v{font-size:22px;font-weight:800;color:#67e8f9}
-.kpi .l{font-size:11px;color:#8fa3bf;margin-top:2px}
-.kpi .c.warn .v{color:#fbbf24}
-.kpi .c.bad .v{color:#f87171}
-.kpi .c.good .v{color:#3ddc97}
+.kpi .l{font-size:11px;color:#536782;margin-top:2px}
+.kpi .c.warn .v{color:#b96a20}
+.kpi .c.bad .v{color:#bf3b49}
+.kpi .c.good .v{color:#168366}
 svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 .contrib{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
-.contrib .c{flex:1;min-width:130px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:9px 11px}
+.contrib .c{flex:1;min-width:130px;background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:9px 11px}
 .contrib .v{font-size:17px;font-weight:800}
-.contrib .l{font-size:11px;color:#8fa3bf}
+.contrib .l{font-size:11px;color:#536782}
 .bar{height:10px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:6px}
 .bar i{display:block;height:100%;border-radius:6px}
 .spanline{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0}
-.spanline .lab{font-size:12px;color:#8fa3bf}
-.spanline .seg{background:#131c2b;border:1px solid #334155;border-radius:16px;padding:5px 14px;font-size:13px;color:#e6edf3}
-.spanline .seg b{color:#fbbf24}
+.spanline .lab{font-size:12px;color:#536782}
+.spanline .seg{background:#f5f8fd;border:1px solid #334155;border-radius:16px;padding:5px 14px;font-size:13px;color:#17243d}
+.spanline .seg b{color:#b96a20}
 .gapbar{margin:10px 0}
 .gapbar .row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12.5px}
-.gapbar .lab{min-width:72px;color:#8fa3bf}
+.gapbar .lab{min-width:72px;color:#536782}
 .gapbar .tr{flex:1;height:16px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative}
 .gapbar .tr i{position:absolute;top:0;bottom:0;border-radius:8px}
 .chart{width:100%;height:270px}
 @media(max-width:760px){.chart{height:215px}}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
-.q3{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
+.q3{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:12px;padding:12px 14px;margin-bottom:14px}
 .q3 .t{font-size:13px;font-weight:800;color:#7dd3fc;margin-bottom:8px}
 .q3 .row{display:flex;flex-wrap:wrap;gap:8px}
-.q3 .q{flex:1;min-width:200px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:9px 11px}
-.q3 .q b{display:block;font-size:12.5px;color:#e6edf3}
-.q3 .q span{font-size:11.5px;color:#8fa3bf}
+.q3 .q{flex:1;min-width:200px;background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:9px 11px}
+.q3 .q b{display:block;font-size:12.5px;color:#17243d}
+.q3 .q span{font-size:11.5px;color:#536782}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="future">
@@ -161,14 +161,14 @@ function hist(){
       return `${v0}—${v1} 亿<br>跑出 ${p[0].value} 次${v1>=ZK.TARGET?' · 已过目标线':''}`;
     }},
     grid:{left:52,right:18,top:34,bottom:30},
-    xAxis:{type:'value',min:3000,max:8200,axisLabel:{color:'#8fa3bf',formatter:'{value}亿',interval:1},splitLine:{show:false}},
-    yAxis:{type:'value',axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    xAxis:{type:'value',min:3000,max:8200,axisLabel:{color:'#536782',formatter:'{value}亿',interval:1},splitLine:{show:false}},
+    yAxis:{type:'value',axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
     series:[{type:'bar',barWidth:'98%',
       data:cnt.map((c,i)=>({value:c,itemStyle:{color:min+(i+1)*bw>=ZK.TARGET?'rgba(245,158,11,.85)':'rgba(37,99,235,.65)',borderRadius:1}})),
-      markLine:{silent:true,symbol:'none',lineStyle:{color:'#f87171',type:'dashed',width:1.5},
-        label:{color:'#f87171',fontSize:11,formatter:'目标 6500'},
+      markLine:{silent:true,symbol:'none',lineStyle:{color:'#bf3b49',type:'dashed',width:1.5},
+        label:{color:'#bf3b49',fontSize:11,formatter:'目标 6500'},
         data:[{xAxis:ZK.TARGET}]}}],
-    graphic:[{type:'text',left:8,top:10,style:{text:'1000 次结果堆叠 · 橙色柱＝落在 6500 以上 · 悬停看计数',fill:'#8fa3bf',fontSize:10.5}}]
+    graphic:[{type:'text',left:8,top:10,style:{text:'1000 次结果堆叠 · 橙色柱＝落在 6500 以上 · 悬停看计数',fill:'#536782',fontSize:10.5}}]
   });
   charts.push(hc);
 }
@@ -183,14 +183,14 @@ function box(){
     backgroundColor:'transparent',tooltip:{trigger:'item',formatter:p=>{
       const v=p.value;return `${p.name}<br>最坏 5%：${v[0]} 亿<br>下四分位：${v[1]} 亿<br>中位数：${v[2]} 亿<br>上四分位：${v[3]} 亿<br>最好 5%：${v[4]} 亿`;
     }},
-    legend:{data:['分布','目标线'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+    legend:{data:['分布','目标线'],textStyle:{color:'#536782',fontSize:11},top:0},
     grid:{left:50,right:18,top:30,bottom:26},
-    xAxis:{type:'category',data:['乐观','基准','恶劣'],axisLabel:{color:'#e6edf3',fontSize:12},axisLine:{lineStyle:{color:'#22304a'}}},
-    yAxis:{type:'value',axisLabel:{color:'#8fa3bf',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    xAxis:{type:'category',data:['乐观','基准','恶劣'],axisLabel:{color:'#17243d',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    yAxis:{type:'value',axisLabel:{color:'#536782',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
     series:[
-      {name:'分布',type:'boxplot',boxWidth:44,itemStyle:{color:'rgba(37,99,235,.25)',borderColor:'#3b82f6',borderWidth:1.5},
+      {name:'分布',type:'boxplot',boxWidth:44,itemStyle:{color:'rgba(37,99,235,.25)',borderColor:'#245bdb',borderWidth:1.5},
         data:boxData,
-        markLine:{silent:true,symbol:'none',lineStyle:{color:'#f87171',type:'dashed'},label:{color:'#f87171',formatter:'目标 6500'},data:[{yAxis:ZK.TARGET}]}}
+        markLine:{silent:true,symbol:'none',lineStyle:{color:'#bf3b49',type:'dashed'},label:{color:'#bf3b49',formatter:'目标 6500'},data:[{yAxis:ZK.TARGET}]}}
     ]
   });
   charts.push(bc);
@@ -212,7 +212,7 @@ function gapbar(){
   const r=r3[cur];
   const basePct=ZK.BASE/ZK.TARGET*100;
   const total=P=(r.p50-ZK.BASE);
-  const rows=[['现有家底',ZK.BASE,0,basePct,'#64748b']];
+  const rows=[['现有家底',ZK.BASE,0,basePct,'#6c7d94']];
   ZK.DEFAULT_PATHS.forEach((p,i)=>{
     const v=p.mu*S[cur][2];
     rows.push([p.name,v,ZK.BASE+rows.slice(1).reduce((a,x)=>a+x[1],0),v/ZK.TARGET*100,p.color]);
@@ -222,11 +222,11 @@ function gapbar(){
     const w=Math.max(2,r2[3]);
     s+=`<div class="row"><span class="lab">${r2[0]}</span><div class="tr"><i style="left:${(r2[2]/ZK.TARGET*100)}%;width:${w}%;background:${r2[4]}"></i></div><span style="min-width:70px;text-align:right">${Math.round(r2[1]).toLocaleString()} 亿</span></div>`;
   });
-  s+=`<div class="row"><span class="lab">目标线</span><div class="tr" style="border:1px dashed #f59e0b;background:transparent"></div><span style="color:#f59e0b">6500 亿</span></div>`;
+  s+=`<div class="row"><span class="lab">目标线</span><div class="tr" style="border:1px dashed #b96a20;background:transparent"></div><span style="color:#b96a20">6500 亿</span></div>`;
   $('gapbar').innerHTML=s;
-  const gapNote=cur===2?'<b style="color:#f87171">恶劣情景下缺口明显放大</b>：链主订单转移+投资收缩，五条路贡献同步缩水，过线概率只剩 '+r3[2].hit.toFixed(0)+'%。'
-    :(cur===1?'<b style="color:#fbbf24">基准情景</b>：按当前趋势延续，中值 '+Math.round(r3[1].p50)+' 亿，过线概率 '+r3[1].hit.toFixed(0)+'%。'
-    :'<b style="color:#3ddc97">乐观情景</b>：需求旺+投资回补，过线概率 '+r3[0].hit.toFixed(0)+'%。');
+  const gapNote=cur===2?'<b style="color:#bf3b49">恶劣情景下缺口明显放大</b>：链主订单转移+投资收缩，五条路贡献同步缩水，过线概率只剩 '+r3[2].hit.toFixed(0)+'%。'
+    :(cur===1?'<b style="color:#b96a20">基准情景</b>：按当前趋势延续，中值 '+Math.round(r3[1].p50)+' 亿，过线概率 '+r3[1].hit.toFixed(0)+'%。'
+    :'<b style="color:#168366">乐观情景</b>：需求旺+投资回补，过线概率 '+r3[0].hit.toFixed(0)+'%。');
   document.querySelector('#gapbar + .ana').textContent='五条路中值合计新增约 2300 亿，正好补上 4037→6500 的缺口。'+gapNote+' 所以关键是抗压，不是乐观。';
 }
 function q3(){
