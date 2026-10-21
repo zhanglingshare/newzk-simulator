@@ -96,13 +96,13 @@ fetch('life.json').then(r=>r.json()).then(d=>{
     const LVn={'高':3,'较高':2,'中':1};
     const popData=[...list].map(function(t){return {name:t.n,level:LVn[t.level]||1,raw:t.level};}).reverse();
     const pc=echarts.init($('popChart'));
-    pc.setOption({
+    pc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
       backgroundColor:'transparent',
       tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'<br>人气档：'+p[0].data.raw;}},
       grid:{left:64,right:30,top:8,bottom:18},
       xAxis:{type:'value',min:0,max:3,interval:1,axisLabel:{show:false},splitLine:{lineStyle:{color:'#e8eef6'}}},
-      yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#405a76',fontSize:10},axisLine:{lineStyle:{color:'#dbe6f2'}}},
-      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#168366',2:'#b96a20',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#405a76',fontSize:10,formatter:function(p){return p.data.raw;}}};})}]
+      yAxis:{type:'category',data:popData.map(function(x){return x.name;}),axisLabel:{color:'#405a76',fontSize:11},axisLine:{lineStyle:{color:'#dbe6f2'}}},
+      series:[{type:'bar',barWidth:13,data:popData.map(function(x){return {value:x.level,itemStyle:{color:{3:'#168366',2:'#b96a20',1:'#fb923c'}[x.level]||'#334155',borderRadius:[0,4,4,0]},label:{show:true,position:'right',color:'#405a76',fontSize:11,formatter:function(p){return p.data.raw;}}};})}]
     });
     window.__pop=pc;
     $('towns').innerHTML=list.map(t=>`
