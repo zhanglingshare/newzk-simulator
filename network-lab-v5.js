@@ -160,7 +160,7 @@ svg.addEventListener('pointerdown',e=>{
   if(pointers.size===2){
     const ps=[...pointers.values()];pinchDist=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y);
     dragView=null;
-  }else if(pointers.size===1&&!e.target.closest('.node')){
+  }else if(pointers.size===1&&!e.target.closest('.node')&&!e.target.closest('.link')){
     dragView={x:e.clientX,y:e.clientY,view:{...viewport}};
     try{svg.setPointerCapture(e.pointerId);}catch(err){}
   }
@@ -190,4 +190,5 @@ if(stored&&stored.type==='network-topology'){
 }
 $('lab5Toggle').disabled=true;
 renderStats();setViewport();chooseMode('base');
+if(window.matchMedia('(max-width:760px)').matches)zoom(2.6);
 })();
