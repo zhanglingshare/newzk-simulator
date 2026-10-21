@@ -180,12 +180,12 @@ function run(){
 function bar5(){
   const rows=SH.map(s=>{const h=ZK.shockHits(s[2]);return {name:s[0],n:h.length,pct:Math.round(h.length/ZK.NO.length*100)};});
   const bc=echarts.init($('bar5'));
-  bc.setOption({
+  bc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>波及 ${p[0].value} 个主体（占全图 ${rows.find(r=>r.name===p[0].name).pct}%）`},
     grid:{left:112,right:36,top:8,bottom:20},
     xAxis:{type:'value',axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-    yAxis:{type:'category',data:rows.map(r=>r.name.length>9?r.name.slice(0,9):r.name).reverse(),axisLabel:{color:'#405773',fontSize:10.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
-    series:[{type:'bar',barWidth:15,data:rows.map((r,i)=>({value:r.n,itemStyle:{color:i===rows.length-1?'#245bdb':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:10,formatter:'{c} 主体'}}))}]
+    yAxis:{type:'category',data:rows.map(r=>r.name.length>9?r.name.slice(0,9):r.name).reverse(),axisLabel:{color:'#405773',fontSize:11.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:15,data:rows.map((r,i)=>({value:r.n,itemStyle:{color:i===rows.length-1?'#245bdb':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:11,formatter:'{c} 主体'}}))}]
   });
   charts.push(bc);
   /* 断边明细表 */
