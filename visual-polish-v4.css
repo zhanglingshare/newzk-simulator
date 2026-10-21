@@ -302,3 +302,92 @@ body[data-v4="windtunnel"] .chain .ar{color:#ad5264!important}
 body[data-v4="windtunnel"] .chain .ok{color:#168364!important}
 body[data-v4="windtunnel"] .roadhit,body[data-v4="windtunnel"] .roadhit b{color:#2d4867!important}
 body[data-v4="windtunnel"] .stat .v{color:#b94761!important}
+
+
+body[data-v4="blindspot"] .hero{background:linear-gradient(110deg,#fff,#fff7f5)!important;border-color:#f0dedb!important}
+body[data-v4="blindspot"] .hero .sub{color:#6f6371!important}
+body[data-v4="blindspot"] .hero .tag{background:#fff2ec!important;border-color:#f2dbd4!important;color:#9a584a!important}
+body[data-v4="blindspot"] .bd{background:#fff9f8!important;border-color:#f0e2df!important;border-radius:14px!important;padding:18px!important}
+body[data-v4="blindspot"] .bd .n,body[data-v4="blindspot"] .qi .v{color:#b65461!important}
+body[data-v4="blindspot"] .bd b,body[data-v4="blindspot"] .sh b{color:#243d5c!important}
+body[data-v4="blindspot"] .bd p,body[data-v4="blindspot"] .sh p{color:#536e88!important}
+body[data-v4="blindspot"] .bd .src,body[data-v4="blindspot"] .qi .d{color:#70849b!important}
+body[data-v4="blindspot"] .qi{background:#f8fbff!important;border-color:#dce7f4!important}
+body[data-v4="mylife"] .hero{background:linear-gradient(115deg,#fff,#fff9f3)!important;border-color:#efdfce!important}
+body[data-v4="mylife"] .card{padding:20px!important;border-radius:14px!important}
+body[data-v4="mylife"] .card b{color:#243e5b!important;font-size:15px!important}
+body[data-v4="mylife"] .card p{color:#546d84!important;font-size:14px!important}
+body[data-v4="mylife"] .card .num{color:#206ac1!important}
+body[data-v4="mylife"] .row2,.row2 .lab{color:#415d79!important;font-size:14px!important}
+body[data-v4="mylife"] .row2 .tr,.lv{background:#e5edf7!important}
+body[data-v4="mylife"] .qlife .q b{color:#233c5a!important;font-size:15px!important}
+body[data-v4="report"] .s{padding:32px!important}
+body[data-v4="report"] .s h2{margin-bottom:18px!important}
+body[data-v4="report"] .mx{padding:16px!important}
+body[data-v4="report"] .mx b{color:#243e5b!important}
+body[data-v4="report"] .mx p{color:#5d738b!important}
+body[data-v4="report"] .gd{padding:17px!important}
+body[data-v4="report"] .gd.a .v{color:#198364!important}
+body[data-v4="report"] .gd.b .v{color:#b67822!important}
+body[data-v4="report"] .gd.c .v{color:#d16c36!important}
+body[data-v4="report"] .gd.d .v{color:#bc4b5e!important}
+body[data-v4="report"] .mx2 div{color:#f1f7ff!important;font-weight:750!important;border:1px solid rgba(255,255,255,.08);border-radius:5px!important}
+body[data-v4="report"] .row2 .lab{color:#526a85!important}
+body[data-v4="report"] .row2 .tr{background:#e8eff8!important}
+body[data-v4="ending"] .quote{
+  background:linear-gradient(110deg,#153050,#1b4d82)!important;
+  border:1px solid #2f5e91!important;border-radius:20px!important;
+  padding:30px!important;box-shadow:0 12px 28px rgba(24,67,121,.13)
+}
+body[data-v4="ending"] .quote .q{color:#fff!important;font-size:clamp(18px,2.3vw,26px)!important;font-weight:780!important;line-height:1.6!important}
+body[data-v4="ending"] .quote .w{color:#9dddff!important}
+body[data-v4="ending"] .loop .n{background:#f4f8ff!important;border-color:#dce7f5!important;color:#2b4a6a!important}
+body[data-v4="ending"] .loop .n b{color:#1d3b61!important}
+body[data-v4="ending"] .loop .ar,body[data-v4="ending"] .steps .ar{color:#218563!important}
+body[data-v4="ending"] .ac{padding:20px!important}
+body[data-v4="ending"] .ac b{color:#1e416c!important;font-size:15px!important}
+body[data-v4="ending"] .ac p{color:#526c87!important;font-size:14px!important}
+body[data-v4="ending"] .steps .s2{background:#f6faff!important;border:1px solid #dce8f6!important;border-radius:12px!important;color:#395775!important;padding:15px!important}
+body[data-v4="ending"] .steps .s2 b{color:#2462b4!important}
+body[data-v4="guide"] .hero{background:linear-gradient(112deg,#fff,#edf5ff)!important}
+body[data-v4="guide"] .rt{padding:23px!important;border-radius:15px!important}
+body[data-v4="guide"] .rt b{color:#2363af!important;font-size:17px!important}
+body[data-v4="guide"] .rt p,body[data-v4="guide"] .rd p{color:#59708a!important;font-size:14px!important}
+body[data-v4="guide"] .rt p a{color:#2159ce!important}
+body[data-v4="guide"] .rd{border-color:#dce6f4!important;padding:15px 0!important}
+body[data-v4="guide"] .rd .n{background:#e7f0fc!important;color:#2257a4!important;border-radius:10px!important}
+body[data-v4="guide"] .rd b{color:#223c59!important;font-size:15px!important}
+body[data-v4="guide"] .flow .f{padding:16px!important}
+body[data-v4="guide"] .flow .f .n{color:#148568!important;font-weight:750!important}
+body[data-v4="guide"] .flow .f p{color:#5b718a!important}
+body[data-v4="guide"] .flow .ar{color:#168568!important}
+body[data-v4="town"] .hero{background:linear-gradient(115deg,#fff,#fff9f0)!important;border-color:#efe2d2!important}
+body[data-v4="town"] .pu{background:#fff!important;border:1px solid #e5e9f0!important;border-radius:12px!important;color:#45617b!important;padding:14px!important}
+body[data-v4="town"] .pu b{color:#2462b5!important}
+body[data-v4="town"] .tw{background:#fff!important;border:1px solid #e3e6eb!important;border-radius:16px!important;padding:21px!important;box-shadow:0 8px 25px rgba(64,66,66,.045)}
+body[data-v4="town"] .tw h3{color:#243b57!important;font-size:20px!important}
+body[data-v4="town"] .tw .tag{background:#edf5ff!important;color:#225ca5!important}
+body[data-v4="town"] .tw .hot{color:#aa7127!important}
+body[data-v4="town"] .tw .hot i{color:#708399!important}
+body[data-v4="town"] .tw .why{color:#556c85!important;font-size:14px!important}
+body[data-v4="town"] .tw .plays{color:#435e79!important;font-size:14px!important}
+body[data-v4="town"] .tw .foods{color:#a77330!important;font-size:14px!important}
+body[data-v4="town"] .season{background:#fff9ed!important;border:1px solid #eedfca!important;color:#425c74!important;border-radius:14px!important;padding:18px!important}
+body[data-v4="town"] .season b{color:#a26b2a!important}
+body[data-v4="town"] .season span{color:#6d7d8c!important}
+@media(max-width:760px){
+ body[data-v4="index"] .big{padding:21px!important}
+ body[data-v4="index"] .q3,body[data-v4="future"] .q3,body[data-v4="index"] .vote{padding:18px!important}
+ body[data-v4="index"] .radar{width:60px!important;height:60px!important}
+ body[data-v4="network"] .s:has(>svg){overflow-x:auto;overscroll-behavior-x:contain}
+ body[data-v4="network"] .s svg{min-width:750px!important;max-width:none!important}
+ body[data-v4="windtunnel"] .s:has(>svg){overflow-x:auto;overscroll-behavior-x:contain}
+ body[data-v4="windtunnel"] .s svg{min-width:700px!important;max-width:none!important}
+ body[data-v4="windtunnel"] .s:has(>table.detail){overflow-x:auto;overscroll-behavior-x:contain}
+ body[data-v4="windtunnel"] .s table.detail{min-width:590px}
+ body[data-v4="choices"] .code,body[data-v4="ending"] .quote{padding:18px!important}
+ body[data-v4="report"] .s{padding:20px!important}
+ body[data-v4="town"] .tw{padding:17px!important}
+ body[data-v4="choices"] .mx2{overflow-x:auto;min-width:0;scrollbar-color:#b9cfe8 transparent}
+ body[data-v4="choices"] .mx2 div{font-size:11.5px!important}
+}
