@@ -1,273 +1,127 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NewZK · 今日仲恺</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070e1f">
+<title>NewZK · 仲恺经济世界 | 从结构的裂缝开始</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2309142a'/%3E%3Cpath d='M6 23V9l10 12V9m0 12 10-12v14' stroke='%2384e1f2' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="portal-v7.css?v=1">
 <script src="model.js"></script>
-<script src="lib/echarts.min.js"></script>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
-.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
-.wrap{max-width:760px;margin:auto;padding:56px 16px 16px}
-.head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
-.radar{width:74px;height:74px;flex:none;position:relative}
-h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
-.sub{color:#536782;font-size:12.5px;margin:0}
-.q3{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:12px;padding:12px 14px;margin-bottom:12px}
-.q3 .t{font-size:13px;font-weight:800;color:#7dd3fc;margin-bottom:8px}
-.q3 .row{display:flex;flex-wrap:wrap;gap:8px}
-.q3 .q{flex:1;min-width:200px;background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:9px 11px}
-.q3 .q b{display:block;font-size:12.5px;color:#17243d}
-.q3 .q span{font-size:11.5px;color:#536782}
-.vote{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #7158c8;border-radius:14px;padding:14px 16px;margin-bottom:14px}
-.vote .t{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}
-.vote .s{font-size:12px;color:#6c7d94;margin-bottom:10px}
-.vote .btns{display:flex;gap:8px;flex-wrap:wrap}
-.vote .btns button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:8px 16px;border-radius:20px;font-size:13px;cursor:pointer}
-.vote .btns button.on{background:#7c3aed;border-color:#7158c8;color:#fff;font-weight:700}
-.vote .out{margin-top:12px;font-size:12.5px;color:#405773;line-height:1.8}
-.vote .cmp{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
-.vote .bar{flex:1;min-width:140px;height:16px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
-.vote .bar i{display:block;height:100%;border-radius:8px}
-.chart{width:100%;height:210px;margin-top:10px}
-@media(max-width:760px){.chart{height:180px}}
-.chart2{width:100%;height:230px;margin-top:12px}
-@media(max-width:760px){.chart2{height:190px}}
-.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
-.cat{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:5px 13px;border-radius:16px;font-size:12.5px;cursor:pointer}
-.cat .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
-.cat.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
-.scan-info{font-size:11px;color:#6c7d94;margin-bottom:12px}
-.top1{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #b96a20;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer}
-.top1 .badge{display:inline-block;background:#b96a20;color:#1a1206;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px}
-.top1 .t{font-size:17px;font-weight:700;margin-bottom:5px}
-.topic{background:#f8fbff;border:1px solid #e5ebf4;border-radius:10px;padding:11px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;cursor:pointer}
-.topic:hover{border-color:#245bdb;background:#121d31}
-.topic .rank{font-size:15px;font-weight:800;color:#b96a20;min-width:20px;text-align:center}
-.topic .body{flex:1;min-width:0}
-.topic .t{font-size:13.5px;font-weight:600;margin-bottom:3px}
-.topic .meta{display:flex;gap:8px;align-items:center;font-size:11px;color:#6c7d94;flex-wrap:wrap}
-.topic .src{background:#edf3fa;padding:1px 6px;border-radius:4px}
-.topic .cat-tag{font-size:10.5px;padding:1px 6px;border-radius:4px}
-.topic .detail{display:none;font-size:12px;color:#536782;margin-top:6px;padding-top:6px;border-top:1px dashed #1e2b40}
-.topic.open .detail{display:block}
-.cat-industry{border-left:3px solid #245bdb}.cat-city{border-left:3px solid #6b7280}
-.cat-livelihood{border-left:3px solid #f97316}.cat-food{border-left:3px solid #ef4444}
-.cat-fun{border-left:3px solid #10b981}.cat-warm{border-left:3px solid #7158c8}
-.next{text-align:center;margin-top:18px}
-.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:14px;font-size:11px;color:#6c7d94;text-align:center}
-@keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes spin{to{transform:rotate(360deg)}}
-.scanline{transform-origin:center;animation:spin 3s linear infinite}
-.big{background:linear-gradient(135deg,#eef4ff,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
-.big .t{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:.5px}
-.big .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-.big .nums div{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:8px;text-align:center}
-.big .nums b{display:block;font-size:20px;font-weight:800;color:#b96a20}
-.big .nums span{font-size:11px;color:#536782}
-.big .links{font-size:11.5px;color:#536782;line-height:1.9}
-.big .links i{color:#67e8f9;font-style:normal}
-</style><link rel="stylesheet" href="cloud-lab.css?v=2">
-<script src="cloud-lab-ui.js?v=2" defer></script>
-</head><body data-page="index">
+</head>
+<body class="zkportal">
+<header class="portal-header">
+  <a class="portal-brand" href="index.html" aria-label="NewZK 仲恺经济世界首页">
+    <span class="portal-mark">N<span>·</span></span><span class="portal-brand-text"><b>NEWZK</b><small>仲恺经济世界</small></span>
+  </a>
+  <span class="portal-header-type"><span class="portal-live-dot"></span> REAL STRUCTURE / OPEN QUESTIONS</span>
+  <nav class="portal-header-nav" aria-label="主要入口">
+    <a href="today.html">今日仲恺</a><a href="network.html">产业世界</a><a class="portal-header-action" href="#entrances">所有入口 <span aria-hidden="true">↗</span></a>
+  </nav>
+</header>
 
-<div class="nav">
-  <b>NewZK</b>
-  <a href="index.html" class="on">① 今日仲恺</a>
-  <a href="who.html">② 仲恺是什么</a>
-  <a href="network.html">③ 产业链地图</a>
-  <a href="choices.html">④ 五条路</a>
-  <a href="future.html">⑤ 未来2030</a>
-  <a href="windtunnel.html">⑥ 风洞</a>
-  <a href="blindspot.html">⑦ 忽略了什么</a>
-  <a href="mylife.html">⑧ 跟我的关系</a>
-  <a href="report.html">⑨ 分析报告</a>
-  <a href="ending.html">⑩ 结语</a>
-  <a href="guide.html">⑪ 使用指南</a>
-  <a href="town.html">⑫ 生活地图</a>
-</div>
+<main>
+  <section class="portal-hero" aria-labelledby="portal-heading">
+    <div class="portal-sky" aria-hidden="true"></div><div class="portal-glow" aria-hidden="true"></div><div class="portal-sun" aria-hidden="true"></div>
+    <div class="portal-mountain" aria-hidden="true"></div><div class="portal-horizon" aria-hidden="true"></div>
+    <div class="portal-skyline" id="portalSkyline" aria-hidden="true"></div>
+    <div class="portal-street" aria-hidden="true"><i class="portal-light1"></i><i class="portal-light2"></i></div>
+    <div class="portal-top-meta"><span>001 / 区域经济结构研究</span><span>2025官方口径 + 模型结构假设 · 非实时经济监测</span></div>
 
-<div class="wrap">
-  <div class="head">
-    <svg class="radar" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="36" fill="none" stroke="#e5ebf4" stroke-width="1"/>
-      <circle cx="40" cy="40" r="24" fill="none" stroke="#e5ebf4" stroke-width="1"/>
-      <circle cx="40" cy="40" r="12" fill="none" stroke="#e5ebf4" stroke-width="1"/>
-      <line x1="40" y1="4" x2="40" y2="76" stroke="#e5ebf4" stroke-width="1"/>
-      <line x1="4" y1="40" x2="76" y2="40" stroke="#e5ebf4" stroke-width="1"/>
-      <g class="scanline"><line x1="40" y1="40" x2="40" y2="6" stroke="#1689b5" stroke-width="1.5" opacity="0.8"/><circle cx="40" cy="6" r="2" fill="#1689b5"/></g>
-    </svg>
-    <div>
-      <h1>今日仲恺</h1>
-      <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。<br><span style="font-size:11px;color:#6c7d94">统计区间：近期公开信息，每日自动刷新。本页不展示后台真实阅读/转发/点赞，改用关注档标注。</span></p>
+    <div class="portal-title">
+      <div class="portal-overline"><span class="portal-overline-stroke"></span> 看不见的联系，决定看得见的未来。</div>
+      <h1 id="portal-heading">这座城很强。<br><em>但它哪里最脆弱？</em></h1>
+      <p>不急着预测2030。先看清三个问题：<br>谁撑起了这张网？什么数字在背离？哪一条连接还没有被证明？</p>
+      <a class="portal-start" href="#fractures">向下，看见三处结构张力 <span aria-hidden="true">↓</span></a>
     </div>
-  </div>
 
-  <!-- 一张图概览：对照沥林式封面 -->
-  <div class="big">
-    <div class="t">仲恺，一张网 · 五条路 · 一个目标</div>
-    <div class="nums" id="bigNums"></div>
-    <div class="links" id="bigLinks"></div>
-  </div>
-
-  <!-- 老百姓三问 -->
-  <div class="q3">
-    <div class="t">今天，跟仲恺人有关的 3 件事</div>
-    <div class="row" id="q3"></div>
-  </div>
-
-  <!-- 决策者判断台（众包 vs 模型） -->
-  <div class="vote">
-    <div class="t">2030 年，仲恺规上工业能不能到 6500 亿？</div>
-    <div class="s">先投一票（这是你的判断），再看模型跑 1000 次的结果——你的直觉和模型，谁更接近？</div>
-    <div class="btns" id="voteBtns">
-      <button data-v="能">能到</button>
-      <button data-v="悬">悬，差一点</button>
-      <button data-v="不能">到不了</button>
+    <div class="portal-core" aria-label="最大关联主体的局部关系切面">
+      <div class="portal-orbit-label">STRUCTURAL CLOSE-UP <span>01 / 最大支点</span></div>
+      <svg id="portalGraph" viewBox="0 0 650 575" role="img" aria-label="展示现有模型中关联最多的命名主体及其局部关系，并非完整网络或地理位置">
+        <defs>
+          <radialGradient id="portalGraphA"><stop offset="0%" stop-color="#66e5ff" stop-opacity=".21"/><stop offset="100%" stop-color="#66e5ff" stop-opacity="0"/></radialGradient>
+          <linearGradient id="portalGraphL" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#70d5ed" stop-opacity=".12"/><stop offset="100%" stop-color="#9deaff" stop-opacity=".8"/></linearGradient>
+        </defs>
+        <circle cx="327" cy="280" r="245" fill="url(#portalGraphA)"/>
+        <circle cx="327" cy="280" r="198" fill="none" stroke="#65bed8" stroke-opacity=".15" stroke-dasharray="3 12"/>
+        <circle cx="327" cy="280" r="155" fill="none" stroke="#d7e9ff" stroke-opacity=".08"/>
+        <g id="portalLinks"></g><g id="portalNodes"></g>
+      </svg>
+      <a class="portal-core-cta" href="network.html">
+        <span>模型中的最大连接枢纽</span>
+        <strong><span id="portalHubName">正在读取</span> <i id="portalHubDegree">—</i><small>条关联</small></strong>
+        <span class="portal-core-cta-link">进入完整68主体关系世界 <span aria-hidden="true">↗</span></span>
+      </a>
+      <div class="portal-graph-notice">只展示最关键主体的局部连线 · 位置为视觉编排，不是真实地图</div>
     </div>
-    <div class="out" id="voteOut"></div>
-    <div class="chart" id="voteChart"></div>
-    <p class="ana">柱越高＝越多人这么判断。你和乡亲们的直觉加起来，就是"众包预判"；和模型那条紫线比，能看出直觉和推演差在哪。</p>
-  </div>
+    <div class="portal-hero-side" aria-label="三个问题的快速入口">
+      <a href="#fractures" class="portal-side-index"><span>01</span><strong>最大的支点</strong><span>↓</span></a>
+      <a href="#fractures" class="portal-side-index"><span>02</span><strong>最醒目的反差</strong><span>↓</span></a>
+      <a href="#fractures" class="portal-side-index"><span>03</span><strong>最薄弱的假设</strong><span>↓</span></a>
+    </div>
+    <div class="portal-hero-footer"><span><i></i> A类官方数据</span><span><i class="portal-orange"></i> 模型关系</span><span><i class="portal-dashed"></i> D级待核实</span><span class="portal-footer-hint">向下滚动，选择一个问题进入研究</span></div>
+  </section>
 
-  <div class="toolbar">
-    <button class="cat on" data-c="all">全部</button>
-    <button class="cat" data-c="industry"><i class="dot" style="background:#245bdb"></i>产业</button>
-    <button class="cat" data-c="city"><i class="dot" style="background:#6b7280"></i>城市</button>
-    <button class="cat" data-c="livelihood"><i class="dot" style="background:#f97316"></i>民生</button>
-    <button class="cat" data-c="food"><i class="dot" style="background:#ef4444"></i>好吃</button>
-    <button class="cat" data-c="fun"><i class="dot" style="background:#10b981"></i>好玩</button>
-    <button class="cat" data-c="warm"><i class="dot" style="background:#7158c8"></i>暖闻</button>
-  </div>
-  <div class="scan-info" id="scanInfo">正在读取今日话题…</div>
-  <div id="topicList"></div>
-  <div class="chart" id="catChart"></div>
-  <p class="ana" style="margin-top:6px">今天仲恺在聊什么：哪类话题占大头，就是今天仲恺的"人气风向"。产业和城市话题多＝大家盯发展；好吃好玩多＝日子过得热闹。</p>
+  <section class="portal-fractures" id="fractures" aria-labelledby="fractures-title">
+    <div class="portal-section-heading"><div><span class="portal-kicker">THREE OPEN QUESTIONS / 三个切口</span><h2 id="fractures-title">最值得进入的，<br>不是全景，而是<strong>矛盾发生的地方。</strong></h2></div>
+    <p>每一幕只指向现有数据中的一种结构张力。首页展示问题，答案留到专题页面研究。</p></div>
 
-  <div class="next"><a href="network.html">下一步：看仲恺的产业链地图 →</a></div>
-  <div class="disc">数据来源：仲恺高新区管委会、统计公报、本地媒体、上市公司公告。所有数字均为情景推演，非预测值。</div>
-</div>
-
-<script>
-/* 一张图概览（数据来自统一内核 model.js） */
-document.getElementById('bigNums').innerHTML=
-  `<div><b>${ZK.NO.length}</b><span>真实主体</span></div>`+
-  `<div><b>${ZK.LK.length}</b><span>关系连线</span></div>`+
-  `<div><b>${ZK.ROADS.length}</b><span>条路可选</span></div>`+
-  `<div><b>${ZK.TARGET}亿</b><span>「十五五」目标</span></div>`;
-document.getElementById('bigLinks').innerHTML=`五条路：<i>${ZK.ROADS.join(' · ')}</i>。一张网里，钱在哪一层流动、哪个环节最容易断，下面逐页摸清。`;
-
-/* 老百姓三问：从当日话题里挑 3 条（按类） */
-function pick3(items){
-  const pick=(cat,fb)=>{const it=items.find(x=>x.cat===cat&&!fb.has(x.title));if(it){fb.add(it.title);return it;}return null;};
-  const used=new Set(),out=[];
-  let a=pick('city',used)||pick('livelihood',used),b=pick('industry',used),c=pick('food',used)||pick('fun',used);
-  [a,b,c].forEach((it,i)=>{
-    if(!it)return;
-    out.push(`<div class="q"><b>${i+1}. ${it.title.length>34?it.title.slice(0,34)+'…':it.title}</b><span>${it.summary?it.summary.slice(0,58)+'…':it.cat}</span></div>`);
-  });
-  document.getElementById('q3').innerHTML=out.join('')||'<div class="q"><b>暂无</b><span>今日话题加载中</span></div>';
-}
-
-/* 决策者判断台 */
-const VKEY='newzk_vote';
-let votes=JSON.parse(localStorage.getItem(VKEY)||'{"能":0,"悬":0,"不能":0,"mine":null}');
-const r=ZK.run(20261020,1000,ZK.DEFAULT_PATHS);
-const hitP=r.hit.toFixed(0),p50=Math.round(r.p50);
-const charts=[];
-const $=i=>document.getElementById(i);
-function drawVoteChart(){
-  const total=votes['能']+votes['悬']+votes['不能'];
-  const vc=echarts.init($('voteChart'));
-  vc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
-    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 票（${total?Math.round(p[0].value/total*100):0}%）`},
-    grid:{left:40,right:16,top:30,bottom:20},
-    xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
-    yAxis:{type:'value',minInterval:1,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-    series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#168366':k==='悬'?'#7158c8':'#bf3b49',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#17243d',formatter:'{c} 票'}}))}],
-    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#536782',fontSize:11.5}}]
-  });
-  charts.push(vc);
-}
-function renderVote(){
-  const total=votes['能']+votes['悬']+votes['不能'];
-  const my=votes.mine;
-  const modelTxt=hitP>=50?'模型认为<b style="color:#b96a20">能到</b>（'+hitP+'% 过线）':'模型认为<b style="color:#b96a20">悬</b>（过线概率仅 '+hitP+'%，中位数 '+p50+' 亿）';
-  document.getElementById('voteOut').innerHTML=
-    (my?('你的判断：<b style="color:#7158c8">'+my+'</b>　'):'')+
-    (total>0?('仲恺人的判断：能到 '+Math.round(votes['能']/total*100)+'% / 悬 '+Math.round(votes['悬']/total*100)+'% / 到不了 '+Math.round(votes['不能']/total*100)+'%　'):'还没人投票，你是第一个。')+
-    '　模型：'+modelTxt+
-    '<div class="cmp"><div class="bar"><i style="width:'+hitP+'%;background:linear-gradient(90deg,#7c3aed,#7158c8)"></i></div><span style="font-size:11px;color:#536782">紫色条＝模型跑 1000 次，过 6500 亿的比例 '+hitP+'%</span></div>';
-  drawVoteChart();
-}
-document.getElementById('voteBtns').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  votes.mine=b.dataset.v;votes[b.dataset.v]++;localStorage.setItem(VKEY,JSON.stringify(votes));
-  document.querySelectorAll('#voteBtns button').forEach(x=>x.classList.toggle('on',x===b));
-  renderVote();
-});
-renderVote();
-
-/* 话题列表 */
-let DATA=[];
-function render(cat){
-  const list=cat==='all'?DATA:DATA.filter(x=>x.cat===cat);
-  const el=document.getElementById('topicList');
-  if(!list.length){el.innerHTML='<div style="color:#6c7d94;padding:20px 0;text-align:center">该分类暂无今日话题</div>';return;}
-  el.innerHTML=list.map((it,i)=>{
-    const heat=it.rel===4?'高':it.rel===3?'较高':'中';
-    const color=it.rel===4?'#bf3b49':it.rel===3?'#b96a20':'#38bdf8';
-    return `<div class="topic ${i===0?'top1':''}" onclick="this.classList.toggle('open')">
-      ${i===0?'<span class="badge">今日最热</span>':''}
-      <div class="rank">${i+1}</div>
-      <div class="body">
-        <div class="t">${it.emoji||''} ${it.title}</div>
-        <div class="meta">
-          <span class="cat-tag" style="color:${color};border:1px solid ${color}44">${it.cat}</span>
-          <span>关注档：<b style="color:${color}">${heat}</b></span>
-          ${it.sources&&it.sources[0]?`<span class="src">${it.sources[0].name}</span>`:''}
-          <span>${it.event_date||''}</span>
+    <div class="portal-feature-list">
+      <a href="network.html" class="portal-feature portal-feature-hub" aria-label="研究连接数最高的主体及其局部网络">
+        <div class="portal-feature-no">01 <span>THE HUB</span></div>
+        <div class="portal-feature-main"><span class="portal-feature-label">最大的支点</span>
+          <h3>一家链主，<br>牵着<span id="portalFeatureDegree">13</span>条线。</h3>
+          <p id="portalFeatureName">亿纬锂能 · 模型网络连接数最高的命名主体</p>
+          <small>连接数量高，不等于经济损失最大，也不等于因果重要性。</small>
         </div>
-        <div class="detail">${it.summary||''}</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-function drawCatChart(){
-  const cnt={};DATA.forEach(x=>{cnt[x.cat]=(cnt[x.cat]||0)+1});
-  const CMAP={'industry':['产业','#245bdb'],'city':['城市','#6b7280'],'livelihood':['民生','#f97316'],'food':['好吃','#ef4444'],'fun':['好玩','#10b981'],'warm':['暖闻','#7158c8']};
-  const cc=echarts.init($('catChart'));
-  cc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
-    backgroundColor:'transparent',tooltip:{trigger:'item',formatter:'{b}：{c} 条 · {d}%'},
-    title:{text:'今日话题构成',left:'center',top:4,textStyle:{color:'#536782',fontSize:12.5,fontWeight:400}},
-    legend:{bottom:0,textStyle:{color:'#536782',fontSize:11.5},itemWidth:10,itemHeight:10},
-    series:[{type:'pie',radius:['38%','64%'],center:['50%','54%'],itemStyle:{borderColor:'#f8fbff',borderWidth:2},
-      label:{color:'#17243d',formatter:'{b} {c}'},
-      data:Object.keys(cnt).map(k=>({name:(CMAP[k]||[k,'#334155'])[0],value:cnt[k],itemStyle:{color:(CMAP[k]||[k,'#334155'])[1]}}))}]
-  });
-  charts.push(cc);
-}
-document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x===b));
-  render(b.dataset.c);
-});
-fetch('hot.json').then(r=>r.json()).then(d=>{
-  DATA=d.items||[];
-  document.getElementById('scanInfo').textContent='已刷新 · '+d.updated+' · 共 '+DATA.length+' 条 · 来源：仲恺高新区管委会与公开媒体';
-  pick3(DATA);
-  render('all');
-  drawCatChart();
-}).catch(()=>{
-  DATA=[{title:'惠州四环路全线闭环，R线（仲恺往惠阳方向）计划10月30日通车',cat:'city',emoji:'',rel:4,sources:[{name:'惠州日报'}],summary:'四环路闭环拉大仲恺通勤圈，R线10月30日通车。',event_date:'2026-10-20'},{title:'智谷彩街：原卓研工业区旧厂房改造，打造"运动+美食"特色商业街',cat:'city',emoji:'',rel:4,sources:[{name:'仲恺发布'}],summary:'旧厂房改商业街，招商约80%，力争12月整体开业。',event_date:'2026-10-20'},{title:'亿纬动力电池潼湖生态智慧区红岗片区22.47万㎡地块规划许可批前公示',cat:'industry',emoji:'',rel:3,sources:[{name:'仲恺高新区管委会'}],summary:'亿纬在潼湖智慧区再落新地块，能源电子扩产。',event_date:'2026-10-20'},{title:'沥林碌鹅即食食品项目建设用地周转方案公示，非遗美食向即食化延链',cat:'industry',emoji:'',rel:3,sources:[{name:'仲恺发布'}],summary:'沥林碌鹅从餐桌走向即食产品，非遗美食产业延链。',event_date:'2026-10-20'},{title:'潼湖碌鹅季人气旺：广和老街百年圩市，高峰三天卖出约1000只',cat:'fun',emoji:'',rel:3,sources:[{name:'南方+'}],summary:'碌鹅季带火潼湖圩市，美食IP撑起镇域人气。',event_date:'2026-10-20'},{title:'陈江街道城中村改造安置房智福家园选房，271户村民选得299套新房',cat:'livelihood',emoji:'',rel:3,sources:[{name:'仲恺发布'}],summary:'城中村改造安置房落地，安居补课进行中。',event_date:'2026-10-20'}];
-  document.getElementById('scanInfo').textContent='内置快照（离线预览）· 上线后每日自动刷新';
-  pick3(DATA);
-  render('all');
-  drawCatChart();
-});
-window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
-</script>
+        <div class="portal-feature-visual portal-hub-visual" aria-hidden="true"><span class="portal-rings"></span><span class="portal-hub-dot"></span><i class="portal-spoke s1"></i><i class="portal-spoke s2"></i><i class="portal-spoke s3"></i><i class="portal-spoke s4"></i><i class="portal-spoke s5"></i></div>
+        <span class="portal-feature-arrow">看它连着谁 <span aria-hidden="true">↗</span></span>
+      </a>
+
+      <a href="blindspot.html" class="portal-feature portal-feature-contrast" aria-label="研究工业增长与工业投资下滑的数据反差">
+        <div class="portal-feature-no">02 <span>THE PARADOX</span></div>
+        <div class="portal-feature-main"><span class="portal-feature-label">最醒目的反差</span>
+          <h3>工厂在增长。<br><i>投资却在后退。</i></h3>
+          <div class="portal-contrast-nums"><div><strong>+12.2%</strong><span>规上工业总产值增长</span></div><div class="portal-contrast-strike"></div><div><strong>−23.6%</strong><span>工业投资变动</span></div></div>
+          <small>来自模型收录的不同统计指标，统计期间与具体口径须逐项核对，不作严格同期因果比较。</small>
+        </div>
+        <div class="portal-feature-visual portal-contrast-visual" aria-hidden="true"><span class="portal-growth-path"></span><span class="portal-decline-path"></span></div>
+        <span class="portal-feature-arrow">去看被忽略的盲点 <span aria-hidden="true">↗</span></span>
+      </a>
+
+      <a href="network.html" class="portal-feature portal-feature-fracture" aria-label="查看本地消费承接的待核实连接与传导链">
+        <div class="portal-feature-no">03 <span>THE MISSING LINK</span></div>
+        <div class="portal-feature-main"><span class="portal-feature-label">最薄弱的假设</span>
+          <h3>产值进来了。<br><i>消费留下多少？</i></h3>
+          <div class="portal-weak">
+            <span>工资</span><span class="portal-weakline"></span><strong>0.35</strong><span class="portal-weakline portal-weakbreak"></span><span>本地消费</span>
+          </div>
+          <p>现有SEM传导链中的最低设定系数。消费承接相关关系还有待核实。</p>
+          <small>D级模型假设，不是实测因果系数；虚线代表证据空缺，不等于现实中已经断裂。</small>
+        </div>
+        <div class="portal-feature-visual portal-fracture-visual" aria-hidden="true"><span class="portal-crack-one"></span><span class="portal-crack-two"></span></div>
+        <span class="portal-feature-arrow">追问缺失的连接 <span aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="portal-daily" aria-labelledby="portal-daily-title">
+    <div class="portal-daily-head"><span class="portal-kicker">TODAY / 城市的今天</span><h2 id="portal-daily-title">今天，仲恺又发生了什么？</h2><p id="portalFeedDate">读取最新公开资料中…</p></div>
+    <a class="portal-daily-story" href="today.html" id="portalDailyLink"><span class="portal-daily-flash">最新公开话题</span><strong id="portalDailyTitle">打开今日仲恺，了解更多</strong><span id="portalDailyMeta">资料来源与抓取日期以当日数据文件为准</span><span class="portal-daily-arrow" aria-hidden="true">↗</span></a>
+  </section>
+
+  <section class="portal-entrances" id="entrances" aria-labelledby="portal-entrances-title">
+    <div class="portal-entrance-heading"><span class="portal-kicker">GO DEEPER / 从一个问题进入</span><h2 id="portal-entrances-title">从这里，<em>真正开始探索。</em></h2></div>
+    <div class="portal-entrance-grid">
+      <a href="network.html"><b>01</b><strong>进入产业世界</strong><span>完整网络 · 主体 · 连接 · 结构实验</span><i>↗</i></a>
+      <a href="choices.html"><b>02</b><strong>挑战五条路</strong><span>权重 · 拉动 · 两种未来</span><i>↗</i></a>
+      <a href="windtunnel.html"><b>03</b><strong>进入风洞</strong><span>冲击情景 · A/B波及比较</span><i>↗</i></a>
+      <a href="mylife.html"><b>04</b><strong>与你有什么关系</strong><span>就业 · 消费 · 生活 · 通勤</span><i>↗</i></a>
+      <a href="today.html"><b>05</b><strong>今日仲恺</strong><span>公开资讯 · 六类话题 · 本机投票</span><i>↗</i></a>
+      <a href="report.html"><b>06</b><strong>研究报告</strong><span>敏感性 · 不确定性 · 证据等级</span><i>↗</i></a>
+    </div>
+    <nav class="portal-secondary-nav" aria-label="其他功能入口"><a href="who.html">仲恺是什么</a><a href="future.html">未来2030</a><a href="blindspot.html">忽略了什么</a><a href="town.html">生活地图</a><a href="ending.html">结语</a><a href="guide.html">使用指南</a></nav>
+  </section>
+</main>
+<footer class="portal-bottom"><span>NEWZK / 城市经济实验室</span><span>公开数据 + 模型结构 · 所有推演均非现实预测 · 首页仅供发现问题与选择入口</span><a href="guide.html">研究方法与使用说明 ↗</a></footer>
+<script src="portal-v7.js?v=1"></script>
 </body></html>
