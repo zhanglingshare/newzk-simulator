@@ -7,72 +7,72 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
+.hero .sub{font-size:12.5px;color:#536782}
 .qbar{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 14px}
-.qbar button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer}
-.qbar button.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+.qbar button{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer}
+.qbar button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .s.hide{display:none}
-.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
-.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #3b82f6;padding-left:9px}
-.s .tag{font-size:11px;color:#5b6b82}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #245bdb;padding-left:9px}
+.s .tag{font-size:11px;color:#6c7d94}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .chart{width:100%;height:280px}
 @media(max-width:760px){.chart{height:230px}}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
 @media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:11px 10px;text-align:center}
+.kpi{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:11px 10px;text-align:center}
 .kpi .v{font-size:19px;font-weight:800;color:#67e8f9}
-.kpi .v small{font-size:11px;color:#8fa3bf}
-.kpi .l{font-size:11px;color:#8fa3bf;margin-top:2px}
+.kpi .v small{font-size:11px;color:#536782}
+.kpi .l{font-size:11px;color:#536782;margin-top:2px}
 .park{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
 @media(max-width:760px){.park{grid-template-columns:1fr}}
-.pk{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px 12px}
-.pk b{display:block;font-size:13.5px;color:#e6edf3;margin-bottom:3px}
-.pk span{font-size:11px;color:#8fa3bf;display:block}
-.pk p{font-size:12px;color:#cbd5e1;margin:5px 0 0}
+.pk{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:10px;padding:11px 12px}
+.pk b{display:block;font-size:13.5px;color:#17243d;margin-bottom:3px}
+.pk span{font-size:11px;color:#536782;display:block}
+.pk p{font-size:12px;color:#405773;margin:5px 0 0}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 @media(max-width:760px){.duo{grid-template-columns:1fr}}
-.duo .d{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:10px 12px}
+.duo .d{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:10px;padding:10px 12px}
 .duo .d b{font-size:13px;color:#7dd3fc;display:block;margin-bottom:5px}
-.duo .d p{font-size:12px;color:#8fa3bf;margin:0;line-height:1.7}
+.duo .d p{font-size:12px;color:#536782;margin:0;line-height:1.7}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="who">
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">01 今日仲恺</a>
-  <a href="who.html" class="on">02 仲恺是什么</a>
-  <a href="network.html">03 产业链地图</a>
-  <a href="choices.html">04 五条路</a>
-  <a href="future.html">05 未来2030</a>
-  <a href="windtunnel.html">06 风洞</a>
-  <a href="blindspot.html">07 忽略了什么</a>
-  <a href="mylife.html">08 跟我的关系</a>
-  <a href="report.html">09 分析报告</a>
-  <a href="ending.html">10 结语</a>
-  <a href="guide.html">11 使用指南</a>
-  <a href="town.html">12 生活地图</a>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html" class="on">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
 </div>
 
 <div class="wrap">
   <div class="hero">
     <div class="hu">仲恺，靠什么吃饭？</div>
-    <div class="sub">一句话：国家级高新区，三大支柱产业撑着 1160 亿的盘子，产业基础突出，城市服务持续完善。</div>
+    <div class="sub">一句话：国家级高新区，三大支柱产业撑着 1160 亿的盘子，产业强、城市还在补课。</div>
     <span class="tag">老百姓看：我住的地方靠什么吃饭</span>
     <span class="tag">决策者看：家底的结构与成色</span>
   </div>
@@ -91,15 +91,15 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="s" data-g="a">
-    <h2>三次产业结构：不同产业的占比</h2>
+    <h2>三次产业结构：一根长板 + 一根短板</h2>
     <div class="chart" id="pie"></div>
     <div class="gt">怎么读</div>
-    <p class="one">第二产业占比较高，第三产业仍有发展空间。工业这块板又长又硬，服务业这块板又短又软——"产城人融合"要补的，主要就是那块短板。</p>
+    <p class="one">二产独大、三产偏弱。工业这块板又长又硬，服务业这块板又短又软——"产城人融合"要补的，主要就是那块短板。</p>
     <p class="ana" id="pieNote"></p>
   </div>
 
   <div class="s" data-g="b">
-    <h2>三大产业支撑结构</h2>
+    <h2>三根柱子：谁在扛产值</h2>
     <div class="chart" id="pillar"></div>
     <div class="gt">直接说</div>
     <p class="one">智能终端 1212 亿、超高清 976 亿、能源电子 812 亿——三根柱子占了规上工业的大部分；能源电子是增长最快的（+18.7%），显示是第二引擎（+23.6%）。</p>
@@ -121,7 +121,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <h2>跟兄弟区比一下</h2>
     <div class="chart" id="radar"></div>
     <div class="duo">
-      <div class="d"><b>仲恺</b><p>工业强度全市最高（95），第三产业与城市配套评分相对较低（45/40）——产业大区、生活配套仍在完善。</p></div>
+      <div class="d"><b>仲恺</b><p>工业强度全市最高（95），三产与城市配套垫底（45/40）——产业大区、生活洼地。</p></div>
       <div class="d"><b>对照</b><p>大亚湾风险集中度更高（单一产业纵深）；惠城三产和城市功能最全。仲恺的短板一目了然。</p></div>
     </div>
     <p class="ana">雷达为定性估计（可信度 D），用于相对比较，不用于精确排名。</p>
@@ -133,7 +133,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <script>
 const $=i=>document.getElementById(i);
-const DARK=['#0e1523','#1c2739','#0e1523'];
+const DARK=['#f8fbff','#e5ebf4','#f8fbff'];
 /* ---------- 家底 KPI（从内核 ZK.A 提取） ---------- */
 const pick=(k)=>{const r=ZK.A.find(x=>x[0].indexOf(k)>=0);return r?r[1]:'—'};
 $('kpis').innerHTML=[
@@ -141,39 +141,39 @@ $('kpis').innerHTML=[
   [pick('规上工业总产值'),'规上工业总产值','+12.2%'],
   [pick('人均地区生产总值'),'人均 GDP','元'],
   [pick('电子产业占规上工业增加值'),'电子占规上工业','56.6%']
-].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div><div class="l" style="color:#5b6b82">${k[2]}</div></div>`).join('');
+].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div><div class="l" style="color:#6c7d94">${k[2]}</div></div>`).join('');
 
 /* ---------- 三次产业结构环图 ---------- */
 const pie=echarts.init($('pie'));
-pie.setOption({
-  backgroundColor:'transparent',color:['#a3e635','#3b82f6','#f59e0b'],
+pie.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
+  backgroundColor:'transparent',color:['#a3e635','#245bdb','#b96a20'],
   tooltip:{trigger:'item',formatter:'{b}<br>{c}% · {d}%'},
-  title:{text:'2024 年三次产业',left:'center',top:6,textStyle:{color:'#8fa3bf',fontSize:12,fontWeight:400}},
-  series:[{type:'pie',radius:['42%','68%'],center:['50%','56%'],itemStyle:{borderColor:'#0e1523',borderWidth:2},
-    label:{color:'#e6edf3',formatter:'{b}\n{c}%'},data:[{name:'一产',value:1.0},{name:'二产',value:67.6},{name:'三产',value:31.4}]}]
+  title:{text:'2024 年三次产业',left:'center',top:6,textStyle:{color:'#536782',fontSize:12.5,fontWeight:400}},
+  series:[{type:'pie',radius:['42%','68%'],center:['50%','56%'],itemStyle:{borderColor:'#f8fbff',borderWidth:2},
+    label:{color:'#17243d',formatter:'{b}\n{c}%'},data:[{name:'一产',value:1.0},{name:'二产',value:67.6},{name:'三产',value:31.4}]}]
 });
 $('pieNote').textContent='口径：2024 年公报；三产占比另有 28.5%（2023 口径）并列（B 轨）。';
 
 /* ---------- 三大支柱柱状图 ---------- */
 const pillar=echarts.init($('pillar'));
-pillar.setOption({
+pillar.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
   grid:{left:44,right:14,top:28,bottom:30},
-  xAxis:{type:'value',axisLabel:{color:'#8fa3bf',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:ZK.CL.map(c=>c[0]).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+  xAxis:{type:'value',axisLabel:{color:'#536782',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+  yAxis:{type:'category',data:ZK.CL.map(c=>c[0]).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[{type:'bar',barWidth:24,
-    data:ZK.CL.map(c=>({value:parseFloat(c[1].replace('约 ','')),itemStyle:{color:c[3],borderRadius:[0,6,6,0]},label:{show:true,position:'right',color:'#e6edf3',formatter:'{c} 亿'}}))}]
+    data:ZK.CL.map(c=>({value:parseFloat(c[1].replace('约 ','')),itemStyle:{color:c[3],borderRadius:[0,6,6,0]},label:{show:true,position:'right',color:'#17243d',formatter:'{c} 亿'}}))}]
 });
 
 /* ---------- 新赛道（官方押注四方向） ---------- */
 const newc=echarts.init($('newc'));
-newc.setOption({
+newc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'item'},
   grid:{left:44,right:14,top:28,bottom:24},
   xAxis:{type:'value',max:100,axisLabel:{show:false},splitLine:{show:false}},
-  yAxis:{type:'category',data:ZK.NEW.map(n=>n[0]).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+  yAxis:{type:'category',data:ZK.NEW.map(n=>n[0]).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[{type:'bar',barWidth:18,
-    data:ZK.NEW.map((n,i)=>({value:82-i*14,itemStyle:{color:i===0?'#22d3ee':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#8fa3bf',fontSize:10,formatter:n[1]}}))}]
+    data:ZK.NEW.map((n,i)=>({value:82-i*14,itemStyle:{color:i===0?'#1689b5':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#536782',fontSize:11,formatter:n[1]}}))}]
 });
 
 /* ---------- 园区版图卡片 ---------- */
@@ -181,17 +181,17 @@ $('park').innerHTML=ZK.PARKS.map(p=>`<div class="pk"><b>${p[0]}</b><span>${p[1]}
 
 /* ---------- 兄弟区对比雷达 ---------- */
 const radar=echarts.init($('radar'));
-radar.setOption({
+radar.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{},
-  legend:{data:['仲恺','大亚湾','惠城'],textStyle:{color:'#8fa3bf',fontSize:11},top:4},
+  legend:{data:['仲恺','大亚湾','惠城'],textStyle:{color:'#536782',fontSize:12},top:4},
   radar:{indicator:[
     {name:'工业强度',max:100},{name:'三产水平',max:100},{name:'城市配套',max:100},{name:'人口活力',max:100},{name:'风险集中',max:100}
-  ],radius:'62%',center:['50%','56%'],axisName:{color:'#8fa3bf',fontSize:11},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#0e1523','#111b2b']}}},
+  ],radius:'62%',center:['50%','56%'],axisName:{color:'#536782',fontSize:12},splitLine:{lineStyle:{color:'#e5ebf4'}},splitArea:{areaStyle:{color:['#f8fbff','#eff4fb']}}},
   series:[{type:'radar',symbolSize:4,
     data:[
-      {name:'仲恺',value:[95,45,40,70,60],lineStyle:{color:'#3b82f6'},itemStyle:{color:'#3b82f6'},areaStyle:{opacity:.25}},
+      {name:'仲恺',value:[95,45,40,70,60],lineStyle:{color:'#245bdb'},itemStyle:{color:'#245bdb'},areaStyle:{opacity:.25}},
       {name:'大亚湾',value:[90,50,50,65,85],lineStyle:{color:'#06b6d4'},itemStyle:{color:'#06b6d4'},areaStyle:{opacity:.15}},
-      {name:'惠城',value:[45,85,80,75,35],lineStyle:{color:'#f59e0b'},itemStyle:{color:'#f59e0b'},areaStyle:{opacity:.15}}
+      {name:'惠城',value:[45,85,80,75,35],lineStyle:{color:'#b96a20'},itemStyle:{color:'#b96a20'},areaStyle:{opacity:.15}}
     ]}]
 });
 window.addEventListener('resize',()=>[pie,pillar,newc,radar].forEach(x=>x.resize()));

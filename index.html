@@ -6,29 +6,29 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:760px;margin:auto;padding:56px 16px 16px}
 .head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
 .radar{width:74px;height:74px;flex:none;position:relative}
 h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
-.sub{color:#8fa3bf;font-size:12.5px;margin:0}
-.q3{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.sub{color:#536782;font-size:12.5px;margin:0}
+.q3{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:12px;padding:12px 14px;margin-bottom:12px}
 .q3 .t{font-size:13px;font-weight:800;color:#7dd3fc;margin-bottom:8px}
 .q3 .row{display:flex;flex-wrap:wrap;gap:8px}
-.q3 .q{flex:1;min-width:200px;background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:9px 11px}
-.q3 .q b{display:block;font-size:12.5px;color:#e6edf3}
-.q3 .q span{font-size:11.5px;color:#8fa3bf}
-.vote{background:linear-gradient(135deg,#1e1b4b,#0e1523);border:1px solid #a78bfa;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.q3 .q{flex:1;min-width:200px;background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:9px 11px}
+.q3 .q b{display:block;font-size:12.5px;color:#17243d}
+.q3 .q span{font-size:11.5px;color:#536782}
+.vote{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #7158c8;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .vote .t{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}
-.vote .s{font-size:12px;color:#94a3b8;margin-bottom:10px}
+.vote .s{font-size:12px;color:#6c7d94;margin-bottom:10px}
 .vote .btns{display:flex;gap:8px;flex-wrap:wrap}
-.vote .btns button{background:#131c2b;color:#93a4bd;border:1px solid #334155;padding:8px 16px;border-radius:20px;font-size:13px;cursor:pointer}
-.vote .btns button.on{background:#7c3aed;border-color:#a78bfa;color:#fff;font-weight:700}
-.vote .out{margin-top:12px;font-size:12.5px;color:#cbd5e1;line-height:1.8}
+.vote .btns button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:8px 16px;border-radius:20px;font-size:13px;cursor:pointer}
+.vote .btns button.on{background:#7c3aed;border-color:#7158c8;color:#fff;font-weight:700}
+.vote .out{margin-top:12px;font-size:12.5px;color:#405773;line-height:1.8}
 .vote .cmp{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
 .vote .bar{flex:1;min-width:140px;height:16px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
 .vote .bar i{display:block;height:100%;border-radius:8px}
@@ -37,39 +37,39 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
 .chart2{width:100%;height:230px;margin-top:12px}
 @media(max-width:760px){.chart2{height:190px}}
 .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
-.cat{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:5px 13px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.cat{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:5px 13px;border-radius:16px;font-size:12.5px;cursor:pointer}
 .cat .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
-.cat.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
-.scan-info{font-size:11px;color:#5b6b82;margin-bottom:12px}
-.top1{background:linear-gradient(135deg,#1e1b4b,#0e1523);border:1px solid #f59e0b;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer}
-.top1 .badge{display:inline-block;background:#f59e0b;color:#1a1206;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px}
+.cat.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
+.scan-info{font-size:11px;color:#6c7d94;margin-bottom:12px}
+.top1{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #b96a20;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer}
+.top1 .badge{display:inline-block;background:#b96a20;color:#1a1206;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px}
 .top1 .t{font-size:17px;font-weight:700;margin-bottom:5px}
-.topic{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:11px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;cursor:pointer}
-.topic:hover{border-color:#3b82f6;background:#121d31}
-.topic .rank{font-size:15px;font-weight:800;color:#fbbf24;min-width:20px;text-align:center}
+.topic{background:#f8fbff;border:1px solid #e5ebf4;border-radius:10px;padding:11px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.topic:hover{border-color:#245bdb;background:#121d31}
+.topic .rank{font-size:15px;font-weight:800;color:#b96a20;min-width:20px;text-align:center}
 .topic .body{flex:1;min-width:0}
 .topic .t{font-size:13.5px;font-weight:600;margin-bottom:3px}
-.topic .meta{display:flex;gap:8px;align-items:center;font-size:11px;color:#7d8fa8;flex-wrap:wrap}
-.topic .src{background:#1a2337;padding:1px 6px;border-radius:4px}
+.topic .meta{display:flex;gap:8px;align-items:center;font-size:11px;color:#6c7d94;flex-wrap:wrap}
+.topic .src{background:#edf3fa;padding:1px 6px;border-radius:4px}
 .topic .cat-tag{font-size:10.5px;padding:1px 6px;border-radius:4px}
-.topic .detail{display:none;font-size:12px;color:#8fa3bf;margin-top:6px;padding-top:6px;border-top:1px dashed #1e2b40}
+.topic .detail{display:none;font-size:12px;color:#536782;margin-top:6px;padding-top:6px;border-top:1px dashed #1e2b40}
 .topic.open .detail{display:block}
-.cat-industry{border-left:3px solid #3b82f6}.cat-city{border-left:3px solid #6b7280}
+.cat-industry{border-left:3px solid #245bdb}.cat-city{border-left:3px solid #6b7280}
 .cat-livelihood{border-left:3px solid #f97316}.cat-food{border-left:3px solid #ef4444}
-.cat-fun{border-left:3px solid #10b981}.cat-warm{border-left:3px solid #a78bfa}
+.cat-fun{border-left:3px solid #10b981}.cat-warm{border-left:3px solid #7158c8}
 .next{text-align:center;margin-top:18px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:14px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:14px;font-size:11px;color:#6c7d94;text-align:center}
 @keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .scanline{transform-origin:center;animation:spin 3s linear infinite}
-.big{background:linear-gradient(135deg,#0c1a2e,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.big{background:linear-gradient(135deg,#eef4ff,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .big .t{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:.5px}
 .big .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-.big .nums div{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:9px;padding:8px;text-align:center}
-.big .nums b{display:block;font-size:20px;font-weight:800;color:#fbbf24}
-.big .nums span{font-size:11px;color:#8fa3bf}
-.big .links{font-size:11.5px;color:#8fa3bf;line-height:1.9}
+.big .nums div{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:8px;text-align:center}
+.big .nums b{display:block;font-size:20px;font-weight:800;color:#b96a20}
+.big .nums span{font-size:11px;color:#536782}
+.big .links{font-size:11.5px;color:#536782;line-height:1.9}
 .big .links i{color:#67e8f9;font-style:normal}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <script src="cloud-lab-ui.js?v=2" defer></script>
@@ -77,27 +77,34 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html" class="on">01 今日仲恺</a>
-  <a href="who.html">02 仲恺是什么</a>
-  <a href="network.html">03 产业链地图</a>
-  <a href="choices.html">04 五条路</a>
-  <a href="future.html">05 未来2030</a>
-  <a href="windtunnel.html">06 风洞</a>
-  <a href="blindspot.html">07 忽略了什么</a>
-  <a href="mylife.html">08 跟我的关系</a>
-  <a href="report.html">09 分析报告</a>
-  <a href="ending.html">10 结语</a>
-  <a href="guide.html">11 使用指南</a>
-  <a href="town.html">12 生活地图</a>
+  <a href="index.html" class="on">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
 </div>
 
 <div class="wrap">
-  <section class="home-hero"><div class="head">
+  <div class="head">
+    <svg class="radar" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#e5ebf4" stroke-width="1"/>
+      <circle cx="40" cy="40" r="24" fill="none" stroke="#e5ebf4" stroke-width="1"/>
+      <circle cx="40" cy="40" r="12" fill="none" stroke="#e5ebf4" stroke-width="1"/>
+      <line x1="40" y1="4" x2="40" y2="76" stroke="#e5ebf4" stroke-width="1"/>
+      <line x1="4" y1="40" x2="76" y2="40" stroke="#e5ebf4" stroke-width="1"/>
+      <g class="scanline"><line x1="40" y1="40" x2="40" y2="6" stroke="#1689b5" stroke-width="1.5" opacity="0.8"/><circle cx="40" cy="6" r="2" fill="#1689b5"/></g>
+    </svg>
     <div>
-      <h1>一座城的变化，<br>你能看见哪一环？</h1>
-      <p class="sub">从真实公开信息出发，探索产业关系，试着改变条件，观察结果如何变化。<br><span style="font-size:11px;color:#5b6b82">统计区间：近期公开信息。本页关注度为合理估算，非平台后台真实统计。</span></p>
+      <h1>今日仲恺</h1>
+      <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。<br><span style="font-size:11px;color:#6c7d94">统计区间：近期公开信息，每日自动刷新。本页不展示后台真实阅读/转发/点赞，改用关注档标注。</span></p>
     </div>
-    <div class="home-actions"><a href="network.html">探索产业关系</a><a class="secondary" href="windtunnel.html">试一次经济冲击</a></div>
   </div>
 
   <!-- 一张图概览：对照沥林式封面 -->
@@ -107,8 +114,6 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
     <div class="links" id="bigLinks"></div>
   </div>
 
-  </section>
-
   <!-- 老百姓三问 -->
   <div class="q3">
     <div class="t">今天，跟仲恺人有关的 3 件事</div>
@@ -116,31 +121,30 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
   </div>
 
   <!-- 决策者判断台（众包 vs 模型） -->
-
-  <div class="toolbar">
-    <button class="cat on" data-c="all">全部</button>
-    <button class="cat" data-c="industry"><i class="dot" style="background:#3b82f6"></i>产业</button>
-    <button class="cat" data-c="city"><i class="dot" style="background:#6b7280"></i>城市</button>
-    <button class="cat" data-c="livelihood"><i class="dot" style="background:#f97316"></i>民生</button>
-    <button class="cat" data-c="food"><i class="dot" style="background:#ef4444"></i>好吃</button>
-    <button class="cat" data-c="fun"><i class="dot" style="background:#10b981"></i>好玩</button>
-    <button class="cat" data-c="warm"><i class="dot" style="background:#a78bfa"></i>暖闻</button>
-  </div>
-  <div class="scan-info" id="scanInfo">正在读取公开话题…</div>
-  <div id="topicList"></div>
   <div class="vote">
     <div class="t">2030 年，仲恺规上工业能不能到 6500 亿？</div>
-    <div class="s">先做一个判断，再与电脑重复模拟1000次的结果对照。投票仅保存在当前浏览器，不是全站投票统计。</div>
+    <div class="s">先投一票（这是你的判断），再看模型跑 1000 次的结果——你的直觉和模型，谁更接近？</div>
     <div class="btns" id="voteBtns">
       <button data-v="能">能到</button>
       <button data-v="悬">悬，差一点</button>
       <button data-v="不能">到不了</button>
     </div>
     <div class="out" id="voteOut"></div>
-    <div class="vote-empty" id="voteEmpty" role="status"><div><strong>还没有本机投票记录</strong>选择一个判断，看看它与模型结果有什么不同。</div></div><div class="chart" id="voteChart" hidden></div>
-    <p class="ana">柱状图仅展示当前浏览器保存的投票记录，不代表其他访客。模型结果来自独立的情景模拟。</p>
+    <div class="chart" id="voteChart"></div>
+    <p class="ana">柱越高＝越多人这么判断。你和乡亲们的直觉加起来，就是"众包预判"；和模型那条紫线比，能看出直觉和推演差在哪。</p>
   </div>
 
+  <div class="toolbar">
+    <button class="cat on" data-c="all">全部</button>
+    <button class="cat" data-c="industry"><i class="dot" style="background:#245bdb"></i>产业</button>
+    <button class="cat" data-c="city"><i class="dot" style="background:#6b7280"></i>城市</button>
+    <button class="cat" data-c="livelihood"><i class="dot" style="background:#f97316"></i>民生</button>
+    <button class="cat" data-c="food"><i class="dot" style="background:#ef4444"></i>好吃</button>
+    <button class="cat" data-c="fun"><i class="dot" style="background:#10b981"></i>好玩</button>
+    <button class="cat" data-c="warm"><i class="dot" style="background:#7158c8"></i>暖闻</button>
+  </div>
+  <div class="scan-info" id="scanInfo">正在读取今日话题…</div>
+  <div id="topicList"></div>
   <div class="chart" id="catChart"></div>
   <p class="ana" style="margin-top:6px">今天仲恺在聊什么：哪类话题占大头，就是今天仲恺的"人气风向"。产业和城市话题多＝大家盯发展；好吃好玩多＝日子过得热闹。</p>
 
@@ -178,34 +182,30 @@ const charts=[];
 const $=i=>document.getElementById(i);
 function drawVoteChart(){
   const total=votes['能']+votes['悬']+votes['不能'];
-  $('voteEmpty').hidden=total>0;
-  $('voteChart').hidden=total===0;
-  if(!total)return;
-  const vc=echarts.getInstanceByDom($('voteChart'))||echarts.init($('voteChart'));
-  vc.setOption({
+  const vc=echarts.init($('voteChart'));
+  vc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 票（${total?Math.round(p[0].value/total*100):0}%）`},
     grid:{left:40,right:16,top:30,bottom:20},
-    xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#cbd5e1',fontSize:11.5},axisLine:{lineStyle:{color:'#22304a'}}},
-    yAxis:{type:'value',minInterval:1,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#3ddc97':k==='悬'?'#a78bfa':'#f87171',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#e6edf3',formatter:'{c} 票'}}))}],
-    graphic:[{type:'text',left:8,top:6,style:{text:'本机投票记录（非全站统计）· 紫色＝模型过线概率 '+hitP+'%',fill:'#8fa3bf',fontSize:10.5}}]
+    xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    yAxis:{type:'value',minInterval:1,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#168366':k==='悬'?'#7158c8':'#bf3b49',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#17243d',formatter:'{c} 票'}}))}],
+    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#536782',fontSize:11.5}}]
   });
-  if(!charts.includes(vc))charts.push(vc);
+  charts.push(vc);
 }
 function renderVote(){
   const total=votes['能']+votes['悬']+votes['不能'];
   const my=votes.mine;
-  const modelTxt=hitP>=50?'模型认为<b style="color:#fbbf24">能到</b>（'+hitP+'% 过线）':'模型认为<b style="color:#fbbf24">悬</b>（过线概率仅 '+hitP+'%，中位数 '+p50+' 亿）';
+  const modelTxt=hitP>=50?'模型认为<b style="color:#b96a20">能到</b>（'+hitP+'% 过线）':'模型认为<b style="color:#b96a20">悬</b>（过线概率仅 '+hitP+'%，中位数 '+p50+' 亿）';
   document.getElementById('voteOut').innerHTML=
-    (my?('你的判断：<b style="color:#a78bfa">'+my+'</b>　'):'')+
-    (total>0?('本机记录：能到 '+Math.round(votes['能']/total*100)+'% / 悬 '+Math.round(votes['悬']/total*100)+'% / 到不了 '+Math.round(votes['不能']/total*100)+'%　'):'当前浏览器还没有投票记录。')+
+    (my?('你的判断：<b style="color:#7158c8">'+my+'</b>　'):'')+
+    (total>0?('仲恺人的判断：能到 '+Math.round(votes['能']/total*100)+'% / 悬 '+Math.round(votes['悬']/total*100)+'% / 到不了 '+Math.round(votes['不能']/total*100)+'%　'):'还没人投票，你是第一个。')+
     '　模型：'+modelTxt+
-    '<div class="cmp"><div class="bar"><i style="width:'+hitP+'%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></i></div><span style="font-size:11px;color:#8fa3bf">紫色条＝模型跑 1000 次，过 6500 亿的比例 '+hitP+'%</span></div>';
+    '<div class="cmp"><div class="bar"><i style="width:'+hitP+'%;background:linear-gradient(90deg,#7c3aed,#7158c8)"></i></div><span style="font-size:11px;color:#536782">紫色条＝模型跑 1000 次，过 6500 亿的比例 '+hitP+'%</span></div>';
   drawVoteChart();
 }
 document.getElementById('voteBtns').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
-  if(votes.mine){votes[votes.mine]=Math.max(0,votes[votes.mine]-1);}
   votes.mine=b.dataset.v;votes[b.dataset.v]++;localStorage.setItem(VKEY,JSON.stringify(votes));
   document.querySelectorAll('#voteBtns button').forEach(x=>x.classList.toggle('on',x===b));
   renderVote();
@@ -217,18 +217,18 @@ let DATA=[];
 function render(cat){
   const list=cat==='all'?DATA:DATA.filter(x=>x.cat===cat);
   const el=document.getElementById('topicList');
-  if(!list.length){el.innerHTML='<div style="color:#5b6b82;padding:20px 0;text-align:center">该分类暂无今日话题</div>';return;}
+  if(!list.length){el.innerHTML='<div style="color:#6c7d94;padding:20px 0;text-align:center">该分类暂无今日话题</div>';return;}
   el.innerHTML=list.map((it,i)=>{
     const heat=it.rel===4?'高':it.rel===3?'较高':'中';
-    const color=it.rel===4?'#f87171':it.rel===3?'#fbbf24':'#38bdf8';
+    const color=it.rel===4?'#bf3b49':it.rel===3?'#b96a20':'#38bdf8';
     return `<div class="topic ${i===0?'top1':''}" onclick="this.classList.toggle('open')">
       ${i===0?'<span class="badge">今日最热</span>':''}
       <div class="rank">${i+1}</div>
       <div class="body">
-        <div class="t">${it.title}</div>
+        <div class="t">${it.emoji||''} ${it.title}</div>
         <div class="meta">
           <span class="cat-tag" style="color:${color};border:1px solid ${color}44">${it.cat}</span>
-          <span>关注档（合理估算，非平台后台真实统计）：<b style="color:${color}">${heat}</b></span>
+          <span>关注档：<b style="color:${color}">${heat}</b></span>
           ${it.sources&&it.sources[0]?`<span class="src">${it.sources[0].name}</span>`:''}
           <span>${it.event_date||''}</span>
         </div>
@@ -239,14 +239,14 @@ function render(cat){
 }
 function drawCatChart(){
   const cnt={};DATA.forEach(x=>{cnt[x.cat]=(cnt[x.cat]||0)+1});
-  const CMAP={'industry':['产业','#3b82f6'],'city':['城市','#6b7280'],'livelihood':['民生','#f97316'],'food':['好吃','#ef4444'],'fun':['好玩','#10b981'],'warm':['暖闻','#a78bfa']};
+  const CMAP={'industry':['产业','#245bdb'],'city':['城市','#6b7280'],'livelihood':['民生','#f97316'],'food':['好吃','#ef4444'],'fun':['好玩','#10b981'],'warm':['暖闻','#7158c8']};
   const cc=echarts.init($('catChart'));
-  cc.setOption({
+  cc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'item',formatter:'{b}：{c} 条 · {d}%'},
-    title:{text:'今日话题构成',left:'center',top:4,textStyle:{color:'#8fa3bf',fontSize:12,fontWeight:400}},
-    legend:{bottom:0,textStyle:{color:'#8fa3bf',fontSize:10.5},itemWidth:10,itemHeight:10},
-    series:[{type:'pie',radius:['38%','64%'],center:['50%','54%'],itemStyle:{borderColor:'#0e1523',borderWidth:2},
-      label:{color:'#e6edf3',formatter:'{b} {c}'},
+    title:{text:'今日话题构成',left:'center',top:4,textStyle:{color:'#536782',fontSize:12.5,fontWeight:400}},
+    legend:{bottom:0,textStyle:{color:'#536782',fontSize:11.5},itemWidth:10,itemHeight:10},
+    series:[{type:'pie',radius:['38%','64%'],center:['50%','54%'],itemStyle:{borderColor:'#f8fbff',borderWidth:2},
+      label:{color:'#17243d',formatter:'{b} {c}'},
       data:Object.keys(cnt).map(k=>({name:(CMAP[k]||[k,'#334155'])[0],value:cnt[k],itemStyle:{color:(CMAP[k]||[k,'#334155'])[1]}}))}]
   });
   charts.push(cc);
@@ -255,7 +255,7 @@ document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x===b));
   render(b.dataset.c);
 });
-fetch('hot.json').then(r=>{if(!r.ok)throw new Error('话题数据不可用');return r.json()}).then(d=>{
+fetch('hot.json').then(r=>r.json()).then(d=>{
   DATA=d.items||[];
   document.getElementById('scanInfo').textContent='已刷新 · '+d.updated+' · 共 '+DATA.length+' 条 · 来源：仲恺高新区管委会与公开媒体';
   pick3(DATA);

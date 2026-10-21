@@ -7,43 +7,43 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
-.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
 .s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #f472b6;padding-left:9px}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 @media(max-width:760px){.grid2{grid-template-columns:1fr}}
-.card{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:12px}
+.card{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:12px}
 .card .e{font-size:20px}
-.card b{display:block;font-size:14px;color:#e6edf3;margin:6px 0 4px}
-.card p{font-size:12.5px;color:#8fa3bf;margin:0;line-height:1.7}
+.card b{display:block;font-size:14px;color:#17243d;margin:6px 0 4px}
+.card p{font-size:12.5px;color:#536782;margin:0;line-height:1.7}
 .card .num{font-size:17px;font-weight:800;color:#67e8f9}
 .lv{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin:8px 0 2px}
 .lv i{display:block;height:100%;border-radius:6px}
-.row2{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:12.5px;color:#cbd5e1}
-.row2 .lab{min-width:70px;color:#8fa3bf}
+.row2{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:12.5px;color:#405773}
+.row2 .lab{min-width:70px;color:#536782}
 .row2 .tr{flex:1;height:15px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative}
 .row2 .tr i{position:absolute;top:0;bottom:0;border-radius:8px}
 .row2 .v{min-width:60px;text-align:right;font-weight:700}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 .qlife .q{margin-bottom:8px}
-.qlife .q b{display:block;font-size:12.5px;color:#cbd5e1;margin-bottom:4px}
+.qlife .q b{display:block;font-size:12.5px;color:#405773;margin-bottom:4px}
 .qlife .opts{display:flex;gap:6px;flex-wrap:wrap}
-.qlife .opts button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer}
-.qlife .opts button.on{background:#7c3aed;border-color:#a78bfa;color:#fff;font-weight:700}
+.qlife .opts button{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.qlife .opts button.on{background:#7c3aed;border-color:#7158c8;color:#fff;font-weight:700}
 .chart{width:100%;height:220px}
 @media(max-width:760px){.chart{height:190px}}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
@@ -52,18 +52,18 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">01 今日仲恺</a>
-  <a href="who.html">02 仲恺是什么</a>
-  <a href="network.html">03 产业链地图</a>
-  <a href="choices.html">04 五条路</a>
-  <a href="future.html">05 未来2030</a>
-  <a href="windtunnel.html">06 风洞</a>
-  <a href="blindspot.html">07 忽略了什么</a>
-  <a href="mylife.html" class="on">08 跟我的关系</a>
-  <a href="report.html">09 分析报告</a>
-  <a href="ending.html">10 结语</a>
-  <a href="guide.html">11 使用指南</a>
-  <a href="town.html">12 生活地图</a>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html" class="on">⑧ 跟我的关系</a>
+  <a href="report.html">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
 </div>
 
 <div class="wrap">
@@ -74,17 +74,8 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <span class="tag">决策者看：三产滞后、消费外流的实感证据</span>
   </div>
 
-
   <div class="s">
-    <h2>你的三个选择，模型里对应哪根弦 <span class="tag">点一点，看影响</span></h2>
-    <div class="qlife" id="qlife"></div>
-    <div class="chart" id="lifeChart"></div>
-    <div class="ana" id="lifeNote"></div>
-  </div>
-
-
-  <div class="s">
-    <h2>就业：产业变化可能怎样影响岗位</h2>
+    <h2>就业：厂在，岗位就在；厂走，岗位先走</h2>
     <div class="grid2">
       <div class="card"><div class="e">产业</div><b>今天：产业人口撑起仲恺</b><p>规上工业 1144 家、用电 102 亿度，数十万产业人口在这里上班。链主每加一条产线，配套厂就多一批岗位。</p></div>
       <div class="card"><div class="e">就业</div><b>未来：新增约 3 万个岗位（估算）</b><p>按"新增 2300 亿产值 × 每亿约 15 个岗位"估算（模型换算，可信度 D），岗位跟着园区走——人安好，厂才留得住。</p></div>
@@ -96,12 +87,12 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <div class="row2"><span class="lab">工资留在仲恺</span><div class="tr"><i style="left:0;width:35%;background:#f472b6"></i></div><span class="v">约 35%</span></div>
     <div class="row2"><span class="lab">流去惠城/深圳</span><div class="tr"><i style="left:35%;width:65%;background:#475569"></i></div><span class="v">约 65%</span></div>
     <div class="gt">直接说</div>
-    <p class="one">这是模型中值得进一步核实的一环：模型假设下，一部分消费可能发生在仲恺之外。钱不在仲恺转，商业街就起不来，三产就滞后——这跟你每月在哪买菜、周末去哪逛街，是同一件事。</p>
+    <p class="one">这是传导链里最松的一环：工人挣的钱，六成以上花在了仲恺之外。钱不在仲恺转，商业街就起不来，三产就滞后——这跟你每月在哪买菜、周末去哪逛街，是同一件事。</p>
     <p class="ana">比例＝模型推算（可信度 D），指向"消费外流"方向，具体数待实地走访核实。</p>
   </div>
 
   <div class="s">
-    <h2>教育医疗：近期公开信息中的新进展</h2>
+    <h2>教育医疗：这两年的新进展</h2>
     <div class="grid2">
       <div class="card"><div class="e">学位</div><b>新增公办学位</b><p class="num">2400 个</p><p>2026 年新增公办学位，配套新建学校落地（廖承志红军学校幸福校区等）。</p></div>
       <div class="card"><div class="e">医疗</div><b>医院分院开建</b><p class="num">2 家新院</p><p>区人民医院潼侨分院、惠环医院新院推进——看病人不用都往市区跑。</p></div>
@@ -114,7 +105,14 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <h2>住房与通勤：住在哪、怎么上班</h2>
     <div class="ana" style="margin-bottom:6px">深惠城际、四环路全线闭环（R 线仲恺往惠阳方向 2026.10.30 通车）——通勤圈在拉开。跨区通勤是虚线：住惠城、上班仲恺的人不少，他们的钱也大部分花在了惠城。</div>
     <div class="gt">决策者看</div>
-    <p class="one">这一页就是"服务业滞后、消费外流"的实感证据，也是第04页"城市与人"那条路（民生优先下排第一）的底气：把人留住，钱才留得住。</p>
+    <p class="one">这一页就是"服务业滞后、消费外流"的实感证据，也是第④页"城市与人"那条路（民生优先下排第一）的底气：把人留住，钱才留得住。</p>
+  </div>
+
+  <div class="s">
+    <h2>你的三个选择，模型里对应哪根弦 <span class="tag">点一点，看影响</span></h2>
+    <div class="qlife" id="qlife"></div>
+    <div class="chart" id="lifeChart"></div>
+    <div class="ana" id="lifeNote"></div>
   </div>
 
   <div class="next"><a href="report.html">下一步：看分析报告与可信度 →</a></div>
@@ -142,16 +140,16 @@ const sel=[0,0,0];
 function drawLife(){
   const v=DIM.map((d,i)=>LIFE.reduce((s,q,j)=>s+q.opts[sel[j]].v[i],0));
   const lc=echarts.init($('lifeChart'));
-  lc.setOption({
+  lc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 分`},
     grid:{left:70,right:20,top:12,bottom:20},
-    xAxis:{type:'value',max:30,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
-    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#3ddc97':x>=12?'#3b82f6':'#f87171',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10}}))}]
+    xAxis:{type:'value',max:30,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#168366':x>=12?'#245bdb':'#bf3b49',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:11}}))}]
   });
   window.__lc=lc;
   const best=DIM[v.indexOf(Math.max(...v))];
-  $('lifeNote').innerHTML='你现在的三个选择，最牵动的是<b style="color:#3ddc97">'+best+'</b>。换个选项再看——同一个你，换三个小决定，模型里那条最长的柱子就换一根。这就是"产城人融合"落到个人身上的样子。';
+  $('lifeNote').innerHTML='你现在的三个选择，最牵动的是<b style="color:#168366">'+best+'</b>。换个选项再看——同一个你，换三个小决定，模型里那条最长的柱子就换一根。这就是"产城人融合"落到个人身上的样子。';
 }
 $('qlife').innerHTML=LIFE.map((q,i)=>`<div class="q"><b>${q.q}</b><div class="opts">${q.opts.map((o,j)=>`<button data-i="${i}" data-j="${j}" class="${j===sel[i]?'on':''}">${o.t}</button>`).join('')}</div></div>`).join('');
 $('qlife').querySelectorAll('button').forEach(b=>b.onclick=()=>{
