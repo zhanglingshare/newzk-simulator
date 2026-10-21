@@ -79,7 +79,7 @@
 .portal-core .portal-impact-ui button:focus-visible{outline:2px solid #a9f2ff;outline-offset:3px}
 .portal-core[data-phase="warning"] .portal-impact-narrative{border-color:#ffb56c}
 .portal-core[data-phase="break"] .portal-impact-narrative,.portal-core[data-phase="wave"] .portal-impact-narrative{border-color:#ff8f79}
-.portal-core[data-phase="afterimage"] .portal-impact-narrative{border-color:#86b4ce}
+.portal-core[data-phase="aftermath"] .portal-impact-narrative{border-color:#86b4ce}
 .portal-graph-notice{bottom:-4px!important;right:8%!important;max-width:45%;text-align:right;white-space:normal!important;line-height:1.4}
 @media(max-width:1250px){
  .portal-impact-top{top:66px}
@@ -100,15 +100,16 @@
  .portal-impact-count{font-size:8px}
  .portal-impact-tabs{top:58px;left:19%;gap:5px}
  .portal-impact-tab{font-size:10px;min-height:35px;padding:7px 12px}
- .portal-impact-narrative{left:10%;bottom:121px;max-width:77%;padding:7px 10px;border-left-width:2px}
+ .portal-impact-narrative{left:10%;top:109px;bottom:auto;max-width:70%;padding:7px 10px;border-left-width:2px}
  .portal-impact-phase{font-size:8px}
  .portal-impact-narrative strong{font-size:12px}
  .portal-impact-narrative>span{font-size:9px;line-height:1.5}
- .portal-impact-player{left:10%;bottom:69px;width:45%;min-width:135px}
+ .portal-impact-player{left:10%;bottom:107px;width:42%;min-width:135px}
  .portal-impact-player-actions{gap:5px}
  .portal-impact-player-actions button{padding:5px;min-height:29px;font-size:9px}
  .portal-impact-player-actions span{font-size:8px}
  .portal-core-cta{z-index:9;pointer-events:auto}
+ .portal-orbit-label{display:none!important}
  .portal-graph-notice{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){
