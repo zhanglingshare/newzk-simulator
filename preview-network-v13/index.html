@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 剪线俱乐部 | 两刀通关</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="../model.js"></script>
+<script src="../lib/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
+.wrap{max-width:1240px;margin:auto;padding:56px 12px 16px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;color:#17243d;border-left:3px solid #245bdb;padding-left:9px}
+.s .tag{font-size:11px;color:#6c7d94}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:10px 0 3px}
+.one{color:#17243d;font-weight:700}
+.ana{color:#536782;font-size:12.5px}
+.layerbar{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+.layerbar button{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:4px 10px;border-radius:14px;font-size:11.5px;cursor:pointer}
+.layerbar button.on{background:#245bdb;border-color:#245bdb;color:#fff}
+svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
+.node{cursor:pointer}
+.node text{pointer-events:none}
+.node ellipse{stroke:#0d1a24;stroke-width:1.2}
+.node:hover ellipse{stroke:#fff;stroke-width:2}
+.node.dim{opacity:.15}
+.link{stroke-opacity:.5}
+.link.dash{stroke-dasharray:4 3;stroke-opacity:.4}
+.link.hi{stroke-opacity:1;stroke-width:2.5}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;font-size:11.5px;color:#536782}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.stat{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.stat .c{flex:1;min-width:130px;background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:9px 11px}
+.stat .v{font-size:20px;font-weight:800;color:#67e8f9}
+.stat .l{font-size:11px;color:#536782}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+.tip{position:fixed;z-index:99;background:#0d1a24;border:1px solid #334155;border-radius:8px;padding:7px 10px;font-size:12px;color:#17243d;pointer-events:none;display:none;max-width:280px}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
+.mul{border-collapse:collapse;width:100%;font-size:12.5px}
+.mul td{border-bottom:1px dashed #1e2b40;padding:7px 4px;color:#405773}
+.mul td:first-child{color:#17243d;font-weight:700}
+.mul tr:last-child td{color:#b96a20;font-weight:800;border-top:1px solid #b96a2044}
+.sem{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:10px 0}
+.sem .n{background:#f5f8fd;border:1px solid #334155;border-radius:8px;padding:6px 10px;font-size:12px;color:#17243d}
+.sem .a{color:#7158c8;font-size:11px;font-weight:800;padding:0 2px}
+.sem .weak{color:#bf3b49}
+.loop{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px 0;font-size:12.5px}
+.loop .n{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:8px;padding:5px 9px;color:#405773}
+.loop .ar{color:#168366;font-weight:800}
+.loop .neg{color:#bf3b49}
+.chart{width:100%;height:230px}
+@media(max-width:760px){.chart{height:200px}}
+</style><link rel="stylesheet" href="../cloud-lab.css?v=2">
+<link rel="stylesheet" href="../lab5.css?v=5">
+<link rel="stylesheet" href="../preview-network-v10/network-v10.css?v=1">
+<link rel="stylesheet" href="../preview-network-v11/network-v11.css?v=1">
+<link rel="stylesheet" href="../preview-network-v12/network-v12.css?v=1">
+<link rel="stylesheet" href="network-v13.css?v=1">
+<script src="../preview-network-v10/cloud-lab-ui.js?v=10" defer></script>
+</head><body data-page="network">
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="../index.html">① 今日仲恺</a>
+  <a href="../who.html">② 仲恺是什么</a>
+  <a href="index.html" class="on">③ 产业链地图</a>
+  <a href="../choices.html">④ 五条路</a>
+  <a href="../future.html">⑤ 未来2030</a>
+  <a href="../windtunnel.html">⑥ 风洞</a>
+  <a href="../blindspot.html">⑦ 忽略了什么</a>
+  <a href="../mylife.html">⑧ 跟我的关系</a>
+  <a href="../report.html">⑨ 分析报告</a>
+  <a href="../ending.html">⑩ 结语</a>
+  <a href="../guide.html">⑪ 使用指南</a>
+  <a href="../town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+
+<nav class="v13-site-nav" aria-label="游戏页面导航">
+  <a href="../index.html" class="v13-return"><span aria-hidden="true">←</span> 返回仲恺世界</a>
+  <span class="v13-where">NEWZK <b>✦</b> 剪线俱乐部</span>
+  <details class="v13-menu"><summary>更多玩法 <span aria-hidden="true">⌄</span></summary>
+    <div><a href="../today.html">今日仲恺</a><a href="../who.html">城市剖面室</a><a href="../choices.html">五条发展路径</a><a href="../windtunnel.html">风洞体验</a><a href="../index.html">回到首页</a></div>
+  </details>
+</nav>
+
+
+
+<section class="v12-game" id="v12Game" aria-labelledby="v12Title" data-chapter="1" data-cut="no">
+  <div class="v12-orbit-bg" aria-hidden="true"></div>
+  <div class="v12-game-header">
+    <div class="v12-logo-line"><span class="v12-beacon"></span> NEWZK · 剪线俱乐部 <small>NEON ARCADE / LEVEL 01</small></div>
+    <div class="v13-top-right"><span class="v13-record">✦ 两刀通关挑战</span><button type="button" class="v13-sound" id="v13Sound" aria-pressed="false" aria-label="开启游戏音效">♪ 音效：关</button></div>
+  </div>
+  <div class="v12-game-heading">
+    <span class="v12-pretitle">⚡ 断线派对 · 没有说明书，只有惊喜</span>
+    <h1 id="v12Title">剪一刀，<br><em>看看谁掉线！</em></h1>
+    <p id="v12Lead">别看规则了，直接剪。第一刀，不一定有人掉队。</p>
+  </div>
+  <div class="v12-game-arena">
+    <div class="v12-arena-hud">
+      <span><i class="v12-hud-light"></i> <span id="v12SceneName">ROUND 1 · 神奇绕路</span></span>
+      <span id="v12Progress">1 / 2</span>
+    </div>
+    <div class="v12-graph-frame">
+      <svg id="v12Graph" viewBox="0 0 900 425" role="img" aria-label="依据仲恺模型局部真实关系绘制的概念网络。点击屏幕下方按钮，可体验假设中断开关系后的结构变化。">
+        <defs>
+          <radialGradient id="v12Glow"><stop offset="0%" stop-color="#268fb9" stop-opacity=".29"/><stop offset="100%" stop-color="#268fb9" stop-opacity="0"/></radialGradient>
+          <linearGradient id="v12Energy" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#53dff5"/><stop offset="50%" stop-color="#d8fcff"/><stop offset="100%" stop-color="#4ab4f1"/></linearGradient>
+        </defs>
+        <ellipse cx="450" cy="210" rx="390" ry="192" fill="url(#v12Glow)"/>
+        <g id="v12GraphEdges"></g>
+        <g id="v12GraphSignals"></g>
+        <g id="v12GraphNodes"></g>
+        <g id="v12GraphImpact"></g>
+      </svg>
+      <div class="v13-game-burst" id="v13Burst" aria-hidden="true"><strong id="v13BurstText">咔嚓！</strong></div>
+      <div class="v12-moment" id="v12Moment" aria-live="polite">
+        <span id="v12MomentKicker">给发光的线来一刀</span>
+        <strong id="v12MomentTitle">它们现在还连着！</strong>
+        <p id="v12MomentCaption">准备好了吗？</p>
+      </div>
+    </div>
+    <div class="v12-game-foot">
+      <div class="v12-game-hint" id="v12Hint"><span class="v12-hint-dot"></span> <span>盯住发光的线，看会发生什么。</span></div>
+      <button type="button" class="v12-big-action" id="v12Action">✂ 剪！ <span aria-hidden="true">⚡</span></button>
+    </div>
+    <div class="v12-game-dots" aria-label="游戏进度"><span class="active"></span><span></span><span></span></div>
+  </div>
+  <div class="v12-final" id="v12Final" hidden>
+    <div class="v12-final-mark">✦ NEWZK ARCADE · 通关成功</div>
+    <h2>哇，你居然<br><em>找出了隐藏路线！</em></h2>
+    <p>第一刀还有路，第二刀就掉队。<strong>这就是连接世界的奇妙之处。</strong></p>
+    <div class="v13-achievements" aria-label="本局获得的游戏徽章">
+      <div class="v13-medal"><span class="v13-medal-emoji">🛣️</span><strong>隐藏路线猎人</strong><small>第一刀 · 成功绕路</small></div>
+      <div class="v13-medal"><span class="v13-medal-emoji">🏝️</span><strong>孤岛发现者</strong><small>第二刀 · 找到落单者</small></div>
+      <div class="v13-medal"><span class="v13-medal-emoji">⚡</span><strong>剪线双冠王</strong><small>2/2 · 全部通关</small></div>
+    </div>
+    <div class="v13-final-one-liner">咦？同样剪一刀，结果竟然完全不同。</div>
+    <p class="v12-final-disclaimer">游戏规则取材于公开资料模型中的连接；断线仅为虚拟效果，不代表现实企业或道路发生故障。</p>
+    <div class="v12-final-actions">
+      <button type="button" id="v13Poster" class="v12-big-action">✦ 生成通关海报</button>
+      <button type="button" id="v12Again" class="v12-deep-action">↺ 再来两刀</button>
+      <button type="button" id="v12GoDeep" class="v12-deep-action">↗ 看幕后彩蛋</button>
+    </div>
+    <p id="v13PosterStatus" class="v13-poster-status" role="status" aria-live="polite"></p>
+  </div>
+  <div class="v12-proof">
+    <span>温馨提示：这是公开模型的连接小游戏，不是现实事故演练。</span>
+    <button type="button" id="v12ShowMath" aria-expanded="false" aria-controls="v12Math">偷偷看看游戏规则 <span aria-hidden="true">⌄</span></button>
+    <div id="v12Math" hidden>
+      <div class="v12-math-columns">
+        <div><span>第一关 / 普通关联</span><strong id="v12MathA">104 → 103</strong><small>连通组 3 → 3 · 最大连通群 66 → 66</small></div>
+        <div><span>第二关 / 桥接关联</span><strong id="v12MathB">104 → 103</strong><small>连通组 3 → 4 · 最大连通群 66 → 65</small></div>
+      </div>
+      <p>来自相同的68节点、104条模型关系。第一关沿“亿纬锂能—储能系统集成”关闭一条关系；二者仍通过“锂电正极”连接。第二关关闭“深惠城际—跨区通勤”（模型待核实关联）；由于目前只记录这一条跨区通勤连接，该节点会成为孤立点。此结果是图论计算，不是经济损失估计。</p>
+    </div>
+  </div>
+</section>
+
+<details class="v12-next-level" id="v12NextLevel">
+  <summary><span>彩蛋区域 · 想看才打开</span><strong>解锁隐藏的仲恺世界</strong><small>68个角色、神秘关系网，还有高级玩家的自定义玩法</small><i aria-hidden="true">↗</i></summary>
+  <div class="v12-next-level-body">
+<section class="v11-experience" id="v11Experience" aria-labelledby="v11ExpHeading">
+  <div class="v11-exp-head">
+    <div class="v11-exp-mark"><span class="v11-exp-light"></span> THE DECISION EXPERIENCE · 约3分钟</div>
+    <div class="v11-exp-index">从一个疑问开始，带走一种判断方法</div>
+    <h2 id="v11ExpHeading">真实世界的数据总是不完整。<br><em>你要怎样做决定？</em></h2>
+    <p>这里没有标准答案，也不要求你学会复杂网络分析。只需要选择一个你在意的现实问题，然后完成一次推理。</p>
+  </div>
+  <div class="v11-steps" role="list" aria-label="决策体验四步">
+    <span role="listitem" class="is-done" data-step-index="1"><b>01</b>发现问题</span>
+    <span role="listitem" data-step-index="2"><b>02</b>做个假设</span>
+    <span role="listitem" data-step-index="3"><b>03</b>看见后果</span>
+    <span role="listitem" data-step-index="4"><b>04</b>补齐证据</span>
+  </div>
+  <div class="v11-exp-content">
+    <div class="v11-exp-step" id="v11Step1">
+      <div class="v11-step-eyebrow">STEP 01 / PICK A QUESTION</div>
+      <h3>此刻，你最想弄清楚什么？</h3>
+      <div class="v11-case-grid" role="group" aria-label="选择一个决策困境">
+        <button class="v11-case is-selected" data-case="supplier" type="button" aria-pressed="true">
+          <span class="v11-case-id">01 · 供应链</span>
+          <strong>一家大企业，<br>真的能带动本地配套吗？</strong>
+          <small>从亿纬锂能和生产性服务业的待核实关系出发</small><i aria-hidden="true">↗</i>
+        </button>
+        <button class="v11-case" data-case="consumer" type="button" aria-pressed="false">
+          <span class="v11-case-id">02 · 城市消费</span>
+          <strong>工厂有订单，<br>钱为什么未必留得下？</strong>
+          <small>从生产性服务业与消费承接的待核实连接出发</small><i aria-hidden="true">↗</i>
+        </button>
+        <button class="v11-case" data-case="talent" type="button" aria-pressed="false">
+          <span class="v11-case-id">03 · 人才生活</span>
+          <strong>产业招到了人，<br>生活配套跟得上吗？</strong>
+          <small>从人才公寓与消费承接的待核实关系出发</small><i aria-hidden="true">↗</i>
+        </button>
+      </div>
+      <div class="v11-action-row">
+        <span>无需了解任何术语 · 全部基于现有公开模型关系</span>
+        <button type="button" id="v11Start" class="v11-primary">带着这个问题进入 →</button>
+      </div>
+    </div>
+    <div class="v11-exp-step" id="v11Step2" hidden>
+      <div class="v11-step-eyebrow">STEP 02 / FORM A HYPOTHESIS</div>
+      <h3 id="v11HypothesisTitle">如果这条关系并不存在呢？</h3>
+      <p id="v11HypothesisCopy">不用猜未来有多少亿元，先观察网络结构会不会改变。</p>
+      <div class="v11-premise" id="v11Premise"></div>
+      <div class="v11-judgment-options">
+        <button type="button" data-judgment="keep" class="v11-judge"><span>A · 假设仍然存在</span><strong>先保留这条关系</strong><small>看看当前网络的结构</small></button>
+        <button type="button" data-judgment="remove" class="v11-judge"><span>B · 假设关系失效</span><strong>暂时拿掉这条关系</strong><small>看看图上的连接会变什么</small></button>
+      </div>
+      <div class="v11-action-row"><button class="v11-back" data-back="1" type="button">← 换一个问题</button><button class="v11-primary" id="v11Run" type="button" disabled>观察结构变化 →</button></div>
+    </div>
+    <div class="v11-exp-step" id="v11Step3" hidden>
+      <div class="v11-step-eyebrow">STEP 03 / SEE THE CONSEQUENCE</div>
+      <h3 id="v11ResultTitle">结构究竟发生了什么？</h3>
+      <div id="v11Tension" class="v11-tension" data-action="keep" aria-label="一条模型关联在A/B两种假设下的断裂视觉示意">
+        <div class="v11-tension-top"><span>同一条模型关系 · 两种假设</span><strong id="v11TensionStatus">原模型关系保留</strong></div>
+        <div class="v11-tension-art">
+          <div class="v11-tension-actor" id="v11TensionLeft">亿纬锂能</div>
+          <svg viewBox="0 0 480 130" role="img" aria-label="线条连接或断裂的概念动画，不是现实因果传播">
+            <defs><linearGradient id="v11Pulse" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#4fc9e1"/><stop offset=".55" stop-color="#fff0af"/><stop offset="1" stop-color="#64d8f0"/></linearGradient></defs>
+            <path class="v11-connection" d="M5 65H475" stroke="url(#v11Pulse)" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <path class="v11-split-left" d="M5 65H211" stroke="#ffc094" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <path class="v11-split-right" d="M269 65H475" stroke="#ffc094" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <circle class="v11-tension-dot" cx="240" cy="65" r="10" fill="#e5faff"/>
+            <circle class="v11-tension-wave" cx="240" cy="65" r="16" fill="none" stroke="#ffb77f" stroke-width="4"/>
+            <circle class="v11-tension-light" cx="18" cy="65" r="6" fill="#fff6d7"/>
+          </svg>
+          <div class="v11-tension-actor" id="v11TensionRight">生产性服务业</div>
+        </div>
+        <small>动画只说明你设置的假设 · 不代表现实发生了断裂</small>
+      </div>
+      <div class="v11-result-graphic" role="img" aria-label="相同底图中仅对选中一条关系施加情景变化的A/B拓扑比较">
+        <div class="v11-result-side"><span>A · 模型记录</span><strong id="v11ResultA">104</strong><small>关系条数</small></div>
+        <div class="v11-result-middle" id="v11ResultGlyph">↔</div>
+        <div class="v11-result-side v11-result-b"><span>B · 你的假设</span><strong id="v11ResultB">103</strong><small>关系条数</small></div>
+      </div>
+      <div class="v11-impact-stats"><span id="v11ResultComponents">连通组：—</span><span id="v11ResultLargest">最大连通群：—</span></div>
+      <p id="v11ResultMeaning" class="v11-result-explain"></p>
+      
+      <div class="v11-aha" id="v11Aha">
+        <div class="v11-aha-title">
+          <div><span>再多问一步 / THE AHA MOMENT</span><strong>都只是少一条线，为什么有时整张网会变？</strong></div>
+          <button type="button" id="v11RevealBridge" aria-expanded="false" aria-controls="v11BridgeReveal">揭开真正的桥接点 <span aria-hidden="true">↓</span></button>
+        </div>
+        <div class="v11-bridge-reveal" id="v11BridgeReveal" hidden>
+          <div class="v11-bridge-visual" data-example="bridge">
+            <div><span>你刚才的情景</span><strong id="v11MyCutName">当前选择</strong><small id="v11MyCutMetrics">连通组 — → —</small></div>
+            <div class="v11-bridge-versus">VS</div>
+            <div class="v11-bridge-focus"><span>另一条真实模型关联</span><strong>深惠城际 — 跨区通勤</strong><small id="v11BridgeMetrics">连通组 — → —</small></div>
+          </div>
+          <p id="v11BridgeInsight">这只是模型中的拓扑桥接关系，不代表现实交通中断，也不表示已经测得了通勤或经济损失。</p>
+          <span class="v11-bridge-lesson">同样是断一条关系，结构位置不同，结果可能不同。更重要的下一步，是弄清关系是否真实、重要程度如何。</span>
+        </div>
+      </div>
+      <div class="v11-unknown">你已经看到的是<strong>模型拓扑变化</strong>。但仅凭这张图，你仍不知道企业实际有没有交易、交易金额是多少、现实经济会损失多少。</div>
+      <div class="v11-action-row"><button class="v11-back" data-back="2" type="button">← 改变假设</button><button type="button" id="v11EvidenceNext" class="v11-primary">那下一步查什么？ →</button></div>
+    </div>
+    <div class="v11-exp-step" id="v11Step4" hidden>
+      <div class="v11-step-eyebrow">STEP 04 / WHAT WOULD CHANGE YOUR MIND?</div>
+      <h3>如果只能再获得一条信息，<br>你会优先核实什么？</h3>
+      <div class="v11-evidence-options" role="group" aria-label="选择下一步核验的证据" id="v11EvidenceOptions"></div>
+      <div id="v11EvidenceFeedback" class="v11-evidence-feedback" aria-live="polite">真正的决策，从知道自己还不知道什么开始。</div>
+      <div class="v11-action-row"><button class="v11-back" data-back="3" type="button">← 返回对比</button><button type="button" id="v11Finish" class="v11-primary" disabled>生成我的思考卡 →</button></div>
+    </div>
+    <div class="v11-exp-step" id="v11Step5" hidden>
+      <div class="v11-step-eyebrow">DECISION COMPLETE / 一次完整的思考</div>
+      <h3>你完成的不是一道题，<br><em>而是一次有证据意识的判断。</em></h3>
+      <div class="v11-takeaway" id="v11Takeaway" aria-live="polite"></div>
+      <div class="v11-three-rules"><span>分清<strong>事实</strong>与<strong>假设</strong></span><span>先看<strong>结构</strong>再谈<strong>后果</strong></span><span>让<strong>新证据</strong>决定下一步</span></div>
+      <div class="v11-action-row"><button type="button" id="v11Again" class="v11-back">↶ 再试一个问题</button><button type="button" id="v11Copy" class="v11-primary">复制我的思考卡</button></div>
+      <p class="v11-save-status" id="v11SaveStatus" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<section class="v10-theater" aria-labelledby="v10Title">
+  <div class="v10-headline">
+    <div>
+      <div class="v10-kicker"><span class="v10-ping"></span> NEWZK / NETWORK ENGINE / 03</div>
+      <h1 id="v10Title">不是先看懂68个点。<br><em>是亲手做一次判断。</em></h1>
+      <p>三分钟，走完一次真实的思考闭环：发现问题、提出假设、观察结构、寻找证据，最后带走自己的判断。</p>
+    </div>
+    <div class="v10-head-summary">
+      <div><span>模型主体</span><strong id="v10HeadNodes">—</strong></div>
+      <div><span>网络关系</span><strong id="v10HeadEdges">—</strong></div>
+      <div><span>待核实线</span><strong id="v10HeadUnknown">—</strong></div>
+      <small>完整的研究底座，体验只需要一条关键连接。</small>
+    </div>
+  </div>
+  <div class="v10-exhibit">
+    <div class="v10-stage" id="v10Stage" data-view="flow" data-network-mode="base">
+      <div class="v10-stage-top">
+        <div class="v10-stage-index"><span>结构近景</span><b id="v10FocusName">亿纬锂能</b></div>
+        <div class="v10-stage-actions" role="group" aria-label="查看不同的关系切面">
+          <button type="button" data-focus="hub" class="active" aria-pressed="true">最大枢纽</button>
+          <button type="button" data-focus="uncertain" aria-pressed="false">待核实关系</button>
+          <button type="button" data-focus="life" aria-pressed="false">消费承接</button>
+        </div>
+      </div>
+      <div class="v10-stage-content">
+        <svg id="v10Graph" viewBox="0 0 840 520" role="img" aria-label="真实模型局部连接的动态可交互展示；光流只是结构关系的视觉符号，不代表实测物流和资金流">
+          <defs>
+            <radialGradient id="v10Aura"><stop stop-color="#65daef" stop-opacity=".20"/><stop offset="100%" stop-color="#65daef" stop-opacity="0"/></radialGradient>
+          </defs>
+          <ellipse cx="414" cy="269" rx="360" ry="240" fill="url(#v10Aura)"/>
+          <circle cx="414" cy="269" r="208" class="v10-orbit"/>
+          <circle cx="414" cy="269" r="156" class="v10-orbit inner"/>
+          <g id="v10Wires"></g>
+          <g id="v10Particles"></g>
+          <g id="v10NodeGroup"></g>
+          <g id="v10Fx"></g>
+        </svg>
+        <div class="v10-stage-caption">
+          <span id="v10LineKind">当前视角：关系流动</span>
+          <strong id="v10FocusHeadline">从最大枢纽开始，看局部连接</strong>
+          <p id="v10FocusDescription">高亮、光点和脉冲仅表现已有关系。点击外围主体，进入完整网络定位它。</p>
+        </div>
+      </div>
+      <div class="v10-stage-bottom">
+        <div class="v10-stage-legend"><span><i class="v10-cyan"></i>现有模型关系</span><span><i class="v10-orange"></i>当前选择</span><span><i class="v10-dash"></i>待核实</span></div>
+        <button id="v10FlowToggle" type="button" aria-pressed="true">Ⅱ 暂停光流</button>
+      </div>
+    </div>
+
+    <aside class="v10-director" aria-label="同步结构实验与对比">
+      <div class="v10-director-top"><span>EXPERIMENT CONTROL</span><strong>在 A 与 B 之间，<br>看见结构怎么改变。</strong><p>这里改变的只是网络拓扑假设。模型原数据不变，也不推算GDP或经济损失。</p></div>
+      <div class="v10-ab-controls" role="group" aria-label="切换全图原始与实验视角">
+        <button type="button" id="v10ModeBase" class="active" aria-pressed="true"><span>A</span>原始关系</button>
+        <button type="button" id="v10ModeTest" aria-pressed="false"><span>B</span>实验关系</button>
+      </div>
+      <div class="v10-compare-strip">
+        <div class="v10-compare-box"><span>A / 原始</span><strong id="v10AEdges">—</strong><small>全部关系</small></div>
+        <div class="v10-compare-arrow">→</div>
+        <div class="v10-compare-box v10-compare-b"><span>B / 假设</span><strong id="v10BEdges">—</strong><small>仍保留关系</small></div>
+      </div>
+      <div class="v10-difference" id="v10Difference" role="status" aria-live="polite">尚未修改B方案</div>
+      <div class="v10-compare-metrics">
+        <div><span>最大连通群</span><strong id="v10Largest">— → —</strong></div>
+        <div><span>独立连通组</span><strong id="v10Components">— → —</strong></div>
+        <div><span>未核实关系</span><strong id="v10Uncertain">—</strong></div>
+      </div>
+      <div class="v10-focus-edge"><span>本次可修改的真实模型关系</span><strong id="v10EdgeLabel">请选择一个切面</strong><small id="v10EdgeStatus">选择后可断开或恢复</small></div>
+      <button type="button" class="v10-cut" id="v10Cut">在 B 方案断开这条关系 <span>✕</span></button>
+      <div class="v10-undo-row"><button type="button" id="v10Undo">↶ 撤销上一步</button><button type="button" id="v10Reset">↻ 恢复全图</button></div>
+      <a class="v10-open" href="#v11Expert">专业玩家：进入完整网络 <span>↗</span></a>
+      <p class="v10-director-note">断线后展示的是<strong>连通性变化</strong>，不是因果冲击传播。可疑连接的证据等级来自原模型，动画不代表现实事件。</p>
+    </aside>
+  </div>
+</section>
+<details id="v11Expert" class="v11-expert"><summary><span>进阶探索 · ADVANCED</span><strong>完整68主体、104关系，在需要时展开</strong><small>主体搜索 / 缩放 / A/B修改 / 撤销 / 保存 / 专业指标</small></summary><div id="v10Editor" class="v10-workbench-label"><span>FULL NETWORK / 专业数据底座</span><h2>68个主体，都在这里。</h2><p>下面是可自由操作的完整结构，折叠不会丢失你的B方案。只看或隐藏节点，不等于删除关系。</p></div>
+  <div class="hero">
+    <div class="hu">仲恺是一张怎么样的网？</div>
+    <div class="sub">68个建模主体与104条公开资料整理的关系，并非全部经核实的真实交易。需要时点亮一个主体，看它的关联。</div>
+    <span class="tag">老百姓看：我的工作在哪个环节</span>
+    <span class="tag">决策者看：断点在哪、钱漏在哪层</span>
+  </div>
+
+  <div class="s">
+    <h2>① 全产业链图谱 <span class="tag">68 主体 · 9 层 · 点住可以拖</span></h2>
+    <div class="layerbar" id="quickBar">
+      <button class="on" data-f="all">全部</button>
+      <button data-f="solid">只看实线关系</button>
+      <button data-f="chain">只看链主链</button>
+      <button data-f="life">只看生活</button>
+    </div>
+    <div class="layerbar" id="layerBar"></div>
+    <div class="legend" id="legend"></div>
+    <div class="lab5-toolbar" role="toolbar" aria-label="产业网络实验工具">
+      <label class="lab5-search"><span>主体搜索</span><input id="lab5Find" type="search" placeholder="输入企业、园区或生活设施"></label>
+      <button type="button" id="lab5FindBtn">定位</button>
+      <button type="button" id="lab5ZoomIn">放大</button><button type="button" id="lab5ZoomOut">缩小</button>
+      <button type="button" id="lab5ZoomReset">全图</button>
+      <span class="lab5-zoom" id="lab5ZoomState" aria-live="polite">100%</span>
+    </div>
+    <div class="lab5-empty" id="lab5SearchStatus" role="status" hidden></div>
+    <div class="lab5-mode" role="group" aria-label="网络状态切换"><button id="lab5ModeBase" class="active" type="button">A · 原始结构</button><button id="lab5ModeTest" type="button">B · 假设结构</button><span>拖动节点＝调整画面；关闭节点或连线＝仅修改假设结构。</span></div>
+    <div class="network-layout"><div class="network-canvas" aria-label="可拖动的产业网络画布"><svg id="net" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg></div><aside class="network-side" aria-label="网络节点信息"><h3>网络速览</h3><p id="selectedNode" class="selected-node" aria-live="polite">点击网络中的主体，查看名称、所属层级与连接数量。</p>
+    <div class="lab5-sandbox" id="lab5Sandbox">
+      <h3>结构假设实验</h3>
+      <div id="lab5Selection" aria-live="polite">点击任一主体或连线，开始一次可撤销的实验。</div>
+      <div class="lab5-actions">
+        <button type="button" id="lab5Toggle">先选择主体或连线</button>
+        <button type="button" id="lab5Undo">撤销</button>
+        <button type="button" id="lab5Reset">全部恢复</button>
+      </div>
+      <div class="lab5-compare-stats" id="lab5Stats" aria-live="polite"></div>
+      <button type="button" id="lab5Save">保存本地结构实验</button>
+      <p class="lab5-note" id="lab5Note">模型原始关系保持不变。下方比较的是网络连通性，不是产值或企业经营预测。</p>
+    </div>
+    <div class="stat" id="stat"></div>
+    <div class="gt">连接最密的主体（按连接多少排序）</div>
+    <div class="chart" id="topChart"></div>
+    <p class="ana" style="margin-top:6px">连接多只意味着当前模型列出了较多关联，不等于经济影响力最大。是否存在关键桥接点，需要做实际连通性检验。</p></aside></div>
+    <div class="gt">直接说</div>
+    <p class="one">链主和园区之间连得密，但"生产 → 生活 → 消费"这一层几乎全是虚线。</p>
+    <p class="ana">把鼠标放到任意主体上：橙色＝链主，青色＝零部件，蓝色＝园区，粉色＝生活。虚线＝待核实的连接（消费承接、生产性服务业、外资落地），这些正是官方承认的"服务业滞后、消费外流"。<b>想换视角就点住一个点拖一拖</b>——地图是活的。</p>
+  </div>
+</details>
+
+  <div class="s">
+    <div class="v11-panel-eyebrow">拓展体验 / 01 · 资金留存</div><h2>同样1亿元订单，钱可能留在哪里？</h2>
+    <p class="ana">链主每收到 1 亿订单，钱在仲恺里一层层留下来——每一层都会漏出去一部分。</p>
+    <div id="v11MoneyStream" class="v11-money-stream"></div><div id="v11MoneyNote" class="v11-money-note" role="status">选择一段示例分配，了解模型里的假设。</div><details class="v11-raw"><summary>想看原始分配表和旧图表？展开 ↗</summary><table class="mul" id="mul"></table><div class="chart" id="leakChart"></div></details>
+    <div class="gt">怎么读</div>
+    <p class="one">1 亿订单 → 约 <b id="multK">0.62 亿</b> 留在仲恺——相当于 1 块钱在仲恺转出约 <b id="multN">1.6</b> 块钱的活。更高的配套率与本地消费承接可能改变模型假设，但不能从这张静态示意表推出真实经济乘数的变化。</p>
+  </div>
+
+  <div class="two">
+    <div class="s">
+      <div class="v11-panel-eyebrow">拓展体验 / 02 · 因果边界</div><h2>这座城最值得核实哪条传导？</h2>
+      <div class="v11-sem-strip" id="v11SemJourney"></div><div class="v11-sem-detail" id="v11SemDetail"></div><details class="v11-raw"><summary>查看模型假设系数的原始图表 ↗</summary><div class="chart" id="semChart"></div></details>
+      <div class="gt">怎么读</div>
+      <p class="one">这条链是"产城人"闭环：产业投入 → 创新 → 工资 → 本地消费 → 生活配套 → 人才留驻 → 再投入。</p>
+      <p class="ana">数字＝这一环的传导力度（越大越紧）。<b style="color:#bf3b49">"工资 → 本地消费"设定为 0.35，是模型中最低的一环</b>。实际消费流向尚需调查，不能断言工人的钱流去了某个具体地方。这些力度是按公开信息推算的（可信度 D：推算值·待核实），数值只说明松紧方向，不是实测。</p>
+    </div>
+    <div class="s">
+      <div class="v11-panel-eyebrow">拓展体验 / 03 · 反馈思维</div><h2>增长的正反馈，凭什么能一直持续？</h2>
+      <div id="v11LoopStage" class="v11-loop-stage"></div><details class="v11-raw"><summary>查看原始反馈路径 ↗</summary><div class="loop" id="loop"></div></details>
+      <div class="gt">怎么读</div>
+      <p class="one">投资 → 配套 → 订单 → 链主 → 税收 → 基建 → 人才 → 创新 → 新订单，是一个正反馈闭环。</p>
+      <p class="ana">工业投资 -23.6% 是公开数据中的风险信号，但不能据此断定整个反馈回路已经断裂。箭头表示值得检验的研究假设，并非测得的因果传导。</p>
+    </div>
+  </div>
+
+  </div>
+</details>
+
+  <div class="next"><a href="../choices.html">下一步：仲恺的五条路 →</a></div>
+  <div class="disc">主体与连线基于公开信息整理，可信度分级标注；资金分配和传导关系含有未验证的模型假设，不能视为真实交易流水或因果效应。</div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#1689b5','park':'#245bdb','fac':'#8ba6bd','cap':'#7158c8','tal':'#168366','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
+const LNAME={'chain':'链主/龙头','oem':'整机','part':'零部件','park':'园区','fac':'设施','cap':'资本/要素','tal':'人才','life':'生活','vill':'乡村','gap':'缺失·待核实'};
+/* 乡村并入生活（不再单列"乡村"笼统类别） */
+const LY=ly=>ly==='vill'?'life':ly;
+/* 节点基础大小（谁大谁小一目了然）+ 按连接数再放大 */
+const R_BASE={'chain':58,'oem':50,'park':46,'cap':44,'fac':40,'part':40,'tal':38,'life':38,'gap':34};
+const deg={};ZK.NO.forEach(n=>deg[n[0]]=0);ZK.LK.forEach(l=>{deg[l[0]]++;deg[l[1]]++;});
+const LAYER_KEYS=Object.keys(LNAME).filter(k=>k!=='vill');
+const FS={'chain':13,'oem':12.5,'park':12,'cap':11.5,'fac':11,'part':11,'tal':11,'life':11,'gap':11};
+const tips=$('tip');
+function $(i){return document.getElementById(i)}
+function tip(e,h){tips.innerHTML=h;tips.style.display='block';const x=e.clientX,y=e.clientY;tips.style.left=Math.min(x+14,innerWidth-300)+'px';tips.style.top=Math.max(y-12,8)+'px'}
+function tipOff(){tips.style.display='none'}
+
+/* 图例 + 层开关 + 快捷筛选 */
+let hidden={},quick='all';
+function legend(){
+  $('legend').innerHTML=LAYER_KEYS.map(k=>`<span><i style="background:${LCOL[k]}"></i>${LNAME[k]}</span>`).join('');
+  $('layerBar').innerHTML=LAYER_KEYS.map(k=>`<button data-l="${k}" class="${hidden[k]?'':'on'}">${LNAME[k]}</button>`).join('');
+  $('layerBar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.l;hidden[k]=!hidden[k];b.classList.toggle('on',!hidden[k]);draw();
+  });
+  $('quickBar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    quick=b.dataset.f;
+    $('quickBar').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    draw();
+  });
+}
+/* 拖拽：节点坐标存内存态 */
+const pos={};ZK.NO.forEach(n=>pos[n[0]]=[n[3],n[4]]);
+let drag=null;
+function draw(){
+  const svg=$('net');
+  const off={}; /* 快捷筛选下的隐藏节点 */
+  if(quick==='solid')ZK.LK.forEach(l=>{if(l[3]){off[l[0]]=1;off[l[1]]=1;}});
+  const qc={}; /* chain 模式保留的层 */
+  if(quick==='chain'){['chain','oem','part'].forEach(k=>qc[k]=1);}
+  const vis=ly=>{
+    ly=LY(ly);
+    if(hidden[ly])return false;
+    if(quick==='chain'&&!qc[ly])return false;
+    if(quick==='life'&&ly!=='life')return false;
+    return true;
+  };
+  let s=`<rect width="1240" height="920" fill="#f8fbff" rx="10"/>`;
+  /* 群落背景：同层节点抱团，一眼看出谁和谁一伙（gap 是散点不圈） */
+  const clu={};
+  ZK.NO.forEach(n=>{
+    if(off[n[0]]||!vis(n[2]))return;
+    const ly=LY(n[2]);
+    if(ly==='gap')return;
+    const b=clu[ly]=clu[ly]||{x1:1e9,y1:1e9,x2:-1e9,y2:-1e9,n:0};
+    const p=pos[n[0]],r=R_BASE[ly]||40;
+    b.x1=Math.min(b.x1,p[0]-r-16);b.y1=Math.min(b.y1,p[1]-r-14);
+    b.x2=Math.max(b.x2,p[0]+r+16);b.y2=Math.max(b.y2,p[1]+r+14);b.n++;
+  });
+  Object.keys(clu).forEach(ly=>{
+    const b=clu[ly],c=LCOL[ly];
+    s+=`<g class="clu"><rect x="${b.x1}" y="${b.y1}" width="${b.x2-b.x1}" height="${b.y2-b.y1}" rx="20" fill="${c}" opacity=".07" stroke="${c}" stroke-width="1.3" stroke-dasharray="7 5" stroke-opacity=".5"/>
+      <rect x="${b.x1+10}" y="${b.y1+8}" width="${LNAME[ly].length*12+14}" height="20" rx="6" fill="#ffffff" opacity=".94"/>
+      <text x="${b.x1+17}" y="${b.y1+22}" fill="${c}" font-size="11.5" font-weight="700" opacity=".95">${LNAME[ly]}</text></g>`;
+  });
+  /* 连线 */
+  ZK.LK.forEach(l=>{
+    const a=ZK.NO.find(n=>n[0]===l[0]),b=ZK.NO.find(n=>n[0]===l[1]);
+    if(!a||!b)return;
+    if(!vis(a[2])||!vis(b[2]))return;
+    if(off[a[0]]||off[b[0]])return;
+    const dash=l[3];
+    const p1=pos[l[0]],p2=pos[l[1]];
+    s+=`<line class="link${dash?' dash':''}" data-a="${l[0]}" data-b="${l[1]}" x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${LCOL[LY(a[2])]}" stroke-width="${dash?1:(l[2]===2?2:1)}" opacity=".35"/>`;
+  });
+  /* 节点：大小随层级与连接数分级（链主最大、待核实最小） */
+  ZK.NO.forEach(n=>{
+    if(off[n[0]]||!vis(n[2]))return;
+    const ly=LY(n[2]),c=LCOL[ly],dim=n[5]?0.6:1;
+    const p=pos[n[0]];
+    const r=(R_BASE[ly]||40)*(1+Math.min(deg[n[0]]||0,6)*0.05);
+    const rx=r,ry=r*0.36,fs=FS[ly]||11;
+    s+=`<g class="node" data-n="${n[0]}" transform="translate(${p[0]},${p[1]})">
+      <ellipse rx="${rx}" ry="${ry}" fill="${c}" opacity="${dim}" stroke="#0d1a24"/>
+      <text text-anchor="middle" y="-${Math.round(ry*0.28)}" font-size="${fs}" font-weight="${ly==='chain'||ly==='oem'?800:700}" fill="#0d1a24">${n[1].length>(ly==='chain'?8:7)?n[1].slice(0,ly==='chain'?8:7):n[1]}</text>
+      <text text-anchor="middle" y="${Math.round(ry*1.15)}" font-size="9" fill="${dim<1?'#405773':'#081018'}" opacity="${dim<1?1:0.9}">${LNAME[ly]}${n[5]?'·待核实':''}</text>
+    </g>`;
+  });
+  svg.innerHTML=s;
+  bind(svg);
+  /* No decorative entrance animation; layout stays stable. */
+}
+/* 节点飞入：从画布外错峰飞进（对标力导向涌现感，轻量实现） */
+function flyIn(svg){
+  const gs=svg.querySelectorAll('.node');
+  const L=[['chain','oem'],['part','park'],['fac','cap','tal'],['life','vill','gap']];
+  gs.forEach(g=>{
+    const id=g.dataset.n,ly=LY(ZK.layerOf(id));
+    const m=(g.getAttribute('transform')||'').match(/translate\(([\d.]+),([\d.]+)\)/);
+    if(!m)return;
+    const x=+m[1],y=+m[2];
+    const li=Math.max(0,L.findIndex(band=>band.includes(ly)));
+    /* 同层同向：链主/整机从上、园区/设施从左、资本/人才从右、生活/乡村从下 */
+    const from=[[0,-1],[1,0],[-1,0],[0,1]][li]||[0,1];
+    const dist=340;
+    const dx=from[0]*dist,dy=from[1]*dist;
+    g.setAttribute('transform',`translate(${x+dx},${y+dy})`);
+    g.style.opacity='0';
+    g.style.transition=`transform .85s cubic-bezier(.2,.7,.3,1) ${li*0.18+(gs.length?Math.random()*0.12:0)}s, opacity .55s ease-out ${li*0.18+0.15}s`;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      g.setAttribute('transform',`translate(${x},${y})`);
+      g.style.opacity='1';
+    }));
+  });
+}
+function svgPt(svg,e){
+  const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;
+  return p.matrixTransform(svg.getScreenCTM().inverse());
+}
+let locked=null;
+function bind(svg){
+  svg.querySelectorAll('.node').forEach(g=>{
+    const id=g.dataset.n;
+    const hl=(e)=>{
+      const c=ZK.LK.filter(l=>l[0]===id||l[1]===id);
+      const w=c.reduce((a,b)=>a+(b[2]||0),0);
+      const hits=c.map(l=>ZK.nm(l[0]===id?l[1]:l[0]));
+      tip(e,`<b>${ZK.nm(id)}</b> · ${LNAME[LY(ZK.layerOf(id))]}${ZK.NO.find(n=>n[0]===id)[5]?'（待核实）':''}<br>连接 ${c.length} 条 · 强度合计 ${w}<br><span style="color:#536782">连向：${hits.slice(0,8).join('、')||'暂无'}</span>`);
+      svg.querySelectorAll('.node').forEach(x=>x.classList.toggle('dim',x!==g&&locked!==id));
+      svg.querySelectorAll('.link').forEach(l=>l.classList.toggle('hi',l.dataset.a===id||l.dataset.b===id));
+    };
+    g.onmouseenter=hl;
+    g.onmousemove=hl;
+    g.onmouseleave=()=>{tipOff();if(locked===id)return;svg.querySelectorAll('.node').forEach(x=>x.classList.remove('dim'));svg.querySelectorAll('.link').forEach(l=>l.classList.remove('hi'));};
+    g.onclick=e=>{locked=locked===id?null:id;hl(e);
+      const info=document.getElementById('selectedNode');
+      if(info)info.textContent=locked===null?'点击网络中的主体，查看名称、所属层级与连接数量。':ZK.nm(id)+' · '+LNAME[LY(ZK.layerOf(id))]+' · '+ZK.LK.filter(l=>l[0]===id||l[1]===id).length+' 条连接'+(ZK.NO.find(n=>n[0]===id)[5]?' · 待核实':'');
+    };
+    /* 拖拽 */
+    g.addEventListener('pointerdown',e=>{e.preventDefault();drag={id:id,g:g};g.setPointerCapture(e.pointerId);g.classList.add('drag');g.style.transition='none';});
+    g.addEventListener('pointermove',e=>{
+      if(!drag||drag.id!==id)return;
+      const q=svgPt(svg,e);
+      pos[id]=[q.x,q.y];
+      g.setAttribute('transform','translate('+q.x+','+q.y+')');
+      svg.querySelectorAll('.link[data-a="'+id+'"],.link[data-b="'+id+'"]').forEach(l=>{
+        const a=pos[l.dataset.a],b=pos[l.dataset.b];
+        if(a&&b){l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',b[0]);l.setAttribute('y2',b[1]);}
+      });
+      if(locked===id){svg.querySelectorAll('.link').forEach(l=>l.classList.remove('hi'));svg.querySelectorAll('.node').forEach(x=>x.classList.remove('dim'));}
+    });
+    g.addEventListener('pointerup',()=>{drag=null;g.classList.remove('drag');});
+    g.addEventListener('pointercancel',()=>{drag=null;g.classList.remove('drag');});
+  });
+  svg.addEventListener('mousemove',e=>{const r=svg.getBoundingClientRect();if(e.clientY>r.top+r.height-30)tipOff();});
+}
+/* 统计 */
+function stat(){
+  const E=ZK.LK.length, real=ZK.LK.filter(l=>!l[3]).length, dash=ZK.LK.length-real;
+  const deg={};ZK.NO.forEach(n=>deg[n[0]]=0);ZK.LK.forEach(l=>{deg[l[0]]++;deg[l[1]]++});
+  const top=[...ZK.NO].sort((a,b)=>deg[b[0]]-deg[a[0]]).slice(0,3);
+  $('stat').innerHTML=`<div class="c"><div class="v">${ZK.NO.length}</div><div class="l">模型主体（10 类）</div></div>
+    <div class="c"><div class="v">${E}</div><div class="l">关系连线（实线 ${real} · 虚线 ${dash} 待核实）</div></div>
+    <div class="c"><div class="v">${top.map(n=>ZK.nm(n[0])).join(' · ')}</div><div class="l">连接最多的主体（度前 3）</div></div>`;
+  const top10=[...ZK.NO].sort((a,b)=>deg[b[0]]-deg[a[0]]).slice(0,10).reverse();
+  const tc=echarts.init($('topChart'));
+  tc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：连 ${p[0].value} 条`},
+    grid:{left:96,right:26,top:8,bottom:20},
+    xAxis:{type:'value',minInterval:1,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    yAxis:{type:'category',data:top10.map(n=>ZK.nm(n[0]).length>9?ZK.nm(n[0]).slice(0,9):ZK.nm(n[0])),axisLabel:{color:'#405773',fontSize:11.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:13,data:top10.map(n=>deg[n[0]]).map((v,i)=>({value:v,itemStyle:{color:ZK.NO.find(n=>n[0]===top10[i][0])?LCOL[ZK.layerOf(top10[i][0])]:'#245bdb',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#17243d',fontSize:11}}))}]
+  });
+  charts.push(tc);
+}
+/* 钱流漏损 */
+function mul(){
+  $('mul').innerHTML=ZK.MULT_LAYERS.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:#536782">${r[2]}</td></tr>`).join('');
+  /* 1 亿订单去向：堆叠条形 */
+  const parts=[[0.32,'本地配套采购','#1689b5'],[0.18,'本地工资','#168366'],[0.07,'工资本地消费','#b96a20'],[0.05,'本地税收','#7158c8'],[0.38,'漏到外地（消费外流/购买外部）','#334155']];
+  const lc=echarts.init($('leakChart'));
+  lc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
+    backgroundColor:'transparent',tooltip:{trigger:'item',formatter:p=>`${p.name}<br>${(p.value*100).toFixed(0)} 分（1 亿订单里占 ${(p.value).toFixed(2)} 亿）`},
+    grid:{left:8,right:8,top:26,bottom:8},
+    xAxis:{show:false,type:'value',max:1},
+    yAxis:{show:false,type:'category'},
+    series:[{type:'bar',stack:'leak',barWidth:34,data:parts.map(p=>({value:p[0],name:p[1],itemStyle:{color:p[2]}})),label:{show:true,position:'inside',formatter:p=>(p.value*100).toFixed(0)+'%',color:'#0d1a24',fontSize:12,fontWeight:700}}],
+    legend:{data:parts.map(p=>p[1]),bottom:0,textStyle:{color:'#536782',fontSize:11},itemWidth:10,itemHeight:10}
+  });
+  charts.push(lc);
+}
+/* 传导链 */
+const charts=[];
+function sem(){
+  const rows=[...ZK.SEM].reverse();
+  const sc=echarts.init($('semChart'));
+  sc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{
+      const s=ZK.SEM.find(r=>r[0]+' → '+r[1]===p[0].name);return `${p[0].name}<br>力度 ${p[0].value.toFixed(2)}<br><span style="color:#536782">${s?s[3]:''}</span>`;
+    }},
+    grid:{left:86,right:40,top:8,bottom:20},
+    xAxis:{type:'value',min:0,max:0.8,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    yAxis:{type:'category',data:rows.map(r=>r[0]+' → '+r[1]),axisLabel:{color:'#405773',fontSize:11},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:15,
+      data:rows.map(r=>({value:r[2],itemStyle:{color:r[2]<0.4?'#bf3b49':r[2]>0.58?'#168366':'#245bdb',borderRadius:[0,5,5,0]},
+        label:{show:true,position:'right',color:r[2]<0.4?'#bf3b49':'#405773',fontSize:12,formatter:'{c}'}}))}],
+    graphic:[{type:'text',left:12,bottom:2,style:{text:'最松＝红 · 最紧＝绿（0.35 全链最松）',fill:'#536782',fontSize:11}}]
+  });
+  charts.push(sc);
+}
+/* 回路 */
+function loop(){
+  $('loop').innerHTML=`
+    <span class="n">投资</span><span class="ar">→</span><span class="n">配套</span><span class="ar">→</span><span class="n">订单</span><span class="ar">→</span><span class="n">链主</span><span class="ar">→</span><span class="n">税收</span><span class="ar">→</span><span class="n">基建</span><span class="ar">→</span><span class="n">人才</span><span class="ar">→</span><span class="n">创新</span><span class="ar">→</span><span class="n">新订单</span><span class="ar">→</span><span class="n">投资</span>
+  `;
+}
+legend();draw();stat();mul();sem();loop();
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
+</script>
+<script src="../preview-network-v10/network-lab-v5.js?v=10"></script>
+<script src="../preview-network-v10/network-v10.js?v=1"></script>
+<script src="../preview-network-v11/network-v11.js?v=1"></script>
+<script src="network-v13.js?v=1"></script>
+</body></html>
