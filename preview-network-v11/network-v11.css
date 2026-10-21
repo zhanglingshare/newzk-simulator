@@ -239,3 +239,37 @@ body[data-page="network"] .wrap>.disc{color:#90a7bb!important;font-size:11px}
  .v11-tension-light,.v11-tension-wave{animation:none!important}
  .v11-tension-light{display:none}
 }
+
+
+/* Optional "aha" comparison: an actual graph bridge, not a fictional economic ripple. */
+.v11-aha{margin:15px 0;border:1px solid rgba(150,200,239,.23);border-radius:13px;background:rgba(14,36,66,.63);max-width:1000px;overflow:hidden}
+.v11-aha-title{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 18px}
+.v11-aha-title>div>span{display:block;color:#9fc3da;font-size:10px;letter-spacing:.12em;font-weight:820;margin-bottom:6px}
+.v11-aha-title>div>strong{color:#f1f9ff;font-size:clamp(14px,1.5vw,19px);line-height:1.55;font-weight:820}
+.v11-aha-title>button{white-space:nowrap;border:1px solid rgba(247,186,135,.53);border-radius:9px;min-height:42px;padding:9px 14px;color:#ffdfb3;font-size:11px;font-weight:830;background:rgba(126,76,69,.34)}
+.v11-aha-title>button:hover{background:rgba(151,86,71,.56)}
+.v11-bridge-reveal{border-top:1px solid rgba(154,196,239,.19);padding:17px 20px 20px;background:linear-gradient(140deg,rgba(18,44,74,.77),rgba(44,43,72,.55))}
+.v11-bridge-reveal[hidden]{display:none!important}
+.v11-bridge-visual{display:grid;grid-template-columns:1fr 38px 1fr;gap:8px;align-items:center}
+.v11-bridge-visual>div:not(.v11-bridge-versus){border:1px solid rgba(142,210,235,.29);border-radius:10px;min-height:107px;padding:13px;background:rgba(16,54,85,.47)}
+.v11-bridge-visual .v11-bridge-focus{border-color:rgba(255,184,134,.49)!important;background:rgba(94,59,76,.35)!important}
+.v11-bridge-visual>div>span{display:block;font-size:10px;letter-spacing:.04em;color:#add3e4}
+.v11-bridge-visual>div>strong{display:block;font-size:clamp(13px,1.4vw,18px);color:#f1fbff;line-height:1.6;margin:6px 0}
+.v11-bridge-visual>div>small{display:block;color:#9ce0e6;font-size:11px;font-variant-numeric:tabular-nums}
+.v11-bridge-visual>.v11-bridge-focus>small{color:#ffc59f}
+.v11-bridge-versus{font-size:18px;color:#ffd0a1;text-align:center;font-weight:900}
+.v11-bridge-reveal>p{color:#c8d9e8;font-size:11.5px;line-height:1.85;margin:15px 0 10px}
+.v11-bridge-lesson{display:block;border-left:3px solid #f4b17d;background:rgba(230,161,107,.09);padding:10px 12px;color:#ffe5c7;font-size:11.5px;line-height:1.8;border-radius:4px}
+@media(max-width:720px){
+.v11-aha-title{padding:12px;flex-direction:column;align-items:stretch;gap:9px}
+.v11-aha-title>div>strong{font-size:14px}
+.v11-aha-title>button{width:100%}
+.v11-bridge-reveal{padding:10px}
+.v11-bridge-visual{grid-template-columns:1fr 26px 1fr;gap:4px}
+.v11-bridge-visual>div:not(.v11-bridge-versus){min-height:108px;padding:9px}
+.v11-bridge-visual>div>strong{font-size:11.5px}
+.v11-bridge-visual>div>small{font-size:9px}
+.v11-bridge-visual>div>span{font-size:9px}
+.v11-bridge-versus{font-size:13px}
+.v11-bridge-reveal>p,.v11-bridge-lesson{font-size:10px}
+}
