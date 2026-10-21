@@ -2,7 +2,7 @@
 (function(){
   'use strict';
   const groups=[
-    {label:'发现仲恺',pages:[['index.html','今日仲恺'],['who.html','仲恺是什么'],['town.html','生活地图'],['mylife.html','跟我的关系']]},
+    {label:'发现仲恺',pages:[['index.html','仲恺入口'],['today.html','今日仲恺'],['who.html','仲恺是什么'],['town.html','生活地图'],['mylife.html','跟我的关系']]},
     {label:'探索关系',pages:[['network.html','产业链地图']]},
     {label:'模拟未来',pages:[['choices.html','五条路'],['future.html','未来2030'],['windtunnel.html','风洞']]},
     {label:'研究与报告',pages:[['blindspot.html','忽略了什么'],['report.html','分析报告'],['ending.html','结语'],['guide.html','使用指南']]}
