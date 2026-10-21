@@ -13,6 +13,12 @@ scenarios.forEach(s=>{
   option.value=s[2];option.textContent=s[0];select.appendChild(option);
 });
 select.value=ref;
+const bSelect=byId('lab5ShockBSelect');
+scenarios.forEach(s=>{
+  const option=document.createElement('option');option.value=s[2];option.textContent=s[0];bSelect.appendChild(option);
+});
+bSelect.value=cur;
+bSelect.onchange=()=>{cur=bSelect.value;cards();run();render();};
 function mapMarkup(k,other){
   const affected=new Set(ZK.shockHits(k));
   const compare=new Set(ZK.shockHits(other));
@@ -50,7 +56,7 @@ function render(){
   const common=[...A].filter(x=>B.has(x));
   const onlyA=[...A].filter(x=>!B.has(x));
   const onlyB=[...B].filter(x=>!A.has(x));
-  byId('lab5ShockB').textContent=names[b];
+  bSelect.value=b;
   const nums=[['A 波及主体',A.size],['B 波及主体',B.size],['共同波及',common.length],['仅 B 波及',onlyB.length]];
   byId('lab5ShockNumbers').replaceChildren();
   nums.forEach(([label,value])=>{
@@ -68,7 +74,7 @@ function render(){
 select.onchange=()=>{ref=select.value;render();};
 byId('cards').addEventListener('click',e=>{if(e.target.closest('.card'))requestAnimationFrame(render);});
 byId('lab5ShockSwap').onclick=()=>{
-  const previous=cur;cur=ref;ref=previous;select.value=ref;
+  const previous=cur;cur=ref;ref=previous;select.value=ref;bSelect.value=cur;
   cards();run();render();
 };
 byId('lab5ShockSave').onclick=()=>{
