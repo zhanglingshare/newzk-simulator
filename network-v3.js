@@ -136,5 +136,5 @@
   new MutationObserver(()=>updateDensity()).observe(svg,{childList:true});
   window.addEventListener('resize',()=>{if(!isMobile())closeDrawer();});
   showView();
-  if(isMobile())zoom(2.05);
+  if(isMobile())zoom(3);
 })();
