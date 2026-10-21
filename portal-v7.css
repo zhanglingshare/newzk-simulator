@@ -56,7 +56,6 @@ body.zkportal{margin:0;background:#080f22;color:var(--ink);font:14px/1.6 -apple-
 .portal-core-cta-link{display:block;color:#8be6fa!important;margin-top:4px;font-size:11px;font-weight:800}
 .portal-core-cta:hover{border-color:#a2eafb;background:rgba(17,40,69,.9)}
 .portal-graph-notice{position:absolute;bottom:0;right:8%;font-size:9.5px;white-space:nowrap;color:#92a9c4}
-.portal-side-index{position:absolute;top:auto}
 .portal-hero-side{position:absolute;z-index:7;bottom:66px;left:clamp(20px,5vw,84px);display:flex;gap:6px}
 .portal-hero-side a{display:flex;align-items:center;gap:8px;padding:10px 12px;border-left:1px solid rgba(159,199,238,.45);font-size:11px;background:rgba(13,25,47,.35)}
 .portal-hero-side a span:first-child{color:#e8af7b;font-size:10px}
