@@ -62,6 +62,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 .chart{width:100%;height:230px}
 @media(max-width:760px){.chart{height:200px}}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
+<link rel="stylesheet" href="lab5.css?v=5">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -99,7 +100,28 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
     </div>
     <div class="layerbar" id="layerBar"></div>
     <div class="legend" id="legend"></div>
+    <div class="lab5-toolbar" role="toolbar" aria-label="产业网络实验工具">
+      <label class="lab5-search"><span>主体搜索</span><input id="lab5Find" type="search" placeholder="输入企业、园区或生活设施"></label>
+      <button type="button" id="lab5FindBtn">定位</button>
+      <button type="button" id="lab5ZoomIn">放大</button><button type="button" id="lab5ZoomOut">缩小</button>
+      <button type="button" id="lab5ZoomReset">全图</button>
+      <span class="lab5-zoom" id="lab5ZoomState" aria-live="polite">100%</span>
+    </div>
+    <div class="lab5-empty" id="lab5SearchStatus" role="status" hidden></div>
+    <div class="lab5-mode" role="group" aria-label="网络状态切换"><button id="lab5ModeBase" class="active" type="button">A · 原始结构</button><button id="lab5ModeTest" type="button">B · 假设结构</button><span>拖动节点＝调整画面；关闭节点或连线＝仅修改假设结构。</span></div>
     <div class="network-layout"><div class="network-canvas" aria-label="可拖动的产业网络画布"><svg id="net" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg></div><aside class="network-side" aria-label="网络节点信息"><h3>网络速览</h3><p id="selectedNode" class="selected-node" aria-live="polite">点击网络中的主体，查看名称、所属层级与连接数量。</p>
+    <div class="lab5-sandbox" id="lab5Sandbox">
+      <h3>结构假设实验</h3>
+      <div id="lab5Selection" aria-live="polite">点击任一主体或连线，开始一次可撤销的实验。</div>
+      <div class="lab5-actions">
+        <button type="button" id="lab5Toggle">先选择主体或连线</button>
+        <button type="button" id="lab5Undo">撤销</button>
+        <button type="button" id="lab5Reset">全部恢复</button>
+      </div>
+      <div class="lab5-compare-stats" id="lab5Stats" aria-live="polite"></div>
+      <button type="button" id="lab5Save">保存本地结构实验</button>
+      <p class="lab5-note" id="lab5Note">模型原始关系保持不变。下方比较的是网络连通性，不是产值或企业经营预测。</p>
+    </div>
     <div class="stat" id="stat"></div>
     <div class="gt">连接最密的主体（按连接多少排序）</div>
     <div class="chart" id="topChart"></div>
@@ -151,7 +173,7 @@ const R_BASE={'chain':58,'oem':50,'park':46,'cap':44,'fac':40,'part':40,'tal':38
 const deg={};ZK.NO.forEach(n=>deg[n[0]]=0);ZK.LK.forEach(l=>{deg[l[0]]++;deg[l[1]]++;});
 const LAYER_KEYS=Object.keys(LNAME).filter(k=>k!=='vill');
 const FS={'chain':13,'oem':12.5,'park':12,'cap':11.5,'fac':11,'part':11,'tal':11,'life':11,'gap':11};
-const tips=$('#tip');
+const tips=$('tip');
 function $(i){return document.getElementById(i)}
 function tip(e,h){tips.innerHTML=h;tips.style.display='block';const x=e.clientX,y=e.clientY;tips.style.left=Math.min(x+14,innerWidth-300)+'px';tips.style.top=Math.max(y-12,8)+'px'}
 function tipOff(){tips.style.display='none'}
@@ -358,4 +380,5 @@ function loop(){
 legend();draw();stat();mul();sem();loop();
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
+<script src="network-lab-v5.js?v=5"></script>
 </body></html>
