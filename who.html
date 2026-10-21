@@ -145,10 +145,10 @@ $('kpis').innerHTML=[
 
 /* ---------- 三次产业结构环图 ---------- */
 const pie=echarts.init($('pie'));
-pie.setOption({
+pie.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',color:['#a3e635','#245bdb','#b96a20'],
   tooltip:{trigger:'item',formatter:'{b}<br>{c}% · {d}%'},
-  title:{text:'2024 年三次产业',left:'center',top:6,textStyle:{color:'#536782',fontSize:12,fontWeight:400}},
+  title:{text:'2024 年三次产业',left:'center',top:6,textStyle:{color:'#536782',fontSize:12.5,fontWeight:400}},
   series:[{type:'pie',radius:['42%','68%'],center:['50%','56%'],itemStyle:{borderColor:'#f8fbff',borderWidth:2},
     label:{color:'#17243d',formatter:'{b}\n{c}%'},data:[{name:'一产',value:1.0},{name:'二产',value:67.6},{name:'三产',value:31.4}]}]
 });
@@ -156,24 +156,24 @@ $('pieNote').textContent='口径：2024 年公报；三产占比另有 28.5%（2
 
 /* ---------- 三大支柱柱状图 ---------- */
 const pillar=echarts.init($('pillar'));
-pillar.setOption({
+pillar.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
   grid:{left:44,right:14,top:28,bottom:30},
   xAxis:{type:'value',axisLabel:{color:'#536782',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
-  yAxis:{type:'category',data:ZK.CL.map(c=>c[0]).reverse(),axisLabel:{color:'#405773',fontSize:11},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+  yAxis:{type:'category',data:ZK.CL.map(c=>c[0]).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[{type:'bar',barWidth:24,
     data:ZK.CL.map(c=>({value:parseFloat(c[1].replace('约 ','')),itemStyle:{color:c[3],borderRadius:[0,6,6,0]},label:{show:true,position:'right',color:'#17243d',formatter:'{c} 亿'}}))}]
 });
 
 /* ---------- 新赛道（官方押注四方向） ---------- */
 const newc=echarts.init($('newc'));
-newc.setOption({
+newc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'item'},
   grid:{left:44,right:14,top:28,bottom:24},
   xAxis:{type:'value',max:100,axisLabel:{show:false},splitLine:{show:false}},
-  yAxis:{type:'category',data:ZK.NEW.map(n=>n[0]).reverse(),axisLabel:{color:'#405773',fontSize:11},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+  yAxis:{type:'category',data:ZK.NEW.map(n=>n[0]).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[{type:'bar',barWidth:18,
-    data:ZK.NEW.map((n,i)=>({value:82-i*14,itemStyle:{color:i===0?'#1689b5':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#536782',fontSize:10,formatter:n[1]}}))}]
+    data:ZK.NEW.map((n,i)=>({value:82-i*14,itemStyle:{color:i===0?'#1689b5':'#334155',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#536782',fontSize:11,formatter:n[1]}}))}]
 });
 
 /* ---------- 园区版图卡片 ---------- */
@@ -181,12 +181,12 @@ $('park').innerHTML=ZK.PARKS.map(p=>`<div class="pk"><b>${p[0]}</b><span>${p[1]}
 
 /* ---------- 兄弟区对比雷达 ---------- */
 const radar=echarts.init($('radar'));
-radar.setOption({
+radar.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{},
-  legend:{data:['仲恺','大亚湾','惠城'],textStyle:{color:'#536782',fontSize:11},top:4},
+  legend:{data:['仲恺','大亚湾','惠城'],textStyle:{color:'#536782',fontSize:12},top:4},
   radar:{indicator:[
     {name:'工业强度',max:100},{name:'三产水平',max:100},{name:'城市配套',max:100},{name:'人口活力',max:100},{name:'风险集中',max:100}
-  ],radius:'62%',center:['50%','56%'],axisName:{color:'#536782',fontSize:11},splitLine:{lineStyle:{color:'#e5ebf4'}},splitArea:{areaStyle:{color:['#f8fbff','#eff4fb']}}},
+  ],radius:'62%',center:['50%','56%'],axisName:{color:'#536782',fontSize:12},splitLine:{lineStyle:{color:'#e5ebf4'}},splitArea:{areaStyle:{color:['#f8fbff','#eff4fb']}}},
   series:[{type:'radar',symbolSize:4,
     data:[
       {name:'仲恺',value:[95,45,40,70,60],lineStyle:{color:'#245bdb'},itemStyle:{color:'#245bdb'},areaStyle:{opacity:.25}},
