@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NewZK · 关系引擎 | 产业链地图</title>
+<title>NewZK · 剪线俱乐部 | 两刀通关</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
@@ -66,6 +66,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 <link rel="stylesheet" href="network-v10.css?v=1">
 <link rel="stylesheet" href="network-v11.css?v=1">
 <link rel="stylesheet" href="network-v12.css?v=1">
+<link rel="stylesheet" href="network-v13.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -92,18 +93,18 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 <section class="v12-game" id="v12Game" aria-labelledby="v12Title" data-chapter="1" data-cut="no">
   <div class="v12-orbit-bg" aria-hidden="true"></div>
   <div class="v12-game-header">
-    <div class="v12-logo-line"><span class="v12-beacon"></span> NEWZK · 连接的秘密 <small>INTERACTIVE STORY / 01</small></div>
-    <div class="v12-time-mark"><span>◷</span> 约30秒 · 无需任何专业知识</div>
+    <div class="v12-logo-line"><span class="v12-beacon"></span> NEWZK · 剪线俱乐部 <small>NEON ARCADE / LEVEL 01</small></div>
+    <div class="v13-top-right"><span class="v13-record">✦ 两刀通关挑战</span><button type="button" class="v13-sound" id="v13Sound" aria-pressed="false" aria-label="开启游戏音效">♪ 音效：关</button></div>
   </div>
   <div class="v12-game-heading">
-    <span class="v12-pretitle">有些联系，断了还有别的路。有些却没有。</span>
-    <h1 id="v12Title">断掉一根线，<br><em>会发生什么？</em></h1>
-    <p id="v12Lead">这里有三个相互关联的主体。你只要按一次按钮，看看会怎样。</p>
+    <span class="v12-pretitle">⚡ 断线派对 · 没有说明书，只有惊喜</span>
+    <h1 id="v12Title">剪一刀，<br><em>看看谁掉线！</em></h1>
+    <p id="v12Lead">别看规则了，直接剪。第一刀，不一定有人掉队。</p>
   </div>
   <div class="v12-game-arena">
     <div class="v12-arena-hud">
-      <span><i class="v12-hud-light"></i> <span id="v12SceneName">第一关 · 还有别的联系吗？</span></span>
-      <span id="v12Progress">01 / 02</span>
+      <span><i class="v12-hud-light"></i> <span id="v12SceneName">ROUND 1 · 神奇绕路</span></span>
+      <span id="v12Progress">1 / 2</span>
     </div>
     <div class="v12-graph-frame">
       <svg id="v12Graph" viewBox="0 0 900 425" role="img" aria-label="依据仲恺模型局部真实关系绘制的概念网络。点击屏幕下方按钮，可体验假设中断开关系后的结构变化。">
@@ -117,34 +118,39 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
         <g id="v12GraphNodes"></g>
         <g id="v12GraphImpact"></g>
       </svg>
+      <div class="v13-game-burst" id="v13Burst" aria-hidden="true"><strong id="v13BurstText">咔嚓！</strong></div>
       <div class="v12-moment" id="v12Moment" aria-live="polite">
-        <span id="v12MomentKicker">这条线代表模型中的一条关联</span>
-        <strong id="v12MomentTitle">现在，它们彼此连着。</strong>
-        <p id="v12MomentCaption">关系是公开资料建模记录，不代表已经核实的真实交易。</p>
+        <span id="v12MomentKicker">给发光的线来一刀</span>
+        <strong id="v12MomentTitle">它们现在还连着！</strong>
+        <p id="v12MomentCaption">准备好了吗？</p>
       </div>
     </div>
     <div class="v12-game-foot">
-      <div class="v12-game-hint" id="v12Hint"><span class="v12-hint-dot"></span> <span>不需要看懂所有圆点，只管看断线后有没有替代联系。</span></div>
-      <button type="button" class="v12-big-action" id="v12Action">✦ 断开这条线 <span aria-hidden="true">→</span></button>
+      <div class="v12-game-hint" id="v12Hint"><span class="v12-hint-dot"></span> <span>盯住发光的线，看会发生什么。</span></div>
+      <button type="button" class="v12-big-action" id="v12Action">✂ 剪！ <span aria-hidden="true">⚡</span></button>
     </div>
     <div class="v12-game-dots" aria-label="游戏进度"><span class="active"></span><span></span><span></span></div>
   </div>
   <div class="v12-final" id="v12Final" hidden>
-    <div class="v12-final-mark">✓ 你已经掌握了一种判断方法</div>
-    <h2>同样少一条联系，<br><em>结果为什么不一样？</em></h2>
-    <p>因为重要的不只是有多少条线，<strong>还要看有没有别的联系能替代。</strong></p>
-    <div class="v12-rule"><span>01</span><strong>先找有没有替代关系</strong></div>
-    <div class="v12-rule"><span>02</span><strong>再查关键关系是否真实</strong></div>
-    <div class="v12-rule"><span>03</span><strong>最后才判断现实影响</strong></div>
-    <p class="v12-final-disclaimer">这是公开资料模型的结构小游戏，不证明现实出现故障，也不预测GDP、企业损失或交通后果。</p>
+    <div class="v12-final-mark">✦ NEWZK ARCADE · 通关成功</div>
+    <h2>哇，你居然<br><em>找出了隐藏路线！</em></h2>
+    <p>第一刀还有路，第二刀就掉队。<strong>这就是连接世界的奇妙之处。</strong></p>
+    <div class="v13-achievements" aria-label="本局获得的游戏徽章">
+      <div class="v13-medal"><span class="v13-medal-emoji">🛣️</span><strong>隐藏路线猎人</strong><small>第一刀 · 成功绕路</small></div>
+      <div class="v13-medal"><span class="v13-medal-emoji">🏝️</span><strong>孤岛发现者</strong><small>第二刀 · 找到落单者</small></div>
+      <div class="v13-medal"><span class="v13-medal-emoji">⚡</span><strong>剪线双冠王</strong><small>2/2 · 全部通关</small></div>
+    </div>
+    <div class="v13-final-one-liner">咦？同样剪一刀，结果竟然完全不同。</div>
+    <p class="v12-final-disclaimer">游戏规则取材于公开资料模型中的连接，断线是虚拟效果，现实里的企业和道路都好好的。</p>
     <div class="v12-final-actions">
-      <button type="button" id="v12Again" class="v12-big-action">↺ 再玩一次</button>
-      <button type="button" id="v12GoDeep" class="v12-deep-action">我想试试自己的判断 ↗</button>
+      <button type="button" id="v13Poster" class="v12-big-action">✦ 生成通关海报</button>
+      <button type="button" id="v12Again" class="v12-deep-action">↺ 再来两刀</button>
+      <button type="button" id="v12GoDeep" class="v12-deep-action">↗ 看幕后彩蛋</button>
     </div>
   </div>
   <div class="v12-proof">
-    <span>光线动起来是为了方便理解，不是测得的资金流或物流。</span>
-    <button type="button" id="v12ShowMath" aria-expanded="false" aria-controls="v12Math">为什么会这样？看真实模型数字 <span aria-hidden="true">⌄</span></button>
+    <span>温馨提示：这是公开模型的连接小游戏，不是现实事故演练。</span>
+    <button type="button" id="v12ShowMath" aria-expanded="false" aria-controls="v12Math">偷偷看看游戏规则 <span aria-hidden="true">⌄</span></button>
     <div id="v12Math" hidden>
       <div class="v12-math-columns">
         <div><span>第一关 / 普通关联</span><strong id="v12MathA">104 → 103</strong><small>连通组 3 → 3 · 最大连通群 66 → 66</small></div>
@@ -156,7 +162,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 </section>
 
 <details class="v12-next-level" id="v12NextLevel">
-  <summary><span>可选 · 不用学会也能离开</span><strong>还想更深入地玩？</strong><small>体验个人判断卡 · 动态网络 · 资金留存 · 完整专业图谱</small><i aria-hidden="true">↗</i></summary>
+  <summary><span>彩蛋区域 · 想看才打开</span><strong>解锁隐藏的仲恺世界</strong><small>68个角色、神秘关系网，还有高级玩家的自定义玩法</small><i aria-hidden="true">↗</i></summary>
   <div class="v12-next-level-body">
 <section class="v11-experience" id="v11Experience" aria-labelledby="v11ExpHeading">
   <div class="v11-exp-head">
@@ -650,5 +656,5 @@ window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()))
 <script src="network-lab-v5.js?v=5"></script>
 <script src="network-v10.js?v=1"></script>
 <script src="network-v11.js?v=1"></script>
-<script src="network-v12.js?v=1"></script>
+<script src="network-v13.js?v=1"></script>
 </body></html>
