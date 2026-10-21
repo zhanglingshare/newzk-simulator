@@ -126,7 +126,7 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
     <button class="cat" data-c="fun"><i class="dot" style="background:#10b981"></i>好玩</button>
     <button class="cat" data-c="warm"><i class="dot" style="background:#a78bfa"></i>暖闻</button>
   </div>
-  <div class="scan-info" id="scanInfo">正在读取今日话题…</div>
+  <div class="scan-info" id="scanInfo">正在读取公开话题…</div>
   <div id="topicList"></div>
   <div class="vote">
     <div class="t">2030 年，仲恺规上工业能不能到 6500 亿？</div>
@@ -188,7 +188,7 @@ function drawVoteChart(){
     xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#cbd5e1',fontSize:11.5},axisLine:{lineStyle:{color:'#22304a'}}},
     yAxis:{type:'value',minInterval:1,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
     series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#3ddc97':k==='悬'?'#a78bfa':'#f87171',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#e6edf3',formatter:'{c} 票'}}))}],
-    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#8fa3bf',fontSize:10.5}}]
+    graphic:[{type:'text',left:8,top:6,style:{text:'本机投票记录（非全站统计）· 紫色＝模型过线概率 '+hitP+'%',fill:'#8fa3bf',fontSize:10.5}}]
   });
   if(!charts.includes(vc))charts.push(vc);
 }
@@ -225,7 +225,7 @@ function render(cat){
       ${i===0?'<span class="badge">今日最热</span>':''}
       <div class="rank">${i+1}</div>
       <div class="body">
-        <div class="t">${it.emoji||''} ${it.title}</div>
+        <div class="t">${it.title}</div>
         <div class="meta">
           <span class="cat-tag" style="color:${color};border:1px solid ${color}44">${it.cat}</span>
           <span>关注档（合理估算，非平台后台真实统计）：<b style="color:${color}">${heat}</b></span>
@@ -255,7 +255,7 @@ document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x===b));
   render(b.dataset.c);
 });
-fetch('hot.json').then(r=>r.json()).then(d=>{
+fetch('hot.json').then(r=>{if(!r.ok)throw new Error('话题数据不可用');return r.json()}).then(d=>{
   DATA=d.items||[];
   document.getElementById('scanInfo').textContent='已刷新 · '+d.updated+' · 共 '+DATA.length+' 条 · 来源：仲恺高新区管委会与公开媒体';
   pick3(DATA);
