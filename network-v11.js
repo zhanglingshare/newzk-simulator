@@ -95,6 +95,8 @@ function chooseCase(next){
  text('v11HypothesisCopy',x.intro);
  const edge=links.find(l=>l.key===edgeKey(...x.edge));
  text('v11Premise',name(x.edge[0])+'  ↔  '+name(x.edge[1])+' · '+(edge.uncertain?'现有模型标记为「待核实」':'模型记录关系'));
+ text('v11TensionLeft',name(x.edge[0]));text('v11TensionRight',name(x.edge[1]));
+ $('v11Tension').dataset.action='keep';text('v11TensionStatus','原模型记录 · 待核实');
  sel('.v11-judge').forEach(b=>b.classList.remove('is-selected'));
  $('v11Run').disabled=true;$('v11Finish').disabled=true;
  if(next==='supplier')document.querySelector('.v10-stage-actions button[data-focus="hub"]')?.click();
@@ -112,6 +114,8 @@ function showResult(){
  const x=scenes[currentCase];
  result=metrics(judgment==='remove'?edgeKey(...x.edge):null);
  const diffC=result.components-baseMetrics.components,diffL=result.largest-baseMetrics.largest;
+ $('v11Tension').dataset.action=judgment;
+ text('v11TensionStatus',judgment==='remove'?'你的假设 / 连接暂时失效':'你的假设 / 关系保持不变');
  text('v11ResultA',baseMetrics.edges);text('v11ResultB',result.edges);
  text('v11ResultGlyph',judgment==='remove'?'⟟':'↔');
  text('v11ResultComponents','连通组：'+baseMetrics.components+' → '+result.components);
