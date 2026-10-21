@@ -86,6 +86,24 @@ table.detail td b{color:#17243d}
     <span class="tag">决策者看：哪条路最抗压、断点在第几环</span>
   </div>
 
+
+  <section class="s lab5-shock-lab" aria-label="冲击情景A/B对比">
+    <div class="lab5-section-head">
+      <div><span class="lab5-eyebrow">结构冲击 A/B 对比</span><h2>同一张网络，换一种冲击会有什么不同？</h2>
+      <p class="ana">固定A方案，再点击下方五张冲击牌选择B方案。高亮的主体来自模型现有的预设波及名单，不能解释为真实传播的时间顺序。</p></div>
+      <button type="button" id="lab5ShockSave">保存本地对比</button>
+    </div>
+    <div class="lab5-shock-select">
+      <label>A 对照情景 <select id="lab5ShockA"></select></label>
+      <div><strong>B 当前情景</strong><span id="lab5ShockB" aria-live="polite"></span></div>
+      <button type="button" id="lab5ShockSwap">交换 A / B</button>
+    </div>
+    <div class="lab5-shock-numbers" id="lab5ShockNumbers" aria-live="polite"></div>
+    <div class="lab5-shock-maps"><div><strong>A · 对照</strong><svg id="lab5ShockMapA" viewBox="0 0 1240 920" aria-label="A情景受影响主体网络"></svg></div>
+      <div><strong>B · 当前</strong><svg id="lab5ShockMapB" viewBox="0 0 1240 920" aria-label="B情景受影响主体网络"></svg></div></div>
+    <p class="lab5-note" id="lab5ShockNote" role="status">比较的是预设名单在同一张网络中的覆盖情况，不是模型的逐级因果传导。</p>
+  </section>
+
   <div class="wind-layout"><div class="cards" id="cards"></div>
 
   <div class="s">
@@ -196,4 +214,5 @@ const charts=[];
 cards();run();bar5();
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
+<script src="shock-compare-v5.js?v=5"></script>
 </body></html>
