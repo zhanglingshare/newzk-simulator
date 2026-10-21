@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NewZK · 五条路</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
+
+<script src="../model.js"></script>
+<script src="../lib/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.stand{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+.stand button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:9px 18px;border-radius:20px;font-size:13px;cursor:pointer}
+.stand button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
+.rank{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.r{background:#f8fbff;border:1px solid #e5ebf4;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.r .n{font-size:18px;font-weight:800;color:#b96a20;min-width:26px;text-align:center}
+.r .m{font-size:12px;color:#67e8f9;font-weight:700;min-width:52px}
+.r .b{flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden}
+.r .b i{display:block;height:100%;border-radius:8px;transition:width .5s}
+.r .t{font-size:13.5px;font-weight:600;color:#17243d;min-width:96px}
+.notes{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:9px;padding:9px 12px;font-size:12px;color:#536782;margin-bottom:14px}
+.twist{background:linear-gradient(135deg,#1e1b4b,#f8fbff);border:1px solid #7158c8;border-radius:12px;padding:13px 15px;margin-bottom:14px}
+.twist .t{font-size:13px;font-weight:800;color:#7158c8;margin-bottom:4px}
+.twist .one{color:#17243d;font-size:14px;font-weight:600}
+.roadcard{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:10px}
+.roadcard .h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.roadcard .h b{font-size:15px}
+.roadcard .h span{font-size:11px;color:#536782;background:#f5f8fd;border:1px solid #d8e3f0;padding:2px 8px;border-radius:10px}
+.roadcard p{font-size:13px;color:#405773;margin:4px 0}
+.roadcard .act{font-size:12px;color:#67e8f9}
+.next{text-align:center;margin:20px 0 6px}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
+.roads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.roads{grid-template-columns:1fr}}
+.chart{width:100%;height:280px}
+@media(max-width:760px){.chart{height:220px}}
+.mx2{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:8px 0}
+.mx2 div{height:34px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#0d1a24}
+.sliders{margin:10px 0}
+.sl{display:flex;align-items:center;gap:10px;margin:8px 0}
+.sl .lab{min-width:76px;font-size:12.5px;color:#405773}
+.sl input{flex:1;accent-color:#245bdb}
+.sl .v{min-width:26px;text-align:right;font-size:13px;font-weight:700;color:#67e8f9}
+.reset{border:1px solid #334155;background:#f5f8fd;color:#536782;padding:7px 16px;border-radius:16px;font-size:12px;cursor:pointer}
+.reset:hover{color:#fff}
+.code{background:linear-gradient(135deg,#eef4ff,#1e1b4b);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.code .t{font-size:13px;font-weight:800;color:#7158c8;margin-bottom:8px}
+.code .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.seg b{font-size:11px;color:#536782;min-width:44px;text-align:right}
+.seg button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:5px 12px;border-radius:14px;font-size:12px;cursor:pointer}
+.seg button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
+.code .lock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.lock button{background:#0e7490;color:#fff;border:1px solid #1689b5;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer}
+.lock button.un{background:#b45309;border-color:#b96a20}
+.code .chip{font-size:13px;color:#67e8f9;font-weight:800;letter-spacing:.5px}
+.code .hint{font-size:11px;color:#6c7d94;margin-top:8px;line-height:1.7}
+.segbar{display:flex;gap:8px;margin:8px 0}
+.segbar button{background:#f5f8fd;color:#536782;border:1px solid #334155;padding:6px 16px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.segbar button.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:700}
+.win{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:8px 0}
+.win .hd{height:24px;background:transparent;color:#536782;font-size:10.5px;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;padding:0 2px}
+.win div{height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#0d1a24}
+</style><link rel="stylesheet" href="../cloud-lab.css?v=2">
+<link rel="stylesheet" href="../lab5.css?v=5">
+<link rel="stylesheet" href="choices-v14.css?v=1">
+<script src="../cloud-lab-ui.js?v=2" defer></script>
+</head><body data-page="choices">
+
+<div class="nav">
+  <b>NewZK</b>
+  <a href="../index.html">① 今日仲恺</a>
+  <a href="../who.html">② 仲恺是什么</a>
+  <a href="../network.html">③ 产业链地图</a>
+  <a href="index.html" class="on">④ 五条路</a>
+  <a href="../future.html">⑤ 未来2030</a>
+  <a href="../windtunnel.html">⑥ 风洞</a>
+  <a href="../blindspot.html">⑦ 忽略了什么</a>
+  <a href="../mylife.html">⑧ 跟我的关系</a>
+  <a href="../report.html">⑨ 分析报告</a>
+  <a href="../ending.html">⑩ 结语</a>
+  <a href="../guide.html">⑪ 使用指南</a>
+  <a href="../town.html">⑫ 生活地图</a>
+</div>
+
+<div class="wrap">
+
+<section class="v14-world" id="v14World" data-road="链主做强" aria-labelledby="v14Title">
+  <nav class="v14-nav" aria-label="未来世界导航">
+    <a href="../index.html" class="v14-home">← 返回仲恺世界</a>
+    <span>NEWZK <b>✦</b> FUTURE GATES / 04</span>
+    <button type="button" id="v14Random">⟳ 随机穿越</button>
+  </nav>
+
+  <div class="v14-intro">
+    <div class="v14-kicker"><i></i> 五扇门 · 五种城市气质</div>
+    <h1 id="v14Title">今晚，<br><em>你想先穿越哪一个仲恺？</em></h1>
+    <p>别比较，别打分。先进去看看。同一座城，换一种主旋律，整片世界都会换一种呼吸。</p>
+  </div>
+
+  <div class="v14-stage">
+    <div class="v14-stage-top">
+      <span id="v14SceneCode">GATE 01 / CHAIN LEADER</span>
+      <strong id="v14SceneTitle">链主做强</strong>
+      <span id="v14Visited">已探索 1 / 5</span>
+    </div>
+
+    <div class="v14-city">
+      <svg viewBox="0 0 1200 650" id="v14City" role="img" aria-label="五种发展路径对应的概念化城市夜景动画，不是真实地图或预测">
+        <defs>
+          <linearGradient id="v14Sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0b1730"/><stop offset="1" stop-color="#13243a"/>
+          </linearGradient>
+          <linearGradient id="v14Ground" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#12314c"/><stop offset="1" stop-color="#071725"/>
+          </linearGradient>
+          <radialGradient id="v14Glow"><stop offset="0" stop-color="#62d9f7" stop-opacity=".2"/><stop offset="1" stop-color="#62d9f7" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1200" height="650" fill="url(#v14Sky)"/>
+        <ellipse cx="610" cy="335" rx="530" ry="250" fill="url(#v14Glow)"/>
+        <path class="v14-ground" d="M0 507L383 356L1200 452V650H0Z" fill="url(#v14Ground)"/>
+        <g class="v14-base-city">
+          <path d="M50 443V322L95 298L132 314V419 M157 417V284L202 267L246 282V396 M277 390V338L317 321L351 334V376" />
+          <path d="M770 395V251L818 232L858 247V405 M889 414V301L931 284L972 298V430 M997 436V334L1038 317L1077 332V453" />
+          <path d="M382 439V246L426 229L469 244V428 M493 423V179L538 162L584 178V409 M610 414V221L654 205L700 222V428" />
+        </g>
+
+        <g class="v14-layer v14-leader">
+          <path class="v14-factory" d="M160 495V407L233 376L300 400V496Z M329 490V396L402 367L478 397V504Z"/>
+          <path class="v14-chimney" d="M197 404V332L218 324V395 M361 383V309L383 301V374"/>
+          <path class="v14-energy-line" d="M226 444C342 387 439 407 532 333S703 279 809 323"/>
+          <circle class="v14-energy-dot" r="8"><animateMotion dur="2.5s" repeatCount="indefinite" path="M226 444C342 387 439 407 532 333S703 279 809 323"/></circle>
+          <circle class="v14-energy-dot second" r="5"><animateMotion dur="2.5s" begin="-1.2s" repeatCount="indefinite" path="M226 444C342 387 439 407 532 333S703 279 809 323"/></circle>
+        </g>
+
+        <g class="v14-layer v14-new">
+          <g class="v14-data-towers">
+            <rect x="430" y="350" width="43" height="128" rx="5"/><rect x="485" y="315" width="43" height="163" rx="5"/><rect x="540" y="273" width="43" height="205" rx="5"/><rect x="595" y="331" width="43" height="147" rx="5"/>
+          </g>
+          <path class="v14-ai-grid" d="M386 486H710M405 456H690M425 426H670M445 396H650"/>
+          <g class="v14-drone"><path d="M0 0L27 10L0 20L8 10Z"/><circle cx="-4" cy="10" r="4"/></g>
+          <g class="v14-drone two"><path d="M0 0L27 10L0 20L8 10Z"/><circle cx="-4" cy="10" r="4"/></g>
+        </g>
+
+        <g class="v14-layer v14-park">
+          <path class="v14-crane" d="M253 420V181M251 194H451M432 194V240M352 194L282 248"/>
+          <path class="v14-crane second" d="M716 401V208M714 221H904M879 221V269M813 221L748 271"/>
+          <g class="v14-new-blocks">
+            <rect x="270" y="409" width="98" height="76"/><rect x="382" y="384" width="117" height="101"/><rect x="676" y="405" width="108" height="80"/><rect x="799" y="374" width="127" height="111"/>
+          </g>
+          <path class="v14-road" d="M64 552C318 468 608 480 1137 553"/>
+        </g>
+
+        <g class="v14-layer v14-service">
+          <g class="v14-shops">
+            <rect x="198" y="422" width="102" height="65" rx="8"/><rect x="315" y="434" width="112" height="53" rx="8"/><rect x="444" y="412" width="124" height="75" rx="8"/><rect x="585" y="427" width="102" height="60" rx="8"/><rect x="702" y="409" width="128" height="78" rx="8"/>
+          </g>
+          <g class="v14-crowd">
+            <circle cx="286" cy="522" r="7"/><circle cx="335" cy="534" r="6"/><circle cx="386" cy="518" r="8"/><circle cx="451" cy="536" r="6"/><circle cx="520" cy="519" r="7"/><circle cx="581" cy="535" r="7"/><circle cx="643" cy="520" r="6"/><circle cx="710" cy="533" r="8"/>
+          </g>
+          <path class="v14-neon" d="M184 500H852"/>
+        </g>
+
+        <g class="v14-layer v14-life">
+          <circle class="v14-park-green" cx="454" cy="445" r="102"/>
+          <path class="v14-school" d="M236 470V393L298 354L360 393V470Z M262 470V420H333V470"/>
+          <path class="v14-hospital" d="M728 468V374H834V468Z M781 390V451 M751 420H812"/>
+          <path class="v14-home" d="M517 477V397L579 351L641 397V477Z"/>
+          <g class="v14-people">
+            <circle cx="465" cy="523" r="8"/><circle cx="498" cy="532" r="7"/><circle cx="532" cy="520" r="8"/><circle cx="566" cy="534" r="7"/><circle cx="600" cy="522" r="8"/>
+          </g>
+        </g>
+
+        <g class="v14-horizon">
+          <path d="M43 506C265 460 410 447 595 459S940 507 1151 493"/>
+        </g>
+      </svg>
+
+      <div class="v14-scene-copy">
+        <span id="v14Mood">今晚的城市关键词：轰鸣、扩张、链主</span>
+        <strong id="v14Headline">工厂灯光一路亮到深夜。</strong>
+        <p id="v14Copy">链主做强不是“多一个大企业”的故事，而是一整片配套、技术、标准和品牌都围着它加速。</p>
+      </div>
+
+      <div class="v14-unlock" id="v14Unlock" hidden>
+        <span>✦ 五扇门全部走过</span>
+        <strong>要不要把整座城一次点亮？</strong>
+        <button type="button" id="v14AllOn">全城开灯</button>
+        <small>视觉彩蛋，不代表五条路径现实中能同时实现。</small>
+      </div>
+    </div>
+
+    <div class="v14-gates" role="group" aria-label="选择一种未来城市气质">
+      <button type="button" data-road="链主做强" class="is-active" aria-pressed="true"><span>01</span><strong>链主做强</strong><small>巨型工厂 · 配套加速</small></button>
+      <button type="button" data-road="新赛道抢跑" aria-pressed="false"><span>02</span><strong>新赛道抢跑</strong><small>机器人 · AI · 低空</small></button>
+      <button type="button" data-road="园区扩容" aria-pressed="false"><span>03</span><strong>园区扩容</strong><small>吊塔 · 道路 · 新空间</small></button>
+      <button type="button" data-road="服务补短" aria-pressed="false"><span>04</span><strong>服务补短</strong><small>商圈 · 服务 · 夜生活</small></button>
+      <button type="button" data-road="城市与人" aria-pressed="false"><span>05</span><strong>城市与人</strong><small>学校 · 医疗 · 公园</small></button>
+    </div>
+  </div>
+
+  <div class="v14-footerline">
+    <span>这是一段城市气质的视觉体验，不是规划效果图或预测。</span>
+    <button type="button" id="v14BackstageOpen">看看这些门背后的真实模型 ↗</button>
+  </div>
+</section>
+
+<details class="v14-backstage" id="v14Backstage">
+  <summary><span>幕后机房 · BACKSTAGE</span><strong>想知道五条路为什么这样设定？</strong><small>原有模型、权重、分布、A/B实验全部保留</small><i>↗</i></summary>
+  <div class="v14-backstage-body">
+
+  <div class="hero">
+    <div class="hu">往 6500 亿走，有五条路可以选</div>
+    <div class="sub">没有对错，只有"换一把尺子，答案就换"。下面先挑你心里的尺子，再看它怎么排。</div>
+    <span class="tag">老百姓看：哪条路先改变我的日子</span>
+    <span class="tag">决策者看：换尺子，排序怎么翻</span>
+  </div>
+
+  <section class="s lab5-path-lab" aria-label="五条路经济情景对比实验">
+    <div class="lab5-section-head">
+      <div><span class="lab5-eyebrow">真实模型计算 · 假设实验</span>
+      <h2>把五条路拉一拉，2030 会怎样？</h2>
+      <p class="ana">本页另一组滑块调的是<strong>评价权重</strong>，只影响排序；这里拖动的是五条路径的<strong>假设新增贡献</strong>，将用原有 model.js 重新模拟。</p></div>
+      <span class="lab5-pin">A 基准 / B 实验</span>
+    </div>
+    <div class="lab5-path-grid">
+      <div class="lab5-path-controls">
+        <div class="lab5-path-head"><strong>调整 B 方案</strong><button type="button" id="lab5PathsReset">恢复默认</button></div>
+        <div id="lab5PathInputs"></div>
+        <div class="lab5-warn">这是情景假设，不包含土地、财政、人才等资源容量约束。把五条路都拉高不代表现实中能同时实现。</div>
+      </div>
+      <div class="lab5-path-outcomes">
+        <div class="lab5-path-compare" id="lab5PathKpis" aria-live="polite"></div>
+        <div class="lab5-chart-label">两种方案的结果分布 · 同一种子、同样1000次抽样</div>
+        <div class="lab5-path-chart" id="lab5PathChart" role="img" aria-label="基准与自定义方案的未来产值概率分布比较"></div>
+        <div class="lab5-path-status" id="lab5PathStatus" role="status"></div>
+        <button type="button" id="lab5PathsSave">在浏览器保存本次对比</button>
+      </div>
+    </div>
+    <p class="ana">注意：本实验使用现有 ZK.run 模型计算，路径波动参数维持默认，修改的只有用户输入的假设平均贡献。结果为模型条件下的推演，不是现实预测；与上方单路径2000次分布统计是两个独立实验。</p>
+  </section>
+
+  <div class="code">
+    <div class="t">你的决策码 · 三把旋钮，一套参照</div>
+    <div class="row">
+      <div class="seg"><b>立场</b><span id="seg_wo"></span></div>
+      <div class="seg"><b>承接</b><span id="seg_rv"></span></div>
+      <div class="seg"><b>算力</b><span id="seg_cv"></span></div>
+      <div class="lock"><span class="chip" id="codeChip"></span><button id="lockBtn">参照已锁</button></div>
+    </div>
+    <div class="hint" id="codeHint"></div>
+  </div>
+
+  <div class="twist" id="twist"></div>
+
+  <div class="stand" id="stand"></div>
+
+  <div class="s">
+    <h2>换一把尺子，排序就翻 <span class="tag">三把尺子 · 各自打分</span></h2>
+    <div class="chart" id="radar"></div>
+    <p class="ana">同一套得分，三种权重立场投影：产值优先下"链主做强"登顶，民生优先下"城市与人"反超——排序不是客观事实，是立场的结果。</p>
+  </div>
+
+  <div class="s workbench">
+    <h2>你自己的尺子：拖权重，看排序怎么翻</h2>
+    <div class="sliders" id="sliders"></div>
+    <button class="reset" id="reset">回到当前立场默认权重</button>
+    <div class="rank" id="rank"></div>
+    <p class="ana" id="sliderNote"></p>
+  </div>
+
+
+
+
+  <div class="s">
+    <h2>五条路各跑 2000 遍：分布长这样 <span class="tag">同一种子 · 同结果</span></h2>
+    <div class="chart" id="dist"></div>
+    <p class="ana" id="distNote"></p>
+  </div>
+
+  <div class="s">
+    <h2>两两比较：谁赢谁输 <span class="tag">两种看法切换</span></h2>
+    <div class="segbar"><button id="tab_mx" class="on">两两对比</button><button id="tab_win">占优概率</button></div>
+    <div class="mx2" id="mx2"></div>
+    <div class="win" id="win" style="display:none"></div>
+    <p class="ana" id="pairNote"></p>
+  </div>
+
+  <div class="s" style="background:transparent;border:none;padding:0">
+    <h2 style="font-size:15.5px;margin:14px 0 8px;border-left:3px solid #245bdb;padding-left:9px">五条路，各自是什么</h2>
+    <div class="roads" id="roads"></div>
+  </div>
+
+    </div>
+</details>
+
+<div class="v14-next"><a href="../future.html">下一站：时间跃迁到2030 <span>→</span></a></div>
+  <div class="disc">排序分值为模型推算（可信度 D，待校准）；"谁排第一"会随立场变，数值与未来页"跑 1000 遍"口径一致。</div>
+</div>
+
+<script>
+const $=i=>document.getElementById(i);
+const COLOR={'链主做强':'#245bdb','新赛道抢跑':'#8b5cf6','园区扩容':'#06b6d4','服务补短':'#b96a20','城市与人':'#bf3b49'};
+const ROAD_ACT={
+  '链主做强':'目标：规模做强、技术做深、标准做高、品牌做大',
+  '新赛道抢跑':'动作：OPC行动·AI示范场景10个 / 低空制造基地 / 仲力磁场一期',
+  '园区扩容':'动作：中韩产业园千亿起步区 · 潼湖智慧区 · 人工智能园29.9km²',
+  '服务补短':'动作：生产性服务业 · 首发经济 · 消费提振（智谷彩街）',
+  '城市与人':'动作：学位2400个 · 医院分院 · 10分钟体育圈 · 人才安居'
+};
+let cur='均衡';
+let manual=null; /* 滑块自定义权重时非空 */
+let rv='mid';     /* 承接档：low/mid/high */
+let cv='0.40';    /* 算力系数档 */
+let locked=true;  /* 决策码锁定态 */
+let pairTab='mx'; /* 两两对比/占优概率 */
+
+function setStand(name){
+  cur=name;manual=null;
+  const list=ZK.AH[cur].map(r=>r[1]);
+  ZK.ROADS.forEach((r,i)=>{const s=$('s_'+r);if(s){s.value=Math.round(list[i]*10)/10;s.nextElementSibling.textContent=s.value;}});
+  renderStand();renderRank();renderRadar();renderMatrix();renderCode();
+}
+function renderStand(){
+  $('stand').innerHTML=ZK.WO.map(w=>`<button data-w="${w[0]}" class="${w[1]===cur?'on':''}">${w[1]}</button>`).join('');
+  $('stand').querySelectorAll('button').forEach(b=>b.onclick=()=>setStand(b.dataset.w));
+}
+function weightOf(r){ return manual?manual[r]: (ZK.AH[cur].find(x=>x[0]===r)||[r,5])[1]; }
+function renderRank(){
+  const list=ZK.ROADS.map(r=>[r,weightOf(r)]).sort((a,b)=>b[1]-a[1]);
+  const max=Math.max(...list.map(l=>l[1]));
+  $('rank').innerHTML=list.map((r,i)=>`
+    <div class="r">
+      <div class="n">${i+1}</div>
+      <div class="t">${r[0]}</div>
+      <div class="b"><i style="width:${r[1]/max*100}%;background:linear-gradient(90deg,${COLOR[r[0]]}88,${COLOR[r[0]]})"></i></div>
+      <div class="m">${r[1].toFixed(1)}</div>
+    </div>`).join('');
+  const twist={
+    '产值优先':['反直觉','在"产值优先"的尺子下，城市与人垫底；但在"民生优先"下它排第一——同一座城，换把尺子就换答案。'],
+    '均衡':['稳定', '均衡尺子下五条路差距最小，新赛道略领先——这也是多数地方实际在走的路线。'],
+    '民生优先':['反直觉','民生优先下"城市与人"登顶、服务补短第二：先把人留住，产业才留得住——这就是"人安好→产业旺"的闭环。']}[cur];
+  if(manual){
+    $('twist').innerHTML=`<div class="t">你的尺子（自定义权重）</div><div class="one">你亲手调的权重生效了：${list[0][0]} 排第一。重置立场可回到 ${cur} 的默认排序。</div>`;
+  }else{
+    $('twist').innerHTML=`<div class="t">${twist[0]}</div><div class="one">${twist[1]}</div>`;
+  }
+}
+function renderRadar(){
+  const radar=echarts.init($('radar'));
+  radar.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
+    backgroundColor:'transparent',tooltip:{},
+    legend:{data:['产值优先','均衡','民生优先'],textStyle:{color:'#536782',fontSize:12},top:0},
+    radar:{indicator:ZK.ROADS.map(r=>({name:r.length>4?r.slice(0,4):r,max:10})),radius:'62%',center:['50%','56%'],
+      axisName:{color:'#536782',fontSize:11.5},splitLine:{lineStyle:{color:'#e5ebf4'}},splitArea:{areaStyle:{color:['#f8fbff','#eff4fb']}}},
+    series:[{type:'radar',symbolSize:4,
+      data:[
+        {name:'产值优先',value:ZK.AH['产值优先'].map(r=>r[1]),lineStyle:{color:'#245bdb'},itemStyle:{color:'#245bdb'},areaStyle:{opacity:.2}},
+        {name:'均衡',value:ZK.AH['均衡'].map(r=>r[1]),lineStyle:{color:'#168366'},itemStyle:{color:'#168366'},areaStyle:{opacity:.15}},
+        {name:'民生优先',value:ZK.AH['民生优先'].map(r=>r[1]),lineStyle:{color:'#b96a20'},itemStyle:{color:'#b96a20'},areaStyle:{opacity:.15}}
+      ]}]
+  });
+  charts.push(radar);
+}
+function renderSliders(){
+  const list=ZK.AH[cur];
+  $('sliders').innerHTML=ZK.ROADS.map(r=>{
+    const v=weightOf(r);
+    return `<div class="sl"><span class="lab">${r}</span><input type="range" id="s_${r}" min="1" max="10" step="0.5" value="${v}"><span class="v">${v}</span></div>`;
+  }).join('');
+  ZK.ROADS.forEach(r=>{
+    $('s_'+r).oninput=e=>{
+      const v=parseFloat(e.target.value);
+      e.target.nextElementSibling.textContent=v;
+      manual=manual||Object.fromEntries(ZK.ROADS.map(name=>[name,weightOf(name)]));manual[r]=v;
+      renderRank();renderMatrix();
+    };
+  });
+  $('reset').onclick=()=>{
+    manual=null;
+    const list=ZK.AH[cur].map(r=>r[1]);
+    ZK.ROADS.forEach((r,i)=>{const s=$('s_'+r);s.value=Math.round(list[i]*10)/10;s.nextElementSibling.textContent=s.value;});
+    renderRank();renderMatrix();
+  };
+}
+function renderMatrix(){
+  const rows=ZK.ROADS.map(r=>[r,weightOf(r)]);
+  const mx=ZK.ROADS.map(a=>ZK.ROADS.map(b=>{
+    const wa=weightOf(a),wb=weightOf(b);
+    const ratio=wa/wb; /* 1-9 标度 */
+    const v=Math.max(1,Math.min(9,Math.round(ratio*2)/2));
+    const t=wa>=wb?`${a}比${b}重要${v.toFixed(1)}倍`:`${b}比${a}重要${(1/ratio).toFixed(1)}倍`;
+    return {v,a,b,hi:wa>wb+0.3,t};
+  }));
+  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>{
+    const c=mx[i][j];
+    return `<div style="background:${c.hi?'#245bdb':'#e5ebf4'}" title="${c.t}">${i===j?'—':c.v.toFixed(1)}</div>`;
+  }).join('')).join('');
+}
+function renderRoads(){
+  $('roads').innerHTML=ZK.ROADS.map(r=>`
+    <div class="roadcard">
+      <div class="h"><b style="color:${COLOR[r]}">${r}</b><span>${(ZK.ROAD_NOTE[r]||'').slice(0,14)}</span></div>
+      <p>${ZK.ROAD_NOTE[r]}</p>
+      <div class="act">${ROAD_ACT[r]}</div>
+    </div>`).join('');
+}
+
+/* ---------- 决策码（立场×承接×算力） ---------- */
+function segGroup(id, opts, curVal, cb){
+  $(id).innerHTML=opts.map(o=>`<button data-v="${o[0]}" class="${o[0]===curVal?'on':''}">${o[1]}</button>`).join('');
+  $(id).querySelectorAll('button').forEach(b=>b.onclick=()=>cb(b.dataset.v));
+}
+function codeText(){ return `${cur}-${ZK.RL[rv]}-${cv}`; }
+function renderCode(){
+  segGroup('seg_wo', ZK.WO, cur, setStand);
+  segGroup('seg_rv', ZK.RO, rv, v=>{rv=v;renderCode();});
+  segGroup('seg_cv', ZK.CO, cv, v=>{cv=v;renderCode();});
+  $('codeChip').textContent='决策码：'+codeText();
+  const lb=$('lockBtn');
+  lb.textContent=locked?'参照已锁':'已解锁·点此锁定';
+  lb.className=locked?'':'un';
+  lb.onclick=()=>{locked=!locked;renderCode();};
+  const to=ZK.TO;
+  $('codeHint').innerHTML=`锁定后，以下参照口径不变：本地配套率 30%→60%，产业桥贡献 32→58 亿（约1.8倍）；算力本地系数 0.30→0.50，算力桥 12→28 亿（约2.3倍）；人才留存/消费承接影响本地乘数。分布曲线与下方两张表均按当前决策码口径计算，同一种子同结果。`;
+}
+
+/* ---------- 五条路分布曲线（贡献抽样 2000 次） ---------- */
+function distOf(paths,N,seed){
+  const prng=ZK.mulberry32(seed),randn=ZK.makeRandn(prng);
+  const out=paths.map(()=>[]);
+  for(let i=0;i<N;i++)for(let j=0;j<paths.length;j++){
+    let v=paths[j].mu+randn()*paths[j].sd;
+    if(v<0)v=0;
+    out[j].push(v);
+  }
+  return out;
+}
+function smooth(a,w){const r=[];for(let i=0;i<a.length;i++){let s=0,c=0;for(let k=-w;k<=w;k++){const j=i+k;if(j>=0&&j<a.length){s+=a[j];c++;}}r.push(c?s/c:0);}return r;}
+function renderDist(){
+  const N=2000,seed=20261020;
+  const dists=distOf(ZK.DEFAULT_PATHS,N,seed);
+  const all=ZK.DEFAULT_PATHS.map((p,j)=>{const a=dists[j].slice().sort((x,y)=>x-y);return {p,min:a[0],max:a[a.length-1],mid:ZK.quantile(a,.5)};});
+  const xmin=Math.floor(Math.min(...all.map(d=>d.min))/50)*50;
+  const xmax=Math.ceil(Math.max(...all.map(d=>d.max))/50)*50;
+  const bins=Math.min(70, Math.max(30, Math.round((xmax-xmin)/12)));
+  const step=(xmax-xmin)/bins;
+  const xs=[];for(let i=0;i<bins;i++)xs.push(+(xmin+step*i).toFixed(0));
+  const series=ZK.DEFAULT_PATHS.map((p,j)=>{
+    const a=dists[j];
+    const f=new Array(bins).fill(0);
+    for(const v of a){let k=Math.floor((v-xmin)/step);if(k<0)k=0;if(k>=bins)k=bins-1;f[k]++;}
+    let sf=smooth(f,3); sf=smooth(sf,2);
+    return {name:p.name,type:'line',smooth:true,symbol:'none',lineStyle:{width:2.5,color:p.color},itemStyle:{color:p.color},areaStyle:{opacity:.06},data:sf.map(v=>+(v/N*100).toFixed(3))};
+  });
+  const dist=echarts.init($('dist'));
+  dist.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
+    backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'cross'}},
+    legend:{data:ZK.DEFAULT_PATHS.map(p=>p.name),textStyle:{color:'#536782',fontSize:12},top:0},
+    grid:{left:44,right:14,top:34,bottom:28},
+    xAxis:{type:'category',data:xs.map(x=>x+'亿'),axisLabel:{color:'#536782',fontSize:11.5,interval:Math.ceil(bins/9)},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    yAxis:{type:'value',name:'密度',nameTextStyle:{color:'#6c7d94',fontSize:11},axisLabel:{color:'#6c7d94',fontSize:11},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    series
+  });
+  charts.push(dist);
+  const tops=all.map(d=>`${d.p.name} ${(d.mid/1).toFixed(0)}亿`).join(' · ');
+  $('distNote').innerHTML=`曲线越高越窄＝结果越确定。峰值就是每一条路最常出现的贡献：${tops}。链主做强、新赛道抢跑又高又宽＝潜力大、波动也大；服务补短、城市与人窄而矮＝稳，但到顶有限。（贡献分布按各路径 μ±σ 抽样 2000 次，同一种子同结果）`;
+}
+
+/* ---------- 占优概率（蒙特卡洛两两比） ---------- */
+function renderWin(){
+  const N=2000,seed=20261020;
+  const dists=distOf(ZK.DEFAULT_PATHS,N,seed);
+  const R=ZK.DEFAULT_PATHS;
+  const cells=[];
+  let head=`<div class="hd"></div>`+R.map(p=>`<div class="hd">${p.name.slice(0,3)}</div>`).join('');
+  for(let i=0;i<R.length;i++){
+    let row=`<div class="hd">${R[i].name.slice(0,3)}</div>`;
+    for(let j=0;j<R.length;j++){
+      if(i===j){row+=`<div style="background:#d8e3f0;color:#536782">—</div>`;continue;}
+      let w=0;const a=dists[i],b=dists[j];
+      for(let k=0;k<N;k++)if(a[k]>b[k])w++;
+      const pct=Math.round(w/N*100);
+      const bg=pct>=70?'#0e7490':pct>=55?'#245bdb':'#475569';
+      row+=`<div style="background:${bg}" title="${R[i].name} 对 ${R[j].name} 占优 ${pct}%">${pct}%</div>`;
+    }
+    cells.push(row);
+  }
+  $('win').innerHTML=head+cells.join('');
+  const sorted=R.map((p,i)=>[p.name, dists[i].reduce((s,v)=>s+v,0)/N]).sort((a,b)=>b[1]-a[1]);
+  $('pairNote').innerHTML=`占优概率＝把每条路单独跑 2000 次，逐次比大小：行路对列路「贡献更高」的场次占比。期望贡献最高的是${sorted[0][0]}（均值${sorted[0][1].toFixed(0)}亿），但概率高低≠必然赢——换承接档、算力档，这张表会跟着变。`;
+}
+
+function initPair(){
+  $('tab_mx').onclick=()=>{pairTab='mx';$('tab_mx').className='on';$('tab_win').className='';$('mx2').style.display='';$('win').style.display='none';$('pairNote').textContent='格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。';};
+  $('tab_win').onclick=()=>{pairTab='win';$('tab_win').className='on';$('tab_mx').className='';$('mx2').style.display='none';$('win').style.display='';renderWin();};
+}
+
+const charts=[];
+renderStand();renderSliders();renderRank();renderRadar();renderMatrix();renderRoads();renderCode();renderDist();initPair();
+window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
+</script>
+<script src="../paths-lab-v5.js?v=5"></script>
+<script src="choices-v14.js?v=1"></script>
+</body></html>
