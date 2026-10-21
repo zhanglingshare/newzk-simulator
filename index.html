@@ -183,13 +183,13 @@ const $=i=>document.getElementById(i);
 function drawVoteChart(){
   const total=votes['能']+votes['悬']+votes['不能'];
   const vc=echarts.init($('voteChart'));
-  vc.setOption({
+  vc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 票（${total?Math.round(p[0].value/total*100):0}%）`},
     grid:{left:40,right:16,top:30,bottom:20},
-    xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#405773',fontSize:11.5},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
     yAxis:{type:'value',minInterval:1,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
     series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#168366':k==='悬'?'#7158c8':'#bf3b49',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#17243d',formatter:'{c} 票'}}))}],
-    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#536782',fontSize:10.5}}]
+    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#536782',fontSize:11.5}}]
   });
   charts.push(vc);
 }
@@ -241,10 +241,10 @@ function drawCatChart(){
   const cnt={};DATA.forEach(x=>{cnt[x.cat]=(cnt[x.cat]||0)+1});
   const CMAP={'industry':['产业','#245bdb'],'city':['城市','#6b7280'],'livelihood':['民生','#f97316'],'food':['好吃','#ef4444'],'fun':['好玩','#10b981'],'warm':['暖闻','#7158c8']};
   const cc=echarts.init($('catChart'));
-  cc.setOption({
+  cc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'item',formatter:'{b}：{c} 条 · {d}%'},
-    title:{text:'今日话题构成',left:'center',top:4,textStyle:{color:'#536782',fontSize:12,fontWeight:400}},
-    legend:{bottom:0,textStyle:{color:'#536782',fontSize:10.5},itemWidth:10,itemHeight:10},
+    title:{text:'今日话题构成',left:'center',top:4,textStyle:{color:'#536782',fontSize:12.5,fontWeight:400}},
+    legend:{bottom:0,textStyle:{color:'#536782',fontSize:11.5},itemWidth:10,itemHeight:10},
     series:[{type:'pie',radius:['38%','64%'],center:['50%','54%'],itemStyle:{borderColor:'#f8fbff',borderWidth:2},
       label:{color:'#17243d',formatter:'{b} {c}'},
       data:Object.keys(cnt).map(k=>({name:(CMAP[k]||[k,'#334155'])[0],value:cnt[k],itemStyle:{color:(CMAP[k]||[k,'#334155'])[1]}}))}]
