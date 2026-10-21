@@ -64,26 +64,26 @@ table.detail td b{color:#e6edf3}
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">① 今日仲恺</a>
-  <a href="who.html">② 仲恺是什么</a>
-  <a href="network.html">③ 产业链地图</a>
-  <a href="choices.html">④ 五条路</a>
-  <a href="future.html">⑤ 未来2030</a>
-  <a href="windtunnel.html" class="on">⑥ 风洞</a>
-  <a href="blindspot.html">⑦ 忽略了什么</a>
-  <a href="mylife.html">⑧ 跟我的关系</a>
-  <a href="report.html">⑨ 分析报告</a>
-  <a href="ending.html">⑩ 结语</a>
-  <a href="guide.html">⑪ 使用指南</a>
-  <a href="town.html">⑫ 生活地图</a>
+  <a href="index.html">01 今日仲恺</a>
+  <a href="who.html">02 仲恺是什么</a>
+  <a href="network.html">03 产业链地图</a>
+  <a href="choices.html">04 五条路</a>
+  <a href="future.html">05 未来2030</a>
+  <a href="windtunnel.html" class="on">06 风洞</a>
+  <a href="blindspot.html">07 忽略了什么</a>
+  <a href="mylife.html">08 跟我的关系</a>
+  <a href="report.html">09 分析报告</a>
+  <a href="ending.html">10 结语</a>
+  <a href="guide.html">11 使用指南</a>
+  <a href="town.html">12 生活地图</a>
 </div>
 
 <div class="wrap">
   <div class="hero">
     <div class="hu">风洞：把仲恺放进风里吹一吹</div>
-    <div class="sub">选一张冲击牌，看这张网上谁先扛不住、哪条路先断。压测不是咒它出事，是提前想好"出事怎么办"。</div>
+    <div class="sub">选一张冲击牌，观察网络中哪些主体和关系可能受到影响，并比较不同情景下的结构变化。</div>
     <span class="tag">老百姓看：那家厂跑了，我会先缺什么</span>
-    <span class="tag">决策者看：哪条路最抗压、断点在第几环</span>
+    <span class="tag">决策者看：哪些结构可能受影响、如何增强韧性</span>
   </div>
 
   <div class="wind-layout"><div class="cards" id="cards"></div>
@@ -94,13 +94,19 @@ table.detail td b{color:#e6edf3}
     <p class="ana" style="margin-top:6px">条越长＝这张牌一打，越多主体跟着晃。链主外迁是"牵一发动全身"，AI 算力过剩只伤新赛道——压测就是提前分清：哪些伤是致命的、哪些只是痒。</p>
     <div class="gt">连锁传导（第一轮波及）</div>
     <div class="chain" id="chain"></div>
-    <div class="gt">断边明细</div>
-    <table class="detail" id="detail"></table>
+    <details class="wind-detail"><summary>查看各情景受影响关系与主体明细</summary><div class="detail-scroll" tabindex="0" aria-label="可横向滚动的情景明细表"><table class="detail" id="detail"></table></div></details>
   </div>
 
   <div class="s">
     <h2>冲击波及面（主体级模拟）</h2>
     <div class="impact" id="impact"></div>
+    <div class="wind-playback" aria-label="逐项查看受影响主体">
+      <button type="button" id="windPlay">逐项查看</button>
+      <button type="button" id="windPause">暂停</button>
+      <button type="button" id="windShowAll">显示全部</button>
+      <span id="windProgress" role="status">已显示全部</span>
+    </div>
+    <p class="ana">逐项展示仅用于帮助观察，显示顺序不代表现实时间或模型传导先后。</p>
     <svg id="map" viewBox="0 0 1240 920" preserveAspectRatio="xMidYMid meet"></svg>
     <div class="stat" id="stat"></div>
     <div class="gt">风洞结论（模型推演）</div>
@@ -110,7 +116,7 @@ table.detail td b{color:#e6edf3}
 
   </div><!-- wind-layout -->
   <div class="next"><a href="blindspot.html">下一步：官方自己承认的问题 →</a></div>
-  <div class="disc">压测按"牌 → 谁先受影响 → 哪条连线先断"推演；波及范围是模型推算（可信度 D），事件与数据为公开口径。非预测值。</div>
+  <div class="disc">压测按"情景 → 受影响主体 → 关联结构"展示；波及范围是模型推算（可信度 D），事件与数据为公开口径。非预测值。</div>
 </div>
 
 <script>
@@ -132,8 +138,11 @@ const TL={'chain':{'e':'外迁','t':'链主外迁/订单转移','s':'一家链�
 let cur='chain';
 const LCOL={'chain':'#ff9440','oem':'#ffd166','part':'#00c2d9','park':'#3b82f6','fac':'#8ba6bd','cap':'#a06bff','tal':'#3ddc97','life':'#f472b6','vill':'#a3e635','gap':'#5d7a91'};
 function cards(){
-  $('cards').innerHTML=SH.map(s=>{const k=s[2];return `<div class="card ${k===cur?'on':''}" data-k="${k}"><div class="e">${TL[k].e}</div><div class="t">${s[0]}</div><div class="s">${TL[k].s}</div></div>`;}).join('');
-  $('cards').querySelectorAll('.card').forEach(c=>c.onclick=()=>{cur=c.dataset.k;cards();run();});
+  $('cards').innerHTML=SH.map(s=>{const k=s[2];return `<div class="card ${k===cur?'on':''}" data-k="${k}" role="button" tabindex="0" aria-pressed="${k===cur}"><div class="e">${TL[k].e}</div><div class="t">${s[0]}</div><div class="s">${TL[k].s}</div></div>`;}).join('');
+  $('cards').querySelectorAll('.card').forEach(c=>{
+    c.onclick=()=>{cur=c.dataset.k;cards();run();};
+    c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}};
+  });
 }
 function run(){
   const hits=ZK.shockHits(cur);
@@ -196,4 +205,5 @@ const charts=[];
 cards();run();bar5();
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
+<script src="windtunnel-v3.js?v=3"></script>
 </body></html>

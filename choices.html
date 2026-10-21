@@ -77,18 +77,18 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">① 今日仲恺</a>
-  <a href="who.html">② 仲恺是什么</a>
-  <a href="network.html">③ 产业链地图</a>
-  <a href="choices.html" class="on">④ 五条路</a>
-  <a href="future.html">⑤ 未来2030</a>
-  <a href="windtunnel.html">⑥ 风洞</a>
-  <a href="blindspot.html">⑦ 忽略了什么</a>
-  <a href="mylife.html">⑧ 跟我的关系</a>
-  <a href="report.html">⑨ 分析报告</a>
-  <a href="ending.html">⑩ 结语</a>
-  <a href="guide.html">⑪ 使用指南</a>
-  <a href="town.html">⑫ 生活地图</a>
+  <a href="index.html">01 今日仲恺</a>
+  <a href="who.html">02 仲恺是什么</a>
+  <a href="network.html">03 产业链地图</a>
+  <a href="choices.html" class="on">04 五条路</a>
+  <a href="future.html">05 未来2030</a>
+  <a href="windtunnel.html">06 风洞</a>
+  <a href="blindspot.html">07 忽略了什么</a>
+  <a href="mylife.html">08 跟我的关系</a>
+  <a href="report.html">09 分析报告</a>
+  <a href="ending.html">10 结语</a>
+  <a href="guide.html">11 使用指南</a>
+  <a href="town.html">12 生活地图</a>
 </div>
 
 <div class="wrap">
@@ -110,6 +110,15 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <div class="hint" id="codeHint"></div>
   </div>
 
+  <div class="s workbench">
+    <h2>你自己的尺子：拖权重，看排序怎么翻</h2>
+    <div class="sliders" id="sliders"></div>
+    <button class="reset" id="reset">回到当前立场默认权重</button>
+    <div class="rank" id="rank"></div>
+    <p class="ana" id="sliderNote"></p>
+  </div>
+
+
   <div class="twist" id="twist"></div>
 
   <div class="stand" id="stand"></div>
@@ -120,16 +129,9 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
     <p class="ana">同一套得分，三种权重立场投影：产值优先下"链主做强"登顶，民生优先下"城市与人"反超——排序不是客观事实，是立场的结果。</p>
   </div>
 
-  <div class="s workbench">
-    <h2>你自己的尺子：拖权重，看排序怎么翻</h2>
-    <div class="sliders" id="sliders"></div>
-    <button class="reset" id="reset">回到当前立场默认权重</button>
-    <div class="rank" id="rank"></div>
-    <p class="ana" id="sliderNote"></p>
-  </div>
 
   <div class="s">
-    <h2>五条路各跑 2000 遍：分布长这样 <span class="tag">同一种子 · 同结果</span></h2>
+    <h2>电脑按当前设定重复模拟2000次：结果可能落在哪些范围 <span class="tag">同一种子 · 同结果</span></h2>
     <div class="chart" id="dist"></div>
     <p class="ana" id="distNote"></p>
   </div>
@@ -137,7 +139,9 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   <div class="s">
     <h2>两两比较：谁赢谁输 <span class="tag">两种看法切换</span></h2>
     <div class="segbar"><button id="tab_mx" class="on">两两对比</button><button id="tab_win">占优概率</button></div>
+    <p class="pair-guide">行和列分别代表两条发展路径；交叉格显示当前立场下的相对权重，同一路径不作比较。</p>
     <div class="mx2" id="mx2"></div>
+    <div class="matrix-mobile" id="matrixMobile" aria-label="选择两条路径进行比较"></div>
     <div class="win" id="win" style="display:none"></div>
     <p class="ana" id="pairNote"></p>
   </div>
@@ -148,7 +152,7 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="next"><a href="future.html">下一步：跑 1000 次，看 2030 →</a></div>
-  <div class="disc">排序分值为模型推算（可信度 D，待校准）；"谁排第一"会随立场变，数值与未来页"跑 1000 遍"口径一致。</div>
+  <div class="disc">排序分值为模型推算（可信度 D，待校准）；"谁排第一"会随立场变，五条路分布按本页2000次抽样展示；未来页的情景模拟按其独立次数展示。</div>
 </div>
 
 <script>
@@ -225,7 +229,7 @@ function renderSliders(){
     $('s_'+r).oninput=e=>{
       const v=parseFloat(e.target.value);
       e.target.nextElementSibling.textContent=v;
-      manual=manual||{};manual[r]=v;
+      manual=manual||Object.fromEntries(ZK.ROADS.map(name=>[name,weightOf(name)]));manual[r]=v;
       renderRank();renderMatrix();
     };
   });
@@ -240,15 +244,26 @@ function renderMatrix(){
   const rows=ZK.ROADS.map(r=>[r,weightOf(r)]);
   const mx=ZK.ROADS.map(a=>ZK.ROADS.map(b=>{
     const wa=weightOf(a),wb=weightOf(b);
-    const ratio=wa/wb; /* 1-9 标度 */
+    const ratio=wa/wb; /* existing 1-9 presentation scale, unchanged */
     const v=Math.max(1,Math.min(9,Math.round(ratio*2)/2));
     const t=wa>=wb?`${a}比${b}重要${v.toFixed(1)}倍`:`${b}比${a}重要${(1/ratio).toFixed(1)}倍`;
     return {v,a,b,hi:wa>wb+0.3,t};
   }));
-  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>{
-    const c=mx[i][j];
-    return `<div style="background:${c.hi?'#3b82f6':'#1c2739'}" title="${c.t}">${i===j?'—':c.v.toFixed(1)}</div>`;
-  }).join('')).join('');
+  $('mx2').innerHTML='<div class="matrix-heading">路径</div>'+ZK.ROADS.map(r=>`<div class="matrix-heading" title="${r}">${r}</div>`).join('')
+    +ZK.ROADS.map((a,i)=>'<div class="matrix-heading" title="'+a+'">'+a+'</div>'+ZK.ROADS.map((b,j)=>{
+      const c=mx[i][j];
+      return `<div class="matrix-cell ${i===j?'diag':c.hi?'hi':''}" title="${i===j?'同一路径，无需比较':c.t}" aria-label="${a}与${b}：${i===j?'同一路径':c.v.toFixed(1)+'倍'}">${i===j?'同一路径':c.v.toFixed(1)+'倍'}</div>`;
+    }).join('')).join('');
+  const mobile=$('matrixMobile');
+  const oldA=mobile.querySelector('#pairA')?.value||ZK.ROADS[0];
+  const oldB=mobile.querySelector('#pairB')?.value||ZK.ROADS[1];
+  mobile.innerHTML='<div class="pair-selectors"><label>路径A <select id="pairA">'+ZK.ROADS.map(r=>`<option value="${r}">${r}</option>`).join('')+'</select></label><label>路径B <select id="pairB">'+ZK.ROADS.map(r=>`<option value="${r}">${r}</option>`).join('')+'</select></label></div><div class="matrix-answer" id="pairAnswer" aria-live="polite"></div>';
+  $('pairA').value=oldA;$('pairB').value=oldB;
+  function updatePair(){
+    const i=ZK.ROADS.indexOf($('pairA').value),j=ZK.ROADS.indexOf($('pairB').value);
+    $('pairAnswer').textContent=i===j?'请选择两条不同的路径':mx[i][j].t+'（当前立场下的权重比较）';
+  }
+  $('pairA').onchange=updatePair;$('pairB').onchange=updatePair;updatePair();
 }
 function renderRoads(){
   $('roads').innerHTML=ZK.ROADS.map(r=>`
@@ -345,8 +360,8 @@ function renderWin(){
 }
 
 function initPair(){
-  $('tab_mx').onclick=()=>{pairTab='mx';$('tab_mx').className='on';$('tab_win').className='';$('mx2').style.display='';$('win').style.display='none';$('pairNote').textContent='格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。';};
-  $('tab_win').onclick=()=>{pairTab='win';$('tab_win').className='on';$('tab_mx').className='';$('mx2').style.display='none';$('win').style.display='';renderWin();};
+  $('tab_mx').onclick=()=>{$('matrixMobile').hidden=false;pairTab='mx';$('tab_mx').className='on';$('tab_win').className='';$('mx2').style.display='';$('win').style.display='none';$('pairNote').textContent='格子＝行指标相对列指标的重要倍数（由当前立场得分比换算，1–9 标度取整）。"链主 vs 城市与人"在产值优先下接近 2 倍，在民生优先下反过来。';};
+  $('tab_win').onclick=()=>{$('matrixMobile').hidden=true;pairTab='win';$('tab_win').className='on';$('tab_mx').className='';$('mx2').style.display='none';$('win').style.display='';renderWin();};
 }
 
 const charts=[];
