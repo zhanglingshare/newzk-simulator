@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071021">
+<title>NewZK · 仲恺经济剖面室 | 看见产业，也看见城市</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2309172d'/%3E%3Cpath d='M6 25L16 5l10 20M10 17h12' stroke='%2384e6f8' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+<script src="../model.js"></script>
+<script src="../lib/echarts.min.js"></script>
+<link rel="stylesheet" href="who-xray-v9.css?v=1">
+</head>
+<body class="who-v9">
+<header class="who-header">
+  <a href="../index.html" class="who-logo"><span class="who-logo-mark">N<span>·</span></span><span><strong>NEWZK</strong><small>仲恺经济世界</small></span></a>
+  <div class="who-header-center"><span class="who-header-dot"></span> WORLD FILE / 02 <span class="who-header-slash">—</span> 认识仲恺</div>
+  <nav class="who-header-actions" aria-label="主要入口"><a href="../index.html">返回首页</a><a href="../today.html">今日仲恺</a><a class="who-header-all" href="#who-all">全部页面 ↗</a></nav>
+</header>
+
+<main>
+<section class="who-hero" aria-labelledby="who-title">
+ <div class="who-hero-grid" aria-hidden="true"></div><div class="who-hero-glow" aria-hidden="true"></div>
+ <div class="who-hero-upper">
+  <span><i class="who-ping"></i> 2025 经济数据 / 2024 产业结构</span>
+  <span>02 / 12 · CITY ECONOMIC X-RAY</span>
+ </div>
+ <div class="who-headline">
+  <div class="who-eyebrow">城市经济剖面 · 一座产业高新区的两种速度</div>
+  <h1 id="who-title">工业很强。<br><em>城市，跟得上吗？</em></h1>
+  <p>仲恺不是一份GDP榜单。它是快速运转的产业发动机，也是每天工作、居住、消费的真实城市。<br>切换三个视角，看清它的长板、短板和证据边界。</p>
+  <div class="who-view-switch" role="group" aria-label="切换经济剖面">
+   <button type="button" class="who-view-btn active" data-lens="industry" aria-pressed="true"><b>01</b><span>产业发动机</span><i>↗</i></button>
+   <button type="button" class="who-view-btn" data-lens="city" aria-pressed="false"><b>02</b><span>城市承接</span><i>↗</i></button>
+   <button type="button" class="who-view-btn" data-lens="compare" aria-pressed="false"><b>03</b><span>区域对照</span><i>↗</i></button>
+  </div>
+ </div>
+ <div class="who-world-frame">
+  <div class="who-world-topline"><span><i></i> ECONOMIC X-RAY</span><span id="who-scan-layer">产业层 / INDUSTRIAL SYSTEM</span></div>
+  <svg id="whoWorld" viewBox="0 0 820 540" role="img" aria-label="概念化城市剖面动画，以不同发光层展示工业、城市承接及相对比较；不是真实地理位置或经济因果传播">
+   <defs>
+    <linearGradient id="whoBuilding" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#385074"/><stop offset="100%" stop-color="#122443"/></linearGradient>
+    <linearGradient id="whoCore" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#51d8ef"/><stop offset="100%" stop-color="#3064a8"/></linearGradient>
+    <radialGradient id="whoLight"><stop stop-color="#79dded" stop-opacity=".19"/><stop offset="100%" stop-color="#79dded" stop-opacity="0"/></radialGradient>
+    <linearGradient id="whoTrack" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#50d7ed"/><stop offset=".5" stop-color="#baf4ff"/><stop offset="1" stop-color="#50d7ed"/></linearGradient>
+   </defs>
+   <ellipse cx="398" cy="270" rx="340" ry="230" fill="url(#whoLight)"/>
+   <g class="who-floor"><path d="M25 390L432 228L794 363L391 526Z"/><path d="M25 437L391 526L794 363"/><path d="M391 526V477 M104 401L483 494 M170 366L574 459 M251 330L663 425 M333 291L749 390"/></g>
+   <g class="who-shadow-buildings">
+    <path d="M495 300L545 281L583 298V396L533 418L495 401Z M588 278L627 264L664 278V376L624 393L588 380Z M667 299L698 286L731 299V373L700 388L667 377Z" fill="#13213e" stroke="#658cb5" stroke-opacity=".33"/>
+   </g>
+   <g class="who-factory-group">
+    <path class="who-factory-wall" d="M116 293L271 231L393 270V387L239 450L116 407Z"/>
+    <path class="who-factory-side" d="M116 293L239 340L239 450L116 407Z"/>
+    <path class="who-factory-roof" d="M116 293L271 231L393 270L239 340Z"/>
+    <path d="M157 300L184 290L212 302L184 314Z M217 277L245 266L273 278L245 290Z M277 251L304 263L277 274L249 263Z" fill="none" stroke="#bceefa" stroke-opacity=".55"/>
+    <path d="M135 336L209 363M135 364L209 390M263 367L374 323M263 394L374 350" stroke="#5bbbdc" stroke-width="4" stroke-opacity=".5"/>
+    <path d="M158 280V223L181 214V271 M225 254V187L245 180V245 M299 246V207L320 200V252" fill="#2c4667" stroke="#88c5dc" stroke-opacity=".45"/>
+    <circle class="who-factory-heart" cx="245" cy="324" r="30" fill="none" stroke="#94edff" stroke-opacity=".57" stroke-width="2"/>
+    <circle class="who-factory-beacon" cx="245" cy="324" r="9"/>
+   </g>
+   <g class="who-city-group">
+    <path class="who-city-floor" d="M437 300L612 233L764 289L593 357Z"/>
+    <path class="who-city-tower" d="M479 262L510 250L538 260V355L507 368L479 357Z M549 238L577 227L604 238V348L576 359L549 348Z M619 265L649 253L678 264V341L647 353L619 341Z"/>
+    <path d="M488 278V340 M500 270V353 M563 253V341 M575 248V345 M630 278V334 M642 272V339" stroke="#72aacb" stroke-width="3" stroke-dasharray="5 7" stroke-opacity=".5"/>
+    <path d="M447 336L597 394L739 331" fill="none" stroke="#6dddbf" stroke-width="1.5" stroke-opacity=".45"/>
+    <circle class="who-city-heart" cx="600" cy="372" r="28" fill="none" stroke="#66eacb" stroke-opacity=".6" stroke-width="2"/>
+    <circle class="who-city-beacon" cx="600" cy="372" r="8"/>
+   </g>
+   <path class="who-flow-track" id="whoFlowTrack" d="M254 328C342 269 412 278 480 316S546 381 600 372" fill="none" stroke="url(#whoTrack)" stroke-width="3"/>
+   <path class="who-flow-base" d="M254 328C342 269 412 278 480 316S546 381 600 372" fill="none" stroke="#74d7e6" stroke-width="14" stroke-opacity=".085"/>
+   <path class="who-flow-blips" d="M254 328C342 269 412 278 480 316S546 381 600 372" fill="none" stroke="#efffff" stroke-dasharray="3 35" stroke-width="4"/>
+   <g class="who-pulses" aria-hidden="true">
+     <circle r="5" fill="#b5f7ff"><animateMotion dur="3.8s" repeatCount="indefinite" path="M254 328C342 269 412 278 480 316S546 381 600 372"/></circle>
+     <circle r="3.6" fill="#73ebcf"><animateMotion dur="3.8s" begin="-1.9s" repeatCount="indefinite" path="M254 328C342 269 412 278 480 316S546 381 600 372"/></circle>
+   </g>
+   <g class="who-xray-lines"><path d="M245 324L139 211L54 211"/><path d="M604 370L726 418H796"/><circle cx="245" cy="324" r="4"/><circle cx="604" cy="370" r="4"/></g>
+   <g class="who-hud-labels">
+     <text x="52" y="194">INDUSTRY / 工业系统</text>
+     <text x="624" y="442">CITY / 城市承接</text>
+     <text x="265" y="443" class="who-hud-big">产业增长</text>
+     <text x="644" y="200" class="who-hud-big">生活服务</text>
+   </g>
+   <g class="who-focus-ring"><circle cx="245" cy="324" r="51" fill="none" stroke="#79e4fc" stroke-width="1" stroke-dasharray="7 12"/><circle cx="245" cy="324" r="43" fill="none" stroke="#79e4fc" stroke-opacity=".15"/></g>
+   <g class="who-city-focus-ring"><circle cx="600" cy="372" r="48" fill="none" stroke="#8ce7ce" stroke-width="1" stroke-dasharray="7 12"/></g>
+  </svg>
+  <div class="who-world-callout"><span id="who-live-kicker">当前聚焦 / 工业</span><strong id="who-live-head">产业机器高速运转</strong><p id="who-live-sub">规上工业总产值增速 +12.2%，但这不是GDP增速。</p></div>
+  <span class="who-world-footnote">概念化经济剖面，不是地理地图 · 光流仅代表分析视角，不是测得的资金或人流</span>
+ </div>
+ <div class="who-hero-bottom">
+   <div class="who-hero-number"><span id="who-stat-a-label">2025规上工业总产值</span><strong id="who-stat-a">—</strong><small id="who-stat-a-note">官方统计</small></div>
+   <div class="who-hero-rule" aria-hidden="true"></div>
+   <div class="who-hero-number"><span id="who-stat-b-label">2025 GDP</span><strong id="who-stat-b">—</strong><small id="who-stat-b-note">不同核算口径，不能简单比较</small></div>
+   <a href="#who-deep" class="who-scroll">向下，进入这一层的证据 <span aria-hidden="true">↓</span></a>
+ </div>
+</section>
+
+<section class="who-deck" id="who-deep" aria-labelledby="who-deck-heading">
+ <div class="who-deck-title"><span class="who-section-kicker">DEEP VIEW / 结构解剖</span><h2 id="who-deck-heading">不是读一堆数字。<br><em>而是看它们怎样组成一座城市。</em></h2><p>你在上方选择的视角，将决定这里展示的内容。所有官方数据和模型估计明确分开。</p></div>
+ <div class="who-deck-tabs" role="group" aria-label="内容视角">
+   <button type="button" data-lens="industry" class="active" aria-pressed="true">产业发动机</button>
+   <button type="button" data-lens="city" aria-pressed="false">城市承接</button>
+   <button type="button" data-lens="compare" aria-pressed="false">区域对照</button>
+ </div>
+
+ <div class="who-deck-panel" data-panel="industry">
+   <div class="who-panel-heading"><span>01 / THE ENGINE</span><h3>三根支柱，撑起产业主干。</h3><p>用数据看工业的构成，而不是用动画制造“谁最重要”的结论。</p></div>
+   <div class="who-industrial-layout">
+     <div class="who-panel-block">
+       <div class="who-panel-block-title"><b>2025 三大支柱产业</b><small>规模 · 亿元 · 原始数据见 model.js</small></div>
+       <div class="who-pillar-list" id="whoPillars" role="list"></div>
+       <div id="whoPillarDetail" class="who-pillar-detail" role="status" aria-live="polite">点击任一产业，查看它在现有数据中的规模与说明。</div>
+     </div>
+     <div class="who-panel-block">
+       <div class="who-panel-block-title"><b>家底速览</b><small>2025 官方统计轨</small></div>
+       <div class="who-kpi-grid" id="whoKpis"></div>
+       <div class="who-mini-note">GDP、工业总产值和工业增加值使用不同统计口径，不能相加或以大小直接判断贡献。</div>
+     </div>
+   </div>
+   <div class="who-panel-subtitle"><h4>新赛道：四个方向，还不是四个排名</h4><p>官方方向按原资料列出，不虚构“成熟度分数”或柱长。</p></div>
+   <div class="who-new-list" id="whoNew"></div>
+   <div class="who-panel-subtitle"><h4>园区版图：「1+1+2」布局</h4><p>以下为园区描述卡，不是经过地理坐标校准的地图。</p></div>
+   <div class="who-park-list" id="whoParks"></div>
+   <div class="who-panel-footer"><a href="../network.html">继续进入产业关系世界 <span>↗</span></a></div>
+ </div>
+
+ <div class="who-deck-panel" data-panel="city" hidden>
+   <div class="who-panel-heading"><span>02 / THE SHORT BOARD</span><h3>工业跑得快，城市承接仍需补课。</h3><p>增长速度与经济规模分开看；“短板”指公开材料中的问题，不是因果已被证明。</p></div>
+   <div class="who-city-layout">
+     <div class="who-panel-block">
+       <div class="who-panel-block-title"><b>三种增长速度</b><small>2025 主要指标增速 · 不同指标</small></div>
+       <div id="whoGrowth" class="who-growth-list"></div>
+       <p class="who-mini-note">这是不同指标的同比增速，不是同一个总量的不同分组，不能相加。</p>
+     </div>
+     <div class="who-panel-block who-city-ring">
+       <div class="who-panel-block-title"><b>三次产业结构</b><small>2024 年统计口径</small></div>
+       <div id="whoStructureChart" class="who-chart" role="img" aria-label="2024 年一二三产业结构占比圆环图"></div>
+       <div class="who-mini-note">2024年：一产1.0%、二产67.6%、三产31.4%。不要与2025年增长率混成一个口径。</div>
+     </div>
+   </div>
+   <div class="who-gap-feature"><span>THE CRITICAL GAP / 关键问题</span><h4>工业增长能否真正变成<br><em>好工作、好生活和本地消费？</em></h4><p>模型用一条“产业投入→创新→工资→本地消费→生活配套”的路径提出问题。其中“工资→本地消费”系数0.35是待校准的模型设定，并非实测结果。</p><a href="../blindspot.html">进入证据盲区与不确定性研究 ↗</a></div>
+   <div class="who-panel-footer"><a href="../mylife.html">从具体人的生活继续看 <span>↗</span></a></div>
+ </div>
+
+ <div class="who-deck-panel" data-panel="compare" hidden>
+  <div class="who-panel-heading"><span>03 / THE COMPARISON</span><h3>横向对照：每座城，都有不同的长短板。</h3><p>本页保留原有仲恺、大亚湾、惠城比较，但明确这是D级定性评分，不是官方统计排名。</p></div>
+  <div class="who-compare-layout">
+   <div class="who-panel-block">
+      <div class="who-panel-block-title"><b>五维相对剖面</b><small>D级主观设定 · 不是实测得分</small></div>
+      <div class="who-compare-switch" role="group" aria-label="选择对照地区"><button type="button" class="active" data-area="仲恺" aria-pressed="true">仲恺</button><button type="button" data-area="大亚湾" aria-pressed="false">大亚湾</button><button type="button" data-area="惠城" aria-pressed="false">惠城</button></div>
+      <div id="whoRadarChart" class="who-chart who-radar-chart" role="img" aria-label="以D级定性评分为基础的仲恺、大亚湾、惠城五维雷达对照"></div>
+   </div>
+   <div class="who-panel-block who-compare-insight">
+     <span class="who-compare-eyebrow">现在聚焦 / <span id="whoAreaName">仲恺</span></span>
+     <h4 id="whoAreaTitle">产业强，城市承接仍要补。</h4>
+     <p id="whoAreaCopy">工业强度突出，而服务业与城市配套有明显改进空间。</p>
+     <div id="whoAreaBars" class="who-area-bars"></div>
+     <div class="who-mini-note">评分仅用于提出比较问题；其中“风险集中”分数越高，表示假设中的风险越集中，并非越好。不能据此得出官方优劣次序或用于招商投资决策。</div>
+   </div>
+  </div>
+  <div class="who-panel-footer"><a href="../report.html">查看研究方法和完整报告 <span>↗</span></a></div>
+ </div>
+</section>
+
+<section class="who-next">
+ <div><span class="who-section-kicker">ONE WORLD / MANY QUESTIONS</span><h2>看见仲恺的样子，<br><em>下一步去看它如何运转。</em></h2></div>
+ <div class="who-next-links">
+   <a href="../network.html"><span>01</span><strong>进入产业链网络</strong><i>↗</i></a>
+   <a href="../choices.html"><span>02</span><strong>研究五条发展路径</strong><i>↗</i></a>
+   <a href="../windtunnel.html"><span>03</span><strong>进入风洞测试</strong><i>↗</i></a>
+ </div>
+</section>
+</main>
+
+<footer class="who-footer" id="who-all">
+ <div class="who-footer-top"><strong>NEWZK · 城市经济实验室</strong><p>官方统计、公开资料与模型假设分层呈现。原页面中的2024占比、2025经济指标、园区资料及D级雷达对照均已保留。</p></div>
+ <nav aria-label="全部页面">
+ <a href="../index.html">首页入口</a><a href="../today.html">今日仲恺</a><a href="index.html" aria-current="page">仲恺是什么</a><a href="../network.html">产业链地图</a><a href="../choices.html">五条路</a><a href="../future.html">未来2030</a><a href="../windtunnel.html">风洞</a><a href="../blindspot.html">忽略了什么</a><a href="../mylife.html">跟我的关系</a><a href="../report.html">分析报告</a><a href="../ending.html">结语</a><a href="../guide.html">使用指南</a><a href="../town.html">生活地图</a>
+ </nav>
+</footer>
+<script src="who-xray-v9.js?v=1"></script>
+</body>
+</html>

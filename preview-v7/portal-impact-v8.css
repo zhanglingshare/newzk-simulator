@@ -1,0 +1,120 @@
+/* NewZK V8: cinematic flow / fracture micro-story, portal-only. */
+.portal-core{isolation:isolate}
+.portal-core #portalEnergy,.portal-core #portalImpactFX{pointer-events:none}
+.portal-core #portalEnergy .portal-energy-line{fill:none;stroke:#95edff;stroke-width:4.3;stroke-linecap:round;stroke-dasharray:1 25;stroke-opacity:.9;filter:drop-shadow(0 0 5px #7ae6fc);animation:portalCurrent 1.85s linear infinite}
+.portal-core #portalEnergy .portal-energy-line.is-critical{stroke:#b6f3ff;stroke-width:6.1;stroke-dasharray:2 17;filter:drop-shadow(0 0 8px #90ebff)}
+@keyframes portalCurrent{from{stroke-dashoffset:0}to{stroke-dashoffset:-104}}
+.portal-core #portalEnergy .portal-energy-particle{fill:#d1fbff;filter:drop-shadow(0 0 7px #80ecfa);opacity:.91}
+.portal-core #portalEnergy .portal-energy-particle.is-critical{fill:#fff6cf;filter:drop-shadow(0 0 10px #fff0ab)}
+.portal-core #portalLinks .portal-critical-wire{stroke:#93e8ff!important;stroke-opacity:.9!important;stroke-width:3.8!important;filter:drop-shadow(0 0 7px #6aceea)}
+.portal-core #portalImpactFX .portal-cut-piece{fill:none;stroke:#ffae7b;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:0;filter:drop-shadow(0 0 10px #ff8a65);transition:transform .22s cubic-bezier(.1,1.6,.4,1),opacity .12s ease}
+.portal-core #portalImpactFX .portal-impact-flash{fill:rgba(255,175,115,.55);stroke:rgba(255,240,202,.8);stroke-width:1.6;opacity:0;filter:drop-shadow(0 0 20px #ffad75)}
+.portal-core #portalImpactFX .portal-impact-flash-core{fill:#fff7de;opacity:0;filter:drop-shadow(0 0 15px #ffdd9c)}
+.portal-core #portalImpactFX .portal-impact-ripple{fill:none;stroke:#ffb985;stroke-width:3;opacity:0;transform-box:fill-box;transform-origin:center}
+.portal-core #portalImpactFX .portal-impact-shard{stroke:#ffd6a1;stroke-width:2.4;stroke-linecap:round;opacity:0;filter:drop-shadow(0 0 6px #ff9f67)}
+.portal-core #portalImpactFX .portal-impact-backpressure{fill:#ffc884;stroke:#fff1cf;stroke-width:1;opacity:0;filter:drop-shadow(0 0 8px #ffc37b)}
+.portal-core .portal-impact-primary .portal-node-dot,.portal-core .portal-impact-secondary .portal-node-dot,.portal-core .portal-impact-center .portal-node-dot{transition:fill .22s,opacity .45s,filter .25s,transform .35s;transform-box:fill-box;transform-origin:center}
+.portal-core .portal-impact-primary .portal-node-halo,.portal-core .portal-impact-secondary .portal-node-halo,.portal-core .portal-impact-center .portal-node-halo{transition:opacity .35s,stroke .35s,fill .35s;transform-origin:center;transform-box:fill-box}
+.portal-core[data-phase="warning"] #portalLinks .portal-critical-wire{stroke:#ffb16d!important;stroke-opacity:1!important;stroke-width:5.5!important;animation:portalWarning .24s step-end infinite}
+.portal-core[data-phase="warning"] #portalEnergy .portal-energy-line.is-critical{stroke:#ffcf8d;stroke-opacity:1;stroke-width:7.8;animation:portalCurrent .95s linear infinite}
+.portal-core[data-phase="warning"] .portal-impact-primary .portal-node-dot{fill:#ffc08b;filter:drop-shadow(0 0 20px #ff8b72);animation:portalWarning .29s step-end infinite}
+@keyframes portalWarning{0%,100%{opacity:1}45%{opacity:.13}58%{opacity:.95}74%{opacity:.3}}
+.portal-core[data-scene="rupture"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalLinks .portal-critical-wire{stroke-opacity:.07!important;filter:none;animation:none}
+.portal-core[data-scene="rupture"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalEnergy .portal-energy-line.is-critical,
+.portal-core[data-scene="rupture"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalEnergy .portal-energy-particle.is-critical{opacity:0;visibility:hidden}
+.portal-core[data-scene="rupture"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalImpactFX .portal-cut-piece{opacity:1}
+.portal-core[data-scene="rupture"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalImpactFX .cut-from-center{transform:translate(5px,-6px)}
+.portal-core[data-scene="rupture"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalImpactFX .cut-to-neighbor{transform:translate(-5px,7px)}
+.portal-core[data-scene="rupture"][data-phase="break"] #portalImpactFX .portal-impact-flash{animation:portalFlash .6s cubic-bezier(.15,.7,.4,1) both}
+.portal-core[data-scene="rupture"][data-phase="break"] #portalImpactFX .portal-impact-flash-core{animation:portalFlashCore .38s ease-out both}
+@keyframes portalFlash{0%{opacity:0;transform:scale(.15);transform-origin:center;transform-box:fill-box}19%{opacity:1;transform:scale(2.4)}62%{opacity:.66;transform:scale(1.2)}100%{opacity:0;transform:scale(2.6)}}
+@keyframes portalFlashCore{0%{opacity:.1}18%{opacity:1}80%,100%{opacity:0}}
+.portal-core[data-scene="rupture"][data-phase="break"] #portalImpactFX .portal-impact-shard{animation:portalShatter .65s ease-out var(--shard-delay,0s) both}
+@keyframes portalShatter{0%{opacity:0;stroke-width:5}12%{opacity:1;stroke-width:4}100%{opacity:0;stroke-width:1.2}}
+.portal-core[data-scene="rupture"][data-phase="wave"] #portalImpactFX .portal-impact-ripple{animation:portalRing 1.18s ease-out var(--ring-delay,0s) both}
+@keyframes portalRing{0%{opacity:.8;transform:scale(.15);stroke-width:5}70%{opacity:.56}100%{opacity:0;transform:scale(5.1);stroke-width:1}}
+.portal-core[data-scene="rupture"]:is([data-phase="wave"],[data-phase="aftermath"]) .portal-impact-primary .portal-node-dot{fill:#fa947e;filter:drop-shadow(0 0 9px #f99b72)}
+.portal-core[data-scene="rupture"]:is([data-phase="wave"],[data-phase="aftermath"]) .portal-impact-secondary .portal-node-dot{fill:#f2b182;opacity:.42}
+.portal-core[data-scene="rupture"][data-phase="aftermath"] .portal-energy-line:not(.is-critical){stroke-opacity:.42;animation-duration:4s}
+.portal-core[data-scene="rupture"][data-phase="aftermath"] #portalImpactFX .portal-cut-piece{stroke:#fd8d7e;stroke-dasharray:9 10;opacity:.75;filter:drop-shadow(0 0 5px #ff9972)}
+.portal-core[data-scene="congestion"] #portalLinks .portal-critical-wire{stroke:#ffd39e!important;stroke-opacity:.98!important;stroke-width:6!important}
+.portal-core[data-scene="congestion"] #portalEnergy .portal-energy-line.is-critical{stroke:#f7b676;stroke-width:7;animation-duration:3.6s}
+.portal-core[data-scene="congestion"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalEnergy .portal-energy-line.is-critical{stroke-opacity:.4;animation-duration:8s}
+.portal-core[data-scene="congestion"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalEnergy .portal-energy-particle.is-critical{visibility:hidden}
+.portal-core[data-scene="congestion"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalImpactFX .portal-impact-backpressure{opacity:1;animation:portalPressure 1.3s ease-in-out var(--pulse-delay,0s) infinite alternate}
+@keyframes portalPressure{0%{opacity:.45;transform:scale(.75);transform-origin:center;transform-box:fill-box}100%{opacity:1;transform:scale(1.5)}}
+.portal-core[data-scene="congestion"][data-phase="wave"] #portalImpactFX .portal-impact-ripple{animation:portalRing 1.4s ease-out var(--ring-delay,0s) both;stroke:#ffd18b}
+.portal-core[data-scene="congestion"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) .portal-impact-primary .portal-node-dot{fill:#ffc387;filter:drop-shadow(0 0 18px #ffbc72)}
+.portal-core[data-scene="congestion"][data-phase="aftermath"] #portalLinks .portal-critical-wire{stroke-dasharray:3 9}
+.portal-core[data-scene="extraction"][data-phase="warning"] .portal-impact-center .portal-node-halo{fill:rgba(255,142,129,.32);stroke:#fca393;animation:portalWarning .26s step-end infinite}
+.portal-core[data-scene="extraction"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) .portal-impact-center .portal-node-dot{fill:#3b516e!important;stroke:#e8a28d;opacity:.43;transform:scale(.42);filter:drop-shadow(0 0 7px #ff9278)}
+.portal-core[data-scene="extraction"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) .portal-impact-center .portal-node-halo{fill:rgba(255,128,128,.07);opacity:.45}
+.portal-core[data-scene="extraction"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalEnergy .portal-energy-line,
+.portal-core[data-scene="extraction"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalEnergy .portal-energy-particle{opacity:.04;visibility:hidden}
+.portal-core[data-scene="extraction"]:is([data-phase="break"],[data-phase="wave"],[data-phase="aftermath"]) #portalLinks .portal-wire{stroke-opacity:.1!important;stroke:#8494b5!important}
+.portal-core[data-scene="extraction"][data-phase="wave"] #portalImpactFX .portal-impact-ripple{animation:portalRing 1.25s ease-out var(--ring-delay,0s) both}
+.portal-core[data-scene="extraction"][data-phase="aftermath"] #portalNodes .portal-node:not(.center) .portal-node-dot{opacity:.45}
+.portal-impact-ui{position:absolute;z-index:7;inset:0;pointer-events:none;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+.portal-impact-top{position:absolute;top:79px;left:8%;right:20%;display:flex;align-items:center;gap:8px;color:#accfe7;font-size:9.7px;font-weight:760;letter-spacing:.11em}
+.portal-impact-icon{font-size:20px;color:#a9effb;line-height:1}
+.portal-impact-count{margin-left:auto;color:#fac495;font-variant-numeric:tabular-nums}
+.portal-impact-tabs{position:absolute;left:8%;top:111px;display:flex;gap:5px;pointer-events:auto}
+.portal-impact-tab{font-size:11px;font-weight:800;color:#c0d7ef;background:rgba(13,33,61,.82);border:1px solid rgba(145,197,241,.27);border-radius:8px;padding:7px 12px;min-height:38px;cursor:pointer;backdrop-filter:blur(8px);transition:background .16s,border-color .16s}
+.portal-impact-tab.is-active{background:linear-gradient(130deg,#247ca7,#284f97);color:white;border-color:#8feafa;box-shadow:0 0 17px rgba(97,194,247,.22)}
+.portal-impact-tab:hover{border-color:#b6f2ff;color:#fff}
+.portal-impact-narrative{position:absolute;left:8%;bottom:131px;max-width:58%;background:linear-gradient(90deg,rgba(9,18,39,.88),rgba(9,18,39,.27));border-left:3px solid #f3b181;padding:9px 15px 10px;backdrop-filter:blur(4px);text-shadow:0 2px 8px #091126}
+.portal-impact-phase{font-size:9px;letter-spacing:.16em;font-weight:800;color:#ffc18d;margin-bottom:3px}
+.portal-impact-narrative strong{display:block;color:#eaf8ff;font-size:clamp(13px,1.45vw,18px);font-weight:860;line-height:1.46}
+.portal-impact-narrative>span{display:block;font-size:10px;color:#aebed3;line-height:1.7;margin-top:3px}
+.portal-impact-player{position:absolute;left:8%;bottom:59px;width:41%;min-width:190px}
+.portal-impact-progress{width:100%;height:3px;background:rgba(167,220,255,.17);overflow:hidden;border-radius:4px;margin-bottom:10px}
+.portal-impact-progress>i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#86eafb,#fff0ba,#ffa482);transform:scaleX(0);transform-origin:left;box-shadow:0 0 6px #90eafb}
+.portal-core.is-running .portal-impact-progress>i{animation:portalTimeline 8s linear both}
+@keyframes portalTimeline{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.portal-impact-player-actions{display:flex;align-items:center;gap:8px}
+.portal-impact-player-actions span{font-size:9px;color:#b8d3e8;font-variant-numeric:tabular-nums;margin-right:auto}
+.portal-impact-player-actions button{min-height:30px;border:1px solid rgba(128,193,241,.29);background:rgba(15,31,57,.8);color:#e5f7ff;font-size:10px;border-radius:7px;padding:5px 8px;cursor:pointer;pointer-events:auto}
+.portal-impact-player-actions button:hover{background:rgba(46,94,141,.9)}
+.portal-core.is-paused .portal-impact-progress>i,.portal-core.is-paused #portalEnergy *,.portal-core.is-paused #portalImpactFX *,.portal-core.is-paused #portalNodes *{animation-play-state:paused!important}
+.portal-core .portal-impact-ui button:focus-visible{outline:2px solid #a9f2ff;outline-offset:3px}
+.portal-core[data-phase="warning"] .portal-impact-narrative{border-color:#ffb56c}
+.portal-core[data-phase="break"] .portal-impact-narrative,.portal-core[data-phase="wave"] .portal-impact-narrative{border-color:#ff8f79}
+.portal-core[data-phase="aftermath"] .portal-impact-narrative{border-color:#86b4ce}
+.portal-graph-notice{bottom:-4px!important;right:8%!important;max-width:45%;text-align:right;white-space:normal!important;line-height:1.4}
+@media(max-width:1250px){
+ .portal-impact-top{top:66px}
+ .portal-impact-tabs{top:94px}
+ .portal-impact-narrative{left:7%;max-width:56%;bottom:130px}
+ .portal-impact-player{left:7%}
+}
+@media(max-width:930px){
+ .portal-impact-top{top:30px;left:12%}
+ .portal-impact-tabs{top:61px;left:12%}
+ .portal-impact-narrative{left:8%;bottom:129px;max-width:52%}
+ .portal-impact-player{left:8%;bottom:59px;width:38%}
+ .portal-orbit-label{right:13%!important}
+}
+@media(max-width:600px){
+ .portal-impact-top{top:29px;left:21%;right:12%;gap:5px;font-size:8px}
+ .portal-impact-icon{font-size:15px}
+ .portal-impact-count{font-size:8px}
+ .portal-impact-tabs{top:58px;left:19%;gap:5px}
+ .portal-impact-tab{font-size:10px;min-height:35px;padding:7px 12px}
+ .portal-impact-narrative{left:10%;top:109px;bottom:auto;max-width:70%;padding:7px 10px;border-left-width:2px}
+ .portal-impact-phase{font-size:8px}
+ .portal-impact-narrative strong{font-size:12px}
+ .portal-impact-narrative>span{font-size:9px;line-height:1.5}
+ .portal-impact-player{left:10%;bottom:107px;width:42%;min-width:135px}
+ .portal-impact-player-actions{gap:5px}
+ .portal-impact-player-actions button{padding:5px;min-height:29px;font-size:9px}
+ .portal-impact-player-actions span{font-size:8px}
+ .portal-core-cta{z-index:9;pointer-events:auto}
+ .portal-orbit-label{display:none!important}
+ .portal-graph-notice{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .portal-core #portalEnergy .portal-energy-line,.portal-core .portal-impact-ripple,.portal-core .portal-impact-backpressure,.portal-core .portal-impact-shard,.portal-core .portal-impact-flash,.portal-core .portal-impact-flash-core{animation:none!important}
+ .portal-core #portalEnergy .portal-energy-particle{display:none!important}
+ .portal-core.is-running .portal-impact-progress>i{animation:none!important}
+ .portal-core .portal-impact-narrative{transition:none!important}
+}

@@ -7,45 +7,47 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#1a0f0f,#0e1523);border:1px solid #7f1d1d;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#1a0f0f,#f8fbff);border:1px solid #7f1d1d;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#fca5a5}
-.hero .tag{display:inline-block;background:rgba(248,113,113,.12);color:#fecaca;border:1px solid #f8717144;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
-.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #f87171;padding-left:9px}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.hero .sub{font-size:12.5px;color:#a83a46}
+.hero .tag{display:inline-block;background:rgba(248,113,113,.12);color:#fecaca;border:1px solid #bf3b4944;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
+.s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #bf3b49;padding-left:9px}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .blind{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
 @media(max-width:760px){.blind{grid-template-columns:1fr}}
 .bd{background:linear-gradient(160deg,#1a0f0f,#0f1a2c);border:1px solid #4c1d1d;border-radius:10px;padding:12px}
-.bd .n{font-size:11px;color:#f87171;font-weight:800;letter-spacing:.5px}
-.bd b{display:block;font-size:14px;color:#e6edf3;margin:4px 0}
-.bd p{font-size:12px;color:#8fa3bf;margin:0}
-.bd .src{font-size:10.5px;color:#5b6b82;margin-top:6px}
+.bd .n{font-size:11px;color:#bf3b49;font-weight:800;letter-spacing:.5px}
+.bd b{display:block;font-size:14px;color:#17243d;margin:4px 0}
+.bd p{font-size:12px;color:#536782;margin:0}
+.bd .src{font-size:10.5px;color:#6c7d94;margin-top:6px}
 .q4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
 @media(max-width:760px){.q4{grid-template-columns:repeat(2,1fr)}}
-.qi{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px;text-align:center}
-.qi .v{font-size:22px;font-weight:800;color:#f87171}
-.qi .l{font-size:11.5px;color:#8fa3bf;margin-top:3px}
-.qi .d{font-size:10.5px;color:#5b6b82;margin-top:2px}
+.qi{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:10px;padding:11px;text-align:center}
+.qi .v{font-size:22px;font-weight:800;color:#bf3b49}
+.qi .l{font-size:11.5px;color:#536782;margin-top:3px}
+.qi .d{font-size:10.5px;color:#6c7d94;margin-top:2px}
 .shock{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
 @media(max-width:760px){.shock{grid-template-columns:1fr}}
-.sh{background:#0f1a2c;border:1px solid #22304a;border-radius:10px;padding:11px 12px}
-.sh b{font-size:13.5px;color:#e6edf3}
-.sh p{font-size:12px;color:#8fa3bf;margin:4px 0 0}
+.sh{background:#0f1a2c;border:1px solid #d8e3f0;border-radius:10px;padding:11px 12px}
+.sh b{font-size:13.5px;color:#17243d}
+.sh p{font-size:12px;color:#536782;margin:4px 0 0}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 .chart{width:100%;height:230px}
 @media(max-width:760px){.chart{height:190px}}
-</style></head><body>
+</style><link rel="stylesheet" href="cloud-lab.css?v=2">
+<script src="cloud-lab-ui.js?v=2" defer></script>
+</head><body data-page="blindspot">
 
 <div class="nav">
   <b>NewZK</b>
@@ -118,17 +120,17 @@ $('q4').innerHTML=Q4.map(q=>`<div class="qi"><div class="v">${q[0]}</div><div cl
 /* 三个缺口：基准 vs 进取（与 report 弹性同源） */
 const GAP=[['算力本地系数','0.30→0.50',12,28],['本地配套率','30%→60%',32,58],['消费承接','低→高',12,18]];
 const gc=echarts.init($('gapChart'));
-gc.setOption({
+gc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
   backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br>${p[0].dataIndex===0?'基准':''}${p[1].value} 亿 → ${p[0].dataIndex===0?GAP[p[0].dataIndex][3]:''}`},
-  legend:{data:['基准档','进取档'],textStyle:{color:'#8fa3bf',fontSize:11},top:0},
+  legend:{data:['基准档','进取档'],textStyle:{color:'#536782',fontSize:12},top:0},
   grid:{left:96,right:30,top:28,bottom:18},
-  xAxis:{type:'value',axisLabel:{color:'#8fa3bf',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:GAP.map(g=>g[0]).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
+  xAxis:{type:'value',axisLabel:{color:'#536782',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+  yAxis:{type:'category',data:GAP.map(g=>g[0]).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
   series:[
     {name:'基准档',type:'bar',barWidth:12,data:GAP.map(g=>g[2]).reverse().map(v=>({value:v,itemStyle:{color:'#334155'}}))},
-    {name:'进取档',type:'bar',barWidth:12,data:GAP.map(g=>g[3]).reverse().map(v=>({value:v,itemStyle:{color:'#3ddc97',borderRadius:[0,5,5,0]}}))}
+    {name:'进取档',type:'bar',barWidth:12,data:GAP.map(g=>g[3]).reverse().map(v=>({value:v,itemStyle:{color:'#168366',borderRadius:[0,5,5,0]}}))}
   ],
-  graphic:[{type:'text',left:8,bottom:0,style:{text:'灰＝基准 · 绿＝进取 · 区间越长越有弹性',fill:'#8fa3bf',fontSize:10}}]
+  graphic:[{type:'text',left:8,bottom:0,style:{text:'灰＝基准 · 绿＝进取 · 区间越长越有弹性',fill:'#536782',fontSize:11}}]
 });
 window.addEventListener('resize',()=>gc.resize());
 </script>

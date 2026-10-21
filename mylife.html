@@ -7,46 +7,48 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#fbbf24}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;font-weight:600}
+body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 12px;background:rgba(8,11,18,.95);border-bottom:1px solid #dce5f0;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:#b96a20}
+.nav a{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 11px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#245bdb;border-color:#245bdb;color:#fff;font-weight:600}
 .wrap{max-width:900px;margin:auto;padding:56px 14px 16px}
-.hero{background:linear-gradient(135deg,#0c1a2e,#0e1523);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#eef4ff,#f8fbff);border:1px solid #2b4a77;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hero .hu{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.hero .sub{font-size:12.5px;color:#8fa3bf}
-.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #22d3ee44;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
-.s{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:14px}
+.hero .sub{font-size:12.5px;color:#536782}
+.hero .tag{display:inline-block;background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid #1689b544;padding:2px 9px;border-radius:12px;font-size:11px;margin:6px 4px 0 0}
+.s{background:#f8fbff;border:1px solid #e5ebf4;border-radius:12px;padding:14px;margin-bottom:14px}
 .s h2{font-size:15.5px;margin:0 0 4px;border-left:3px solid #f472b6;padding-left:9px}
-.gt{font-size:12px;font-weight:800;color:#fbbf24;margin:12px 0 3px}
-.one{color:#e6edf3;font-weight:600;font-size:13.5px}
-.ana{color:#8fa3bf;font-size:12.5px}
+.gt{font-size:12px;font-weight:800;color:#b96a20;margin:12px 0 3px}
+.one{color:#17243d;font-weight:600;font-size:13.5px}
+.ana{color:#536782;font-size:12.5px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 @media(max-width:760px){.grid2{grid-template-columns:1fr}}
-.card{background:rgba(255,255,255,.04);border:1px solid #22304a;border-radius:10px;padding:12px}
+.card{background:rgba(255,255,255,.04);border:1px solid #d8e3f0;border-radius:10px;padding:12px}
 .card .e{font-size:20px}
-.card b{display:block;font-size:14px;color:#e6edf3;margin:6px 0 4px}
-.card p{font-size:12.5px;color:#8fa3bf;margin:0;line-height:1.7}
+.card b{display:block;font-size:14px;color:#17243d;margin:6px 0 4px}
+.card p{font-size:12.5px;color:#536782;margin:0;line-height:1.7}
 .card .num{font-size:17px;font-weight:800;color:#67e8f9}
 .lv{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin:8px 0 2px}
 .lv i{display:block;height:100%;border-radius:6px}
-.row2{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:12.5px;color:#cbd5e1}
-.row2 .lab{min-width:70px;color:#8fa3bf}
+.row2{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:12.5px;color:#405773}
+.row2 .lab{min-width:70px;color:#536782}
 .row2 .tr{flex:1;height:15px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative}
 .row2 .tr i{position:absolute;top:0;bottom:0;border-radius:8px}
 .row2 .v{min-width:60px;text-align:right;font-weight:700}
 .next{text-align:center;margin:20px 0 6px}
-.next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
+.next a{background:#245bdb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:12px;font-size:11px;color:#6c7d94;text-align:center}
 .qlife .q{margin-bottom:8px}
-.qlife .q b{display:block;font-size:12.5px;color:#cbd5e1;margin-bottom:4px}
+.qlife .q b{display:block;font-size:12.5px;color:#405773;margin-bottom:4px}
 .qlife .opts{display:flex;gap:6px;flex-wrap:wrap}
-.qlife .opts button{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer}
-.qlife .opts button.on{background:#7c3aed;border-color:#a78bfa;color:#fff;font-weight:700}
+.qlife .opts button{background:#f5f8fd;color:#536782;border:1px solid #d8e3f0;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.qlife .opts button.on{background:#7c3aed;border-color:#7158c8;color:#fff;font-weight:700}
 .chart{width:100%;height:220px}
 @media(max-width:760px){.chart{height:190px}}
-</style></head><body>
+</style><link rel="stylesheet" href="cloud-lab.css?v=2">
+<script src="cloud-lab-ui.js?v=2" defer></script>
+</head><body data-page="mylife">
 
 <div class="nav">
   <b>NewZK</b>
@@ -138,16 +140,16 @@ const sel=[0,0,0];
 function drawLife(){
   const v=DIM.map((d,i)=>LIFE.reduce((s,q,j)=>s+q.opts[sel[j]].v[i],0));
   const lc=echarts.init($('lifeChart'));
-  lc.setOption({
+  lc.setOption({textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif'},
     backgroundColor:'transparent',tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}：${p[0].value} 分`},
     grid:{left:70,right:20,top:12,bottom:20},
-    xAxis:{type:'value',max:30,axisLabel:{color:'#8fa3bf'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#cbd5e1',fontSize:11},axisLine:{lineStyle:{color:'#22304a'}}},
-    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#3ddc97':x>=12?'#3b82f6':'#f87171',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#cbd5e1',fontSize:10}}))}]
+    xAxis:{type:'value',max:30,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
+    yAxis:{type:'category',data:DIM.map(d=>d.length>4?d.slice(0,4):d).reverse(),axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
+    series:[{type:'bar',barWidth:16,data:[...v].reverse().map(x=>({value:x,itemStyle:{color:x>=20?'#168366':x>=12?'#245bdb':'#bf3b49',borderRadius:[0,5,5,0]},label:{show:true,position:'right',color:'#405773',fontSize:11}}))}]
   });
   window.__lc=lc;
   const best=DIM[v.indexOf(Math.max(...v))];
-  $('lifeNote').innerHTML='你现在的三个选择，最牵动的是<b style="color:#3ddc97">'+best+'</b>。换个选项再看——同一个你，换三个小决定，模型里那条最长的柱子就换一根。这就是"产城人融合"落到个人身上的样子。';
+  $('lifeNote').innerHTML='你现在的三个选择，最牵动的是<b style="color:#168366">'+best+'</b>。换个选项再看——同一个你，换三个小决定，模型里那条最长的柱子就换一根。这就是"产城人融合"落到个人身上的样子。';
 }
 $('qlife').innerHTML=LIFE.map((q,i)=>`<div class="q"><b>${q.q}</b><div class="opts">${q.opts.map((o,j)=>`<button data-i="${i}" data-j="${j}" class="${j===sel[i]?'on':''}">${o.t}</button>`).join('')}</div></div>`).join('');
 $('qlife').querySelectorAll('button').forEach(b=>b.onclick=()=>{
