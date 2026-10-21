@@ -447,3 +447,29 @@ body[data-page="windtunnel"] .wind-layout>.s:first-of-type .gt{margin-top:16px}
  body[data-page="windtunnel"] .detail-scroll{margin:0 -4px;padding:0 4px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* V3 corrective rules */
+[hidden]{display:none!important}
+body[data-page="network"] .two:has(.net-analysis-panel){display:block!important}
+body[data-page="network"] .two .net-analysis-panel{width:100%}
+body[data-page="network"] .net-analysis-panel .s{margin-bottom:0}
+body[data-page="network"] .network-side .chart{max-width:100%}
+body[data-page="choices"] .pair-selectors{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+body[data-page="choices"] .pair-selectors label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#536782}
+body[data-page="choices"] .win{max-width:100%;overflow-x:auto}
+body[data-page="windtunnel"] .wind-playback{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+body[data-page="windtunnel"] .wind-playback button{min-height:44px;padding:9px 13px;background:#fff;border:1px solid #cddcf0;border-radius:9px;color:#245bdb;font-weight:700;cursor:pointer}
+body[data-page="windtunnel"] .wind-playback span{font-size:13px;color:#536782}
+body[data-page="windtunnel"] .wind-reveal-hidden{opacity:0!important;pointer-events:none!important}
+body[data-page="windtunnel"] .wind-detail{border:1px solid #dfe7f2;border-radius:12px;background:#f8fbff;margin-top:14px}
+body[data-page="windtunnel"] .wind-detail summary{padding:12px 15px;cursor:pointer;font-size:14px;font-weight:700;color:#245bdb;min-height:44px}
+body[data-page="windtunnel"] .wind-detail .detail-scroll{padding:10px 12px 15px}
+body[data-page="windtunnel"] .wind-detail .detail-scroll:focus-visible{outline:3px solid #78a9f9}
+@media(max-width:760px){
+ body[data-page="network"] .network-canvas svg#net{min-width:0!important}
+ body[data-page="network"] .network-side.drawer-open .chart{height:220px}
+ body[data-page="choices"] .pair-selectors{grid-template-columns:1fr}
+ body[data-page="choices"] .win{min-width:580px}
+ body[data-page="windtunnel"] .wind-playback button{flex:1}
+}
