@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 const svg=document.getElementById('net'), search=document.getElementById('lab5Find');
-if(!svg || !window.ZK)return;
+if(!svg || typeof ZK==='undefined')return;
 const $=id=>document.getElementById(id);
 const ids=ZK.NO.map(n=>n[0]);
 const idSet=new Set(ids);
