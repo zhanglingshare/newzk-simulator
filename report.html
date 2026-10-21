@@ -49,50 +49,49 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .next{text-align:center;margin:20px 0 6px}
 .next a{background:#1d4ed8;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .disc{margin-top:12px;font-size:11px;color:#5b6b82;text-align:center}
-</style><link rel="stylesheet" href="cloud-lab.css?v=2">
-<script src="cloud-lab-ui.js?v=2" defer></script>
-</head><body data-page="report">
+</style>
+<link rel="stylesheet" href="visual-polish-v4.css?v=4"></head><body data-v4="report">
 
 <div class="nav">
   <b>NewZK</b>
-  <a href="index.html">01 今日仲恺</a>
-  <a href="who.html">02 仲恺是什么</a>
-  <a href="network.html">03 产业链地图</a>
-  <a href="choices.html">04 五条路</a>
-  <a href="future.html">05 未来2030</a>
-  <a href="windtunnel.html">06 风洞</a>
-  <a href="blindspot.html">07 忽略了什么</a>
-  <a href="mylife.html">08 跟我的关系</a>
-  <a href="report.html" class="on">09 分析报告</a>
-  <a href="ending.html">10 结语</a>
-  <a href="guide.html">11 使用指南</a>
-  <a href="town.html">12 生活地图</a>
+  <a href="index.html">① 今日仲恺</a>
+  <a href="who.html">② 仲恺是什么</a>
+  <a href="network.html">③ 产业链地图</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来2030</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="mylife.html">⑧ 跟我的关系</a>
+  <a href="report.html" class="on">⑨ 分析报告</a>
+  <a href="ending.html">⑩ 结语</a>
+  <a href="guide.html">⑪ 使用指南</a>
+  <a href="town.html">⑫ 生活地图</a>
 </div>
 
 <div class="wrap">
   <div class="hero">
-    <div class="hu">分析报告：哪些结论值得进一步验证</div>
-    <div class="sub">每一条都标了可信度：哪些是官方实数、哪些是模型估计、哪些还没核实。可以查来源，也可以了解推演的边界。</div>
+    <div class="hu">结论怎么来的，这里说得清</div>
+    <div class="sub">每一条都标了可信度：哪些是官方实数、哪些是模型估计、哪些还没核实。信得过，也挑得出毛病。</div>
     <span class="tag">老百姓看：结论可以信几分</span>
     <span class="tag">决策者看：哪三个数最该先核实</span>
   </div>
 
   <div class="s">
-    <h2>01 弹性排序：哪根弦一碰就响 <span class="tag">基准到进取 · 拉一拉看弹性</span></h2>
+    <h2>弹性排序：哪根弦一碰就响 <span class="tag">基准到进取 · 拉一拉看弹性</span></h2>
     <div class="chart" id="tornado"></div>
     <div class="gt">直接说</div>
     <p class="one">第一根弦是<b>本地配套率</b>：链主 1 亿订单，配套吃多少，决定钱在仲恺转几圈；第二根是<b>算力本地系数</b>（数据中心留多少）；第三根是<b>消费承接</b>——工人钱花不花在仲恺。这三根弦，就是"产城人融合"的命门。</p>
   </div>
 
   <div class="s">
-    <h2>02 五条路 × 三情景：贡献与抗压</h2>
+    <h2>五条路 × 三情景：贡献与抗压</h2>
     <div class="chart" id="mxbar"></div>
     <div class="matrix" id="matrix"></div>
     <div class="ana">贡献＝电脑把未来跑 1000 遍的中位数新增（乐观/基准/恶劣三档）；抗压＝风洞五张牌下的存活度（模型推演）。新赛道在乐观情景贡献最大，但在恶劣情景和风洞中抗压最弱——高风险高回报，是它的两面。</div>
   </div>
 
   <div class="s">
-    <h2>03 权重怎么定：结论对谁的尺子敏感 <span class="tag">默认均衡立场</span></h2>
+    <h2>权重怎么定：结论对谁的尺子敏感 <span class="tag">默认均衡立场</span></h2>
     <div class="two2">
       <div class="chart" id="radar2"></div>
       <div class="mx2" id="mx2"></div>
@@ -101,21 +100,21 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
   </div>
 
   <div class="s">
-    <h2>04 稳健性结论</h2>
+    <h2>稳健性结论</h2>
     <div class="gt">三情景共识（怎么换世界都不变的判断）</div>
     <div class="one" id="robust"></div>
     <p class="ana" id="robust2"></p>
   </div>
 
   <div class="s">
-    <h2>05 可信度分级：每个数字的信誉</h2>
+    <h2>可信度分级：每个数字的信誉</h2>
     <div class="grade" id="grade"></div>
     <div class="gt">怎么用</div>
-    <p class="one">A 级数据引用时需核对统计期和来源；B 级应附来源与口径；C 级仅作辅助参考；<b>D 轨（本沙盘的所有模型估计）一律标"待核实"</b>——别把推演当事实，也别把事实当推演。</p>
+    <p class="one">A 轨数字随便引用；B 轨可作参考但要给来源；C 轨只能佐证；<b>D 轨（本沙盘的所有模型估计）一律标"待核实"</b>——别把推演当事实，也别把事实当推演。</p>
   </div>
 
   <div class="next"><a href="ending.html">下一步：收尾，产城人闭环 →</a></div>
-  <div class="disc">弹性区间为模型推算（可信度 D）；官方锚点见第02页 A 轨清单。非预测值。</div>
+  <div class="disc">弹性区间为模型推算（可信度 D）；官方锚点见第②页 A 轨清单。非预测值。</div>
 </div>
 
 <script>
@@ -167,7 +166,7 @@ radar2.setOption({
   backgroundColor:'transparent',tooltip:{},
   legend:{data:['产值优先','均衡','民生优先'],textStyle:{color:'#8fa3bf',fontSize:10},top:0},
   radar:{indicator:ZK.ROADS.map(r=>({name:r.length>4?r.slice(0,4):r,max:10})),radius:'60%',center:['50%','55%'],
-    axisName:{color:'#8fa3bf',fontSize:10},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#f8fbff','#edf4ff']}}},
+    axisName:{color:'#8fa3bf',fontSize:10},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['#0e1523','#111b2b']}}},
   series:[{type:'radar',symbolSize:3,
     data:[
       {name:'产值优先',value:ZK.AH['产值优先'].map(r=>r[1]),lineStyle:{color:'#3b82f6'},itemStyle:{color:'#3b82f6'},areaStyle:{opacity:.2}},
@@ -182,7 +181,7 @@ charts.push(radar2);
     const ratio=w(a)/w(b),v=Math.max(1,Math.min(9,Math.round(ratio*2)/2));
     return {v,hi:w(a)>w(b)+0.3,t:`${a} vs ${b}：${v.toFixed(1)}`};
   }));
-  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>`<div style="background:${i===j?'#edf2f8':cells[i][j].hi?'#245bdb':'#e7effb'}" title="${cells[i][j].t}">${i===j?'—':cells[i][j].v.toFixed(1)}</div>`).join('')).join('');
+  $('mx2').innerHTML=ZK.ROADS.map((a,i)=>ZK.ROADS.map((b,j)=>`<div style="background:${i===j?'#22304a':cells[i][j].hi?'#3b82f6':'#1c2739'}" title="${cells[i][j].t}">${i===j?'—':cells[i][j].v.toFixed(1)}</div>`).join('')).join('');
 })();
 
 /* ---------- 五路 × 三情景 卡片矩阵 ---------- */
@@ -194,7 +193,7 @@ const MX=[
   ['城市与人','乐观 319 / 恶劣 221','中','人才流失牌直接命中']
 ];
 $('matrix').innerHTML=MX.map(m=>`<div class="mx"><b>${m[0]}</b><p>${m[1]}</p><p><span class="tag" style="background:${m[2]==='抗压强'?'rgba(61,220,151,.15)':m[2]==='抗压弱'?'rgba(248,113,113,.15)':'rgba(251,191,36,.12)'};color:${m[2]==='抗压强'?'#3ddc97':m[2]==='抗压弱'?'#f87171':'#fbbf24'}">${m[2]}</span> ${m[3]}</p></div>`).join('');
-const R=['01 目标可行但靠努力：基准情景过线概率约 39%——6500 亿不是躺着能到，也不是够不着，但要靠五条路真落地。','02 命门在本地配套率与消费承接：工业再强，钱留不住也是空转。','03 最该先核实三个数：本地配套率实测、工人消费流向、中韩外资落地实况（全是 D 级虚线）。'];
+const R=['1️⃣ 目标可行但靠努力：基准情景过线概率约 39%——6500 亿不是躺着能到，也不是够不着，但要靠五条路真落地。','2️⃣ 命门在本地配套率与消费承接：工业再强，钱留不住也是空转。','3️⃣ 最该先核实三个数：本地配套率实测、工人消费流向、中韩外资落地实况（全是 D 级虚线）。'];
 $('robust').innerHTML=R.map(r=>r+'<br>').join('');
 const r=ZK.run(20261020,1000,ZK.DEFAULT_PATHS);
 $('robust2').textContent='（基准情景模型输出：中位数 '+Math.round(r.p50)+' 亿，过线概率 '+r.hit.toFixed(0)+'%，区间 '+Math.round(r.p10)+'—'+Math.round(r.p90)+' 亿）';
@@ -202,5 +201,4 @@ const G=[['A','官方一手','#3ddc97','a'],['B','官方媒体/企业官网','#f
 $('grade').innerHTML=G.map(g=>`<div class="gd ${g[3]}"><div class="v">${g[0]}</div><p>${g[1]}</p><p style="color:#5b6b82">${g[2]}</p></div>`).join('');
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
-<script src="report-v3.js?v=3"></script>
 </body></html>
