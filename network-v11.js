@@ -276,5 +276,15 @@ $('v11Copy').addEventListener('click',async()=>{
   finally{ta.remove();}
  }
 });
-buildMoney();buildSem();buildLoop();onToggleRaw();chooseCase('supplier');go(1);
+function openExpert(){
+ const expert=$('v11Expert');if(!expert)return;
+ expert.open=true;
+ window.dispatchEvent(new Event('resize'));
+}
+document.querySelector('a.v10-open[href="#v11Expert"]')?.addEventListener('click',openExpert);
+function restoreDeepLink(){
+ if(window.location?.hash==='#v10Editor'||window.location?.hash==='#v11Expert')openExpert();
+}
+window.addEventListener('hashchange',restoreDeepLink);
+buildMoney();buildSem();buildLoop();onToggleRaw();chooseCase('supplier');go(1);restoreDeepLink();
 })();
