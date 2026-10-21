@@ -228,7 +228,7 @@ h1{font-size:24px;margin:0 0 2px;letter-spacing:.5px}
     </div>
     <div class="out" id="voteOut"></div>
     <div class="chart" id="voteChart"></div>
-    <p class="ana">柱越高＝越多人这么判断。你和乡亲们的直觉加起来，就是"众包预判"；和模型那条紫线比，能看出直觉和推演差在哪。</p>
+    <p class="ana">投票目前只保存在当前浏览器，本机柱状图不代表全区民意；可与模型基准结果作个人直觉对照。</p>
   </div>
 
   <div class="toolbar">
@@ -286,7 +286,7 @@ function drawVoteChart(){
     xAxis:{type:'category',data:['能到','悬，差一点','到不了'],axisLabel:{color:'#405773',fontSize:12},axisLine:{lineStyle:{color:'#d8e3f0'}}},
     yAxis:{type:'value',minInterval:1,axisLabel:{color:'#536782'},splitLine:{lineStyle:{color:'#e5ebf4'}}},
     series:[{type:'bar',barWidth:34,data:['能','悬','不能'].map(k=>({value:votes[k],itemStyle:{color:k==='能'?'#168366':k==='悬'?'#7158c8':'#bf3b49',borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:'#17243d',formatter:'{c} 票'}}))}],
-    graphic:[{type:'text',left:8,top:6,style:{text:'众包投票累计（存在本机）· 紫色＝模型过线概率 '+hitP+'%',fill:'#536782',fontSize:11.5}}]
+    graphic:[{type:'text',left:8,top:6,style:{text:'本机投票累计· 紫色＝模型过线概率 '+hitP+'%',fill:'#536782',fontSize:11.5}}]
   });
   charts.push(vc);
 }
@@ -296,7 +296,7 @@ function renderVote(){
   const modelTxt=hitP>=50?'模型认为<b style="color:#b96a20">能到</b>（'+hitP+'% 过线）':'模型认为<b style="color:#b96a20">悬</b>（过线概率仅 '+hitP+'%，中位数 '+p50+' 亿）';
   document.getElementById('voteOut').innerHTML=
     (my?('你的判断：<b style="color:#7158c8">'+my+'</b>　'):'')+
-    (total>0?('仲恺人的判断：能到 '+Math.round(votes['能']/total*100)+'% / 悬 '+Math.round(votes['悬']/total*100)+'% / 到不了 '+Math.round(votes['不能']/total*100)+'%　'):'还没人投票，你是第一个。')+
+    (total>0?('本机累计判断：能到 '+Math.round(votes['能']/total*100)+'% / 悬 '+Math.round(votes['悬']/total*100)+'% / 到不了 '+Math.round(votes['不能']/total*100)+'%　'):'本机尚无投票记录。')+
     '　模型：'+modelTxt+
     '<div class="cmp"><div class="bar"><i style="width:'+hitP+'%;background:linear-gradient(90deg,#7c3aed,#7158c8)"></i></div><span style="font-size:11px;color:#536782">紫色条＝模型跑 1000 次，过 6500 亿的比例 '+hitP+'%</span></div>';
   drawVoteChart();
@@ -353,7 +353,11 @@ document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{
   render(b.dataset.c);
 });
 fetch('hot.json').then(r=>r.json()).then(d=>{
-  DATA=d.items||[];
+  DATA=(d.items||[]).map(it=>({...it,
+    rel:Number.isFinite(it.rel)?it.rel:({'高':4,'较高':3,'中':2}[it.tier]||2),
+    sources:Array.isArray(it.sources)&&it.sources.length?it.sources:[{name:it.source||it.srcLevel||'公开渠道'}],
+    event_date:it.event_date||it.published_at||''
+  }));
   document.getElementById('scanInfo').textContent='已刷新 · '+d.updated+' · 共 '+DATA.length+' 条 · 来源：仲恺高新区管委会与公开媒体';
   pick3(DATA);
   render('all');
