@@ -73,6 +73,7 @@ body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"Ping
 .win div{height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#0d1a24}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <link rel="stylesheet" href="lab5.css?v=5">
+<link rel="stylesheet" href="choices-v14.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="choices">
 
@@ -93,6 +94,131 @@ body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"Ping
 </div>
 
 <div class="wrap">
+
+<section class="v14-world" id="v14World" data-road="链主做强" aria-labelledby="v14Title">
+  <nav class="v14-nav" aria-label="未来世界导航">
+    <a href="index.html" class="v14-home">← 返回仲恺世界</a>
+    <span>NEWZK <b>✦</b> FUTURE GATES / 04</span>
+    <button type="button" id="v14Random">⟳ 随机穿越</button>
+  </nav>
+
+  <div class="v14-intro">
+    <div class="v14-kicker"><i></i> 五扇门 · 五种城市气质</div>
+    <h1 id="v14Title">今晚，<br><em>你想先穿越哪一个仲恺？</em></h1>
+    <p>别比较，别打分。先进去看看。同一座城，换一种主旋律，整片世界都会换一种呼吸。</p>
+  </div>
+
+  <div class="v14-stage">
+    <div class="v14-stage-top">
+      <span id="v14SceneCode">GATE 01 / CHAIN LEADER</span>
+      <strong id="v14SceneTitle">链主做强</strong>
+      <span id="v14Visited">已探索 1 / 5</span>
+    </div>
+
+    <div class="v14-city">
+      <svg viewBox="0 0 1200 650" id="v14City" role="img" aria-label="五种发展路径对应的概念化城市夜景动画，不是真实地图或预测">
+        <defs>
+          <linearGradient id="v14Sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0b1730"/><stop offset="1" stop-color="#13243a"/>
+          </linearGradient>
+          <linearGradient id="v14Ground" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#12314c"/><stop offset="1" stop-color="#071725"/>
+          </linearGradient>
+          <radialGradient id="v14Glow"><stop offset="0" stop-color="#62d9f7" stop-opacity=".2"/><stop offset="1" stop-color="#62d9f7" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1200" height="650" fill="url(#v14Sky)"/>
+        <ellipse cx="610" cy="335" rx="530" ry="250" fill="url(#v14Glow)"/>
+        <path class="v14-ground" d="M0 507L383 356L1200 452V650H0Z" fill="url(#v14Ground)"/>
+        <g class="v14-base-city">
+          <path d="M50 443V322L95 298L132 314V419 M157 417V284L202 267L246 282V396 M277 390V338L317 321L351 334V376" />
+          <path d="M770 395V251L818 232L858 247V405 M889 414V301L931 284L972 298V430 M997 436V334L1038 317L1077 332V453" />
+          <path d="M382 439V246L426 229L469 244V428 M493 423V179L538 162L584 178V409 M610 414V221L654 205L700 222V428" />
+        </g>
+
+        <g class="v14-layer v14-leader">
+          <path class="v14-factory" d="M160 495V407L233 376L300 400V496Z M329 490V396L402 367L478 397V504Z"/>
+          <path class="v14-chimney" d="M197 404V332L218 324V395 M361 383V309L383 301V374"/>
+          <path class="v14-energy-line" d="M226 444C342 387 439 407 532 333S703 279 809 323"/>
+          <circle class="v14-energy-dot" r="8"><animateMotion dur="2.5s" repeatCount="indefinite" path="M226 444C342 387 439 407 532 333S703 279 809 323"/></circle>
+          <circle class="v14-energy-dot second" r="5"><animateMotion dur="2.5s" begin="-1.2s" repeatCount="indefinite" path="M226 444C342 387 439 407 532 333S703 279 809 323"/></circle>
+        </g>
+
+        <g class="v14-layer v14-new">
+          <g class="v14-data-towers">
+            <rect x="430" y="350" width="43" height="128" rx="5"/><rect x="485" y="315" width="43" height="163" rx="5"/><rect x="540" y="273" width="43" height="205" rx="5"/><rect x="595" y="331" width="43" height="147" rx="5"/>
+          </g>
+          <path class="v14-ai-grid" d="M386 486H710M405 456H690M425 426H670M445 396H650"/>
+          <g class="v14-drone"><path d="M0 0L27 10L0 20L8 10Z"/><circle cx="-4" cy="10" r="4"/></g>
+          <g class="v14-drone two"><path d="M0 0L27 10L0 20L8 10Z"/><circle cx="-4" cy="10" r="4"/></g>
+        </g>
+
+        <g class="v14-layer v14-park">
+          <path class="v14-crane" d="M253 420V181M251 194H451M432 194V240M352 194L282 248"/>
+          <path class="v14-crane second" d="M716 401V208M714 221H904M879 221V269M813 221L748 271"/>
+          <g class="v14-new-blocks">
+            <rect x="270" y="409" width="98" height="76"/><rect x="382" y="384" width="117" height="101"/><rect x="676" y="405" width="108" height="80"/><rect x="799" y="374" width="127" height="111"/>
+          </g>
+          <path class="v14-road" d="M64 552C318 468 608 480 1137 553"/>
+        </g>
+
+        <g class="v14-layer v14-service">
+          <g class="v14-shops">
+            <rect x="198" y="422" width="102" height="65" rx="8"/><rect x="315" y="434" width="112" height="53" rx="8"/><rect x="444" y="412" width="124" height="75" rx="8"/><rect x="585" y="427" width="102" height="60" rx="8"/><rect x="702" y="409" width="128" height="78" rx="8"/>
+          </g>
+          <g class="v14-crowd">
+            <circle cx="286" cy="522" r="7"/><circle cx="335" cy="534" r="6"/><circle cx="386" cy="518" r="8"/><circle cx="451" cy="536" r="6"/><circle cx="520" cy="519" r="7"/><circle cx="581" cy="535" r="7"/><circle cx="643" cy="520" r="6"/><circle cx="710" cy="533" r="8"/>
+          </g>
+          <path class="v14-neon" d="M184 500H852"/>
+        </g>
+
+        <g class="v14-layer v14-life">
+          <circle class="v14-park-green" cx="454" cy="445" r="102"/>
+          <path class="v14-school" d="M236 470V393L298 354L360 393V470Z M262 470V420H333V470"/>
+          <path class="v14-hospital" d="M728 468V374H834V468Z M781 390V451 M751 420H812"/>
+          <path class="v14-home" d="M517 477V397L579 351L641 397V477Z"/>
+          <g class="v14-people">
+            <circle cx="465" cy="523" r="8"/><circle cx="498" cy="532" r="7"/><circle cx="532" cy="520" r="8"/><circle cx="566" cy="534" r="7"/><circle cx="600" cy="522" r="8"/>
+          </g>
+        </g>
+
+        <g class="v14-horizon">
+          <path d="M43 506C265 460 410 447 595 459S940 507 1151 493"/>
+        </g>
+      </svg>
+
+      <div class="v14-scene-copy">
+        <span id="v14Mood">今晚的城市关键词：轰鸣、扩张、链主</span>
+        <strong id="v14Headline">工厂灯光一路亮到深夜。</strong>
+        <p id="v14Copy">链主做强不是“多一个大企业”的故事，而是一整片配套、技术、标准和品牌都围着它加速。</p>
+      </div>
+
+      <div class="v14-unlock" id="v14Unlock" hidden>
+        <span>✦ 五扇门全部走过</span>
+        <strong>要不要把整座城一次点亮？</strong>
+        <button type="button" id="v14AllOn">全城开灯</button>
+        <small>视觉彩蛋，不代表五条路径现实中能同时实现。</small>
+      </div>
+    </div>
+
+    <div class="v14-gates" role="group" aria-label="选择一种未来城市气质">
+      <button type="button" data-road="链主做强" class="is-active" aria-pressed="true"><span>01</span><strong>链主做强</strong><small>巨型工厂 · 配套加速</small></button>
+      <button type="button" data-road="新赛道抢跑" aria-pressed="false"><span>02</span><strong>新赛道抢跑</strong><small>机器人 · AI · 低空</small></button>
+      <button type="button" data-road="园区扩容" aria-pressed="false"><span>03</span><strong>园区扩容</strong><small>吊塔 · 道路 · 新空间</small></button>
+      <button type="button" data-road="服务补短" aria-pressed="false"><span>04</span><strong>服务补短</strong><small>商圈 · 服务 · 夜生活</small></button>
+      <button type="button" data-road="城市与人" aria-pressed="false"><span>05</span><strong>城市与人</strong><small>学校 · 医疗 · 公园</small></button>
+    </div>
+  </div>
+
+  <div class="v14-footerline">
+    <span>这是一段城市气质的视觉体验，不是规划效果图或预测。</span>
+    <button type="button" id="v14BackstageOpen">看看这些门背后的真实模型 ↗</button>
+  </div>
+</section>
+
+<details class="v14-backstage" id="v14Backstage">
+  <summary><span>幕后机房 · BACKSTAGE</span><strong>想知道五条路为什么这样设定？</strong><small>原有模型、权重、分布、A/B实验全部保留</small><i>↗</i></summary>
+  <div class="v14-backstage-body">
+
   <div class="hero">
     <div class="hu">往 6500 亿走，有五条路可以选</div>
     <div class="sub">没有对错，只有"换一把尺子，答案就换"。下面先挑你心里的尺子，再看它怎么排。</div>
@@ -175,7 +301,10 @@ body{margin:0;background:#f3f6fb;color:#17243d;font:14px/1.6 -apple-system,"Ping
     <div class="roads" id="roads"></div>
   </div>
 
-  <div class="next"><a href="future.html">下一步：跑 1000 次，看 2030 →</a></div>
+    </div>
+</details>
+
+<div class="v14-next"><a href="future.html">下一站：时间跃迁到2030 <span>→</span></a></div>
   <div class="disc">排序分值为模型推算（可信度 D，待校准）；"谁排第一"会随立场变，数值与未来页"跑 1000 遍"口径一致。</div>
 </div>
 
@@ -382,4 +511,5 @@ renderStand();renderSliders();renderRank();renderRadar();renderMatrix();renderRo
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 <script src="paths-lab-v5.js?v=5"></script>
+<script src="choices-v14.js?v=1"></script>
 </body></html>
