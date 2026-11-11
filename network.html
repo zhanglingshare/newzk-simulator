@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NewZK · 产业链地图</title>
+<title>NewZK · 关系引擎 | 产业链地图</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23080b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2322d3ee'/%3E%3Cline x1='16' y1='6' x2='16' y2='16' stroke='%23fbbf24'/%3E%3C/svg%3E">
 
 <script src="model.js"></script>
@@ -63,6 +63,7 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 @media(max-width:760px){.chart{height:200px}}
 </style><link rel="stylesheet" href="cloud-lab.css?v=2">
 <link rel="stylesheet" href="lab5.css?v=5">
+<link rel="stylesheet" href="network-v10.css?v=1">
 <script src="cloud-lab-ui.js?v=2" defer></script>
 </head><body data-page="network">
 
@@ -83,6 +84,82 @@ svg{width:100%;height:auto;background:#0a1018;border-radius:10px}
 </div>
 
 <div class="wrap">
+
+<section class="v10-theater" aria-labelledby="v10Title">
+  <div class="v10-headline">
+    <div>
+      <div class="v10-kicker"><span class="v10-ping"></span> NEWZK / NETWORK ENGINE / 03</div>
+      <h1 id="v10Title">这不是一张关系图。<br><em>这是仲恺的连接方式。</em></h1>
+      <p>先看一条关系如何被记录，再动手改变它。数字、结构、可疑的空白，要一起给你回应。</p>
+    </div>
+    <div class="v10-head-summary">
+      <div><span>模型主体</span><strong id="v10HeadNodes">—</strong></div>
+      <div><span>网络关系</span><strong id="v10HeadEdges">—</strong></div>
+      <div><span>待核实线</span><strong id="v10HeadUnknown">—</strong></div>
+      <small>基于现有模型整理；连接 ≠ 交易金额或经济因果。</small>
+    </div>
+  </div>
+  <div class="v10-exhibit">
+    <div class="v10-stage" id="v10Stage" data-view="flow" data-network-mode="base">
+      <div class="v10-stage-top">
+        <div class="v10-stage-index"><span>结构近景</span><b id="v10FocusName">亿纬锂能</b></div>
+        <div class="v10-stage-actions" role="group" aria-label="查看不同的关系切面">
+          <button type="button" data-focus="hub" class="active" aria-pressed="true">最大枢纽</button>
+          <button type="button" data-focus="uncertain" aria-pressed="false">待核实关系</button>
+          <button type="button" data-focus="life" aria-pressed="false">消费承接</button>
+        </div>
+      </div>
+      <div class="v10-stage-content">
+        <svg id="v10Graph" viewBox="0 0 840 520" role="img" aria-label="真实模型局部连接的动态可交互展示；光流只是结构关系的视觉符号，不代表实测物流和资金流">
+          <defs>
+            <radialGradient id="v10Aura"><stop stop-color="#65daef" stop-opacity=".20"/><stop offset="100%" stop-color="#65daef" stop-opacity="0"/></radialGradient>
+          </defs>
+          <ellipse cx="414" cy="269" rx="360" ry="240" fill="url(#v10Aura)"/>
+          <circle cx="414" cy="269" r="208" class="v10-orbit"/>
+          <circle cx="414" cy="269" r="156" class="v10-orbit inner"/>
+          <g id="v10Wires"></g>
+          <g id="v10Particles"></g>
+          <g id="v10NodeGroup"></g>
+          <g id="v10Fx"></g>
+        </svg>
+        <div class="v10-stage-caption">
+          <span id="v10LineKind">当前视角：关系流动</span>
+          <strong id="v10FocusHeadline">从最大枢纽开始，看局部连接</strong>
+          <p id="v10FocusDescription">高亮、光点和脉冲仅表现已有关系。点击外围主体，进入完整网络定位它。</p>
+        </div>
+      </div>
+      <div class="v10-stage-bottom">
+        <div class="v10-stage-legend"><span><i class="v10-cyan"></i>现有模型关系</span><span><i class="v10-orange"></i>当前选择</span><span><i class="v10-dash"></i>待核实</span></div>
+        <button id="v10FlowToggle" type="button" aria-pressed="true">Ⅱ 暂停光流</button>
+      </div>
+    </div>
+
+    <aside class="v10-director" aria-label="同步结构实验与对比">
+      <div class="v10-director-top"><span>EXPERIMENT CONTROL</span><strong>在 A 与 B 之间，<br>看见结构怎么改变。</strong><p>这里改变的只是网络拓扑假设。模型原数据不变，也不推算GDP或经济损失。</p></div>
+      <div class="v10-ab-controls" role="group" aria-label="切换全图原始与实验视角">
+        <button type="button" id="v10ModeBase" class="active" aria-pressed="true"><span>A</span>原始关系</button>
+        <button type="button" id="v10ModeTest" aria-pressed="false"><span>B</span>实验关系</button>
+      </div>
+      <div class="v10-compare-strip">
+        <div class="v10-compare-box"><span>A / 原始</span><strong id="v10AEdges">—</strong><small>全部关系</small></div>
+        <div class="v10-compare-arrow">→</div>
+        <div class="v10-compare-box v10-compare-b"><span>B / 假设</span><strong id="v10BEdges">—</strong><small>仍保留关系</small></div>
+      </div>
+      <div class="v10-difference" id="v10Difference" role="status" aria-live="polite">尚未修改B方案</div>
+      <div class="v10-compare-metrics">
+        <div><span>最大连通群</span><strong id="v10Largest">— → —</strong></div>
+        <div><span>独立连通组</span><strong id="v10Components">— → —</strong></div>
+        <div><span>未核实关系</span><strong id="v10Uncertain">—</strong></div>
+      </div>
+      <div class="v10-focus-edge"><span>本次可修改的真实模型关系</span><strong id="v10EdgeLabel">请选择一个切面</strong><small id="v10EdgeStatus">选择后可断开或恢复</small></div>
+      <button type="button" class="v10-cut" id="v10Cut">在 B 方案断开这条关系 <span>✕</span></button>
+      <div class="v10-undo-row"><button type="button" id="v10Undo">↶ 撤销上一步</button><button type="button" id="v10Reset">↻ 恢复全图</button></div>
+      <a class="v10-open" href="#v10Editor">进入完整68主体实验台 <span>↗</span></a>
+      <p class="v10-director-note">断线后展示的是<strong>连通性变化</strong>，不是因果冲击传播。可疑连接的证据等级来自原模型，动画不代表现实事件。</p>
+    </aside>
+  </div>
+</section>
+<div id="v10Editor" class="v10-workbench-label"><span>FULL NETWORK / 实验工作台</span><h2>68个主体，都在这里。</h2><p>上面先看局部；下面保留完整可拖动、可缩放、可筛选的网络，以及原有A/B结构实验和所有研究图表。</p></div>
   <div class="hero">
     <div class="hu">仲恺是一张怎么样的网？</div>
     <div class="sub">68 个真实主体：谁跟谁有业务往来、钱从哪来、在哪一层漏掉。点亮一个点看它的连接。</div>
@@ -381,4 +458,5 @@ legend();draw();stat();mul();sem();loop();
 window.addEventListener('resize',()=>charts.forEach(c=>c&&c.resize&&c.resize()));
 </script>
 <script src="network-lab-v5.js?v=5"></script>
+<script src="network-v10.js?v=1"></script>
 </body></html>
