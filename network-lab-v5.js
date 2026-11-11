@@ -33,6 +33,13 @@ function graphMetrics(nodesOff,linksOff){
   return {nodes:nodes.length,edges:nEdges,components,largest,isolated};
 }
 const base=graphMetrics(new Set(),new Set());
+function emitTopology(){
+  if(typeof window.dispatchEvent!=='function'||typeof CustomEvent!=='function')return;
+  window.dispatchEvent(new CustomEvent('newzk:topology',{detail:{
+    ...cloneState(),mode,selected,base,experiment:graphMetrics(removedNodes,removedLinks)
+  }}));
+}
+
 function setViewport(){
   const minW=1240/3.2;
   viewport.w=Math.max(minW,Math.min(DEFAULT.w,viewport.w));
@@ -100,7 +107,7 @@ function renderStats(){
     :'当前假设中移除'+removedNodes.size+'个主体、断开'+removedLinks.size+'条关系。这里比较的是网络连通性，不代表真实企业退出、产值损失或因果传导。';
   $('lab5Undo').disabled=history.length===0;
   $('lab5Reset').disabled=removedNodes.size+removedLinks.size===0;
-  refreshPaint();
+  refreshPaint();emitTopology();
 }
 function chooseMode(next){
   mode=next;
@@ -108,7 +115,7 @@ function chooseMode(next){
   $('lab5ModeTest').classList.toggle('active',next==='test');
   $('lab5ModeBase').setAttribute('aria-pressed',String(next==='base'));
   $('lab5ModeTest').setAttribute('aria-pressed',String(next==='test'));
-  refreshPaint();
+  refreshPaint();emitTopology();
 }
 $('lab5ModeBase').onclick=()=>chooseMode('base');
 $('lab5ModeTest').onclick=()=>chooseMode('test');
@@ -188,6 +195,25 @@ if(stored&&stored.type==='network-topology'){
   const validEdges=new Set(edges.map(e=>e.id));
   removedLinks=new Set((stored.removedLinks||[]).filter(id=>validEdges.has(id)));
 }
+
+window.NewZKNetworkLab={
+ snapshot:()=>({...cloneState(),mode,selected,base,experiment:graphMetrics(removedNodes,removedLinks)}),
+ focusNode(id){
+   if(!idSet.has(id))return false;
+   select({type:'node',id});
+   const node=ZK.NO.find(n=>n[0]===id);
+   const p=typeof pos!=='undefined'?pos[id]:[node[3],node[4]];
+   centerAt(p[0],p[1]);return true;
+ },
+ toggleLink(a,b){
+   if(!edges.some(e=>e.id===key(a,b)))return false;
+   select({type:'edge',a,b,id:key(a,b)});
+   $('lab5Toggle').onclick();return true;
+ },
+ view:chooseMode,
+ undo:()=>$('lab5Undo').onclick(),
+ reset:()=>$('lab5Reset').onclick()
+};
 $('lab5Toggle').disabled=true;
 renderStats();setViewport();chooseMode('base');
 if(window.matchMedia('(max-width:760px)').matches)zoom(2.6);
